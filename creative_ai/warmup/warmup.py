@@ -5,11 +5,7 @@
 # which will run your implementations against the test cases contained in each
 # function. Do NOT change any of the comments in this file or we will NOT be
 # able to grade your project.
-<<<<<<< HEAD
 #Nikhil2
-=======
-#Nikhil1
->>>>>>> b3ba781787e598f74f21053cd3f4914058001275
 # Turn off bytecode .pyc files
 import sys
 sys.dont_write_bytecode = True
