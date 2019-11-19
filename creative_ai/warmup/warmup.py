@@ -5,8 +5,6 @@
 # which will run your implementations against the test cases contained in each
 # function. Do NOT change any of the comments in this file or we will NOT be
 # able to grade your project.
-#Aidan
-#Nikhil2
 
 import sys
 sys.dont_write_bytecode = True
@@ -22,7 +20,7 @@ def returnDictionary(D):
     >>> returnDictionary(lyrics) == {'a': 'hard', 'days': 'night'}
     True
     """
-    pass
+    return(D)
 
 def keyInDict(D, K):
     """
@@ -38,7 +36,11 @@ def keyInDict(D, K):
     >>> keyInDict(lyrics, 'postman')
     False
     """
-    pass
+    if (K in D):
+        return True
+    else:
+        return False
+    
 
 def returnKeyVal(D, K):
     """
@@ -51,7 +53,8 @@ def returnKeyVal(D, K):
     >>> returnKeyVal(lyrics, 'postman')
     {}
     """
-    pass
+    store =  D[K]
+    return store
 
 def setKeyVal(D, K, V):
     """
@@ -64,7 +67,8 @@ def setKeyVal(D, K, V):
     >>> setKeyVal({'where do': 'they all'}, 'come', 'from') == {'where do': 'they all', 'come': 'from'}
     True
     """
-    pass
+    D[K] = V
+    return D
 
 def setKeyValList(D, K, V1, V2, V3, V4):
     """
@@ -76,7 +80,10 @@ def setKeyValList(D, K, V1, V2, V3, V4):
     >>> setKeyValList({}, 'taxman', 'cause', 'im', 'the', 'taxman') == {'taxman': ['cause', 'im', 'the', 'taxman']}
     True
     """
-    pass
+    list = [V1,V2,V3,V4]
+    D[K] = list
+    return D
+    
 
 def asciiAssociate():
     """
