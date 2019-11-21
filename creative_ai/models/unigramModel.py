@@ -67,7 +67,7 @@ class UnigramModel():
             return True
         else:
             return False
-        pass
+        
 
     def getCandidateDictionary(self, sentence):
         """
@@ -78,7 +78,8 @@ class UnigramModel():
                   to the current sentence. For details on which words the
                   UnigramModel sees as candidates, see the spec.
         """
-        pass
+        
+        return self.nGramCounts
 
 ###############################################################################
 # End Core
@@ -110,3 +111,10 @@ if __name__ == '__main__':
     uni.trainModel(text)
     print(uni.trainingDataHasNGram(sentence)) # should be True
     
+    #A getCandidateDictionary test case
+    uni = UnigramModel()
+    text = [['the', 'brown', 'fox'], ['the', 'lazy', 'dog']]
+    uni.trainModel(text)
+    uni2 = uni.getCandidateDictionary(text)
+    print(uni2)
+
