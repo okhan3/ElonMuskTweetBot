@@ -44,11 +44,7 @@ class UnigramModel():
         for index in range(len(text)):
             for index2 in range(len(text[index])):
                 store = text[index][index2]
-                self.nGramCounts[store] = 0
-        for index in range(len(text)):
-            for index2 in range(len(text[index])):
-                store = text[index][index2]
-                if (self.nGramCounts[store] >= 1):
+                if (store in self.nGramCounts):
                     self.nGramCounts[store] = self.nGramCounts[store] + 1
                 else:
                     self.nGramCounts[store] = 1
