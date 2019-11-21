@@ -41,7 +41,17 @@ class UnigramModel():
                   self.nGramCounts, see the spec.
                   Returns self.nGramCounts
         """
-        self.nGramCounts = text
+        for index in range(len(text)):
+            for index2 in range(len(text[index])):
+                store = text[index][index2]
+                self.nGramCounts[store] = 0
+        for index in range(len(text)):
+            for index2 in range(len(text[index])):
+                store = text[index][index2]
+                if (self.nGramCounts[store] >= 1):
+                    self.nGramCounts[store] = self.nGramCounts[store] + 1
+                else:
+                    self.nGramCounts[store] = 1
         return self.nGramCounts
 
     def trainingDataHasNGram(self, sentence):
@@ -52,6 +62,11 @@ class UnigramModel():
                   the next token for the sentence. For explanations of how this
                   is determined for the UnigramModel, see the spec.
         """
+        store = len(self.nGramCounts)
+        if (store > 0):
+            return True
+        else:
+            return False
         pass
 
     def getCandidateDictionary(self, sentence):
@@ -82,7 +97,7 @@ if __name__ == '__main__':
     uni.trainModel(text)
     # Should print: { 'brown' : 1 }
     print(uni)
-
+    
     text = [ ['the', 'brown', 'fox'], ['the', 'lazy', 'dog'] ]
     uni.trainModel(text)
     # Should print: { 'brown': 2, 'dog': 1, 'fox': 1, 'lazy': 1, 'the': 2 }
@@ -94,3 +109,4 @@ if __name__ == '__main__':
     print(uni.trainingDataHasNGram(sentence)) # should be False
     uni.trainModel(text)
     print(uni.trainingDataHasNGram(sentence)) # should be True
+    
