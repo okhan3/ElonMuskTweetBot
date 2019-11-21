@@ -85,8 +85,8 @@ def setKeyValList(D, K, V1, V2, V3, V4):
     >>> setKeyValList({}, 'taxman', 'cause', 'im', 'the', 'taxman') == {'taxman': ['cause', 'im', 'the', 'taxman']}
     True
     """
-    list = [V1, V2, V3, V4]
-    D[K] = list
+    list2 = [V1, V2, V3, V4]
+    D[K] = list2
     return D
 
 
