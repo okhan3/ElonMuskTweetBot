@@ -41,7 +41,8 @@ class UnigramModel():
                   self.nGramCounts, see the spec.
                   Returns self.nGramCounts
         """
-        pass
+        self.nGramCounts = text
+        return self.nGramCounts
 
     def trainingDataHasNGram(self, sentence):
         """

@@ -1,0 +1,9 @@
+README.md
+setup.py
+creative_ai/__init__.py
+creative_ai/generate.py
+creative_ai.egg-info/PKG-INFO
+creative_ai.egg-info/SOURCES.txt
+creative_ai.egg-info/dependency_links.txt
+creative_ai.egg-info/requires.txt
+creative_ai.egg-info/top_level.txt

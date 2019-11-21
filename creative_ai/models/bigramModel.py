@@ -8,7 +8,7 @@ class BigramModel():
         Modifies: self (this instance of the NGramModel object)
         Effects:  This is the NGramModel constructor. It sets up an empty
                   dictionary as a member variable.
-        
+
         This function is done for you.
         """
         self.nGramCounts = {}
@@ -20,7 +20,7 @@ class BigramModel():
         Effects:  Returns the string to print when you call print on an
                   NGramModel object. This string will be formatted in JSON
                   and display the currently trained dataset.
-        
+
         This function is done for you.
         """
 
@@ -42,7 +42,9 @@ class BigramModel():
                   {string: integer} pairs as values.
                   Returns self.nGramCounts
         """
-        pass
+        for index in range(len(text)):
+            self.nGramCounts [index] = text [index]
+        print(self.nGramCounts)
 
     def trainingDataHasNGram(self, sentence):
         """

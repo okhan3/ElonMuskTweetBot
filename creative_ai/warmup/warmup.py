@@ -9,6 +9,8 @@
 import sys
 sys.dont_write_bytecode = True
 #
+
+
 def returnDictionary(D):
     """
     Requires: Nothing
@@ -21,6 +23,7 @@ def returnDictionary(D):
     True
     """
     return(D)
+
 
 def keyInDict(D, K):
     """
@@ -40,7 +43,7 @@ def keyInDict(D, K):
         return True
     else:
         return False
-    
+
 
 def returnKeyVal(D, K):
     """
@@ -53,8 +56,9 @@ def returnKeyVal(D, K):
     >>> returnKeyVal(lyrics, 'postman')
     {}
     """
-    store =  D[K]
+    store = D[K]
     return store
+
 
 def setKeyVal(D, K, V):
     """
@@ -70,6 +74,7 @@ def setKeyVal(D, K, V):
     D[K] = V
     return D
 
+
 def setKeyValList(D, K, V1, V2, V3, V4):
     """
     Requires: D is a dictionary
@@ -80,10 +85,10 @@ def setKeyValList(D, K, V1, V2, V3, V4):
     >>> setKeyValList({}, 'taxman', 'cause', 'im', 'the', 'taxman') == {'taxman': ['cause', 'im', 'the', 'taxman']}
     True
     """
-    list = [V1,V2,V3,V4]
+    list = [V1, V2, V3, V4]
     D[K] = list
     return D
-    
+
 
 def asciiAssociate():
     """
@@ -98,7 +103,10 @@ def asciiAssociate():
     """
     # You may find this useful
     from string import ascii_lowercase as alphabet
-    pass
+    dict = {'a': 97, 'b': 98, 'c': 99, 'd': 100, 'e': 101, 'f': 102, 'g': 103, 'h': 104, 'i': 105, 'j': 106, 'k': 107, 'l': 108,
+            'm': 109, 'n': 110, 'o': 111, 'p': 112, 'q': 113, 'r': 114, 's': 115, 't': 116, 'u': 117, 'v': 118, 'w': 119, 'x': 120, 'y': 121, 'z': 122}
+    return dict
+
 
 def nestedAscii():
     """
@@ -112,7 +120,10 @@ def nestedAscii():
     """
     # You may find this useful
     from string import ascii_lowercase as alphabet
-    pass
+    dict = {'a': {}, 'b': {}, 'c': {}, 'd': {}, 'e': {}, 'f': {}, 'g': {}, 'h': {}, 'i': {}, 'j': {}, 'k': {}, 'l': {}, 'm': {
+    }, 'n': {}, 'o': {}, 'p': {}, 'q': {}, 'r': {}, 's': {}, 't': {}, 'u': {}, 'v': {}, 'w': {}, 'x': {}, 'y': {}, 'z': {}}
+    return dict
+
 
 def getNote(song, note):
     """
@@ -127,7 +138,10 @@ def getNote(song, note):
     >>> getNote({'backbeat': ['e1', 'g1']}, 'backbeat')
     'e1'
     """
-    pass
+    store = song[note]
+    store2 = store[0]
+    return store2
+
 
 def translate(vocab, word, language):
     """
@@ -143,7 +157,9 @@ def translate(vocab, word, language):
     >>> translate({'river': {'Spanish': 'rio', 'French': 'riviere'}}, 'river', 'French')
     'riviere'
     """
-    pass
+    store = vocab[word][language]
+    return store
+
 
 def nestedDictionary3D(L1, L2):
     """
@@ -160,7 +176,15 @@ def nestedDictionary3D(L1, L2):
     >>> nestedDictionary3D(albums, attributes)
     {'help': {'sales': {}, 'songs': {}}, 'revolver': {'sales': {}, 'songs': {}}}
     """
-    pass
+    D = {}
+    D2 = {}
+    D3 = {}
+    for index in range(len(L2)):
+        D2[L2[index]] = D3
+    for index in range(len(L1)):
+        D[L1[index]] = D2
+    return D
+
 
 def valueFrom3D(D, K1, K2, K3):
     """
@@ -176,7 +200,9 @@ def valueFrom3D(D, K1, K2, K3):
     >>> valueFrom3D({'twist': {'and': {'shout': 5}}}, 'twist', 'and', 'shout')
     5
     """
-    pass
+    store = D[K1][K2][K3]
+    return store
+
 
 def keysIn2D(D, L1, L2):
     """
@@ -193,7 +219,20 @@ def keysIn2D(D, L1, L2):
     >>> keysIn2D(D, ['c4', 'f#6'], ['ab3', 'd5', 'e3'])
     True
     """
-    pass
+    check = False
+    # access last element in list
+    store = L1[-1]
+    # checks to see if element is equal to keys in dictionary
+    if (store in D):
+        # gets value (another dictionary) from dictionary based on key
+        store2 = D[store]
+        # gets keys of the inner dictionary
+        store3 = store2.keys()
+        # compares the final element in the list with the key from the inner dictionary
+        if(L2[-1] == store3[0]):
+            check = True
+    return check
+
 
 class warmup(object):
     """A simple class with methods to get you used to how python classes work."""
@@ -209,7 +248,7 @@ class warmup(object):
         >>> w.bandName
         'The Beatles'
         """
-        pass
+        self.bandName = band
 
     def setAlbum(self, album):
         """
@@ -222,6 +261,7 @@ class warmup(object):
         >>> w.album
         'Abbey Road'
         """
+        self.album = album
         pass
 
     def printAlbum(self):
@@ -235,10 +275,11 @@ class warmup(object):
         >>> w.printAlbum()
         'Twist and Shout by The Beatles'
         """
-        pass
+        return self.album + " by " + self.bandName
 
-    #hint: use the functions you defined above!
-    def __init__(self, name_in = " ", album_in = " "):
+    # hint: use the functions you defined above!
+
+    def __init__(self, name_in=" ", album_in=" "):
         """
         Requires: nothing
         Modifies: self
@@ -256,6 +297,12 @@ class warmup(object):
         >>> a.album
         'Astro Lounge'
         """
+        if (name_in == " " and album_in == " "):
+            self.bandName = "No name"
+            self.album = "No album"
+        else:
+            self.bandName = name_in
+            self.album = album_in
         pass
 
 
