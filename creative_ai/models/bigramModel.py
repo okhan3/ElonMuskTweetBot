@@ -41,10 +41,33 @@ class BigramModel():
                   which has strings as keys and dictionaries of
                   {string: integer} pairs as values.
                   Returns self.nGramCounts
+
+        >>> x = BigramModel()
+        >>> y = [['strawberry', 'fields', 'nothing', 'is', 'real'], ['strawberry', 'fields', 'forever']]
+        >>> x.trainModel(y)
+        {'strawberry': {'fields': 2}, 'fields': {'nothing': 1, 'forever': 1}, 'nothing': {'is': 1}, 'is': {'real': 1}}
+        >>> z = [['^::^', '^:::^', 'strawberry', 'fields', 'nothing', 'is', 'real', '$:::$'], ['^::^', '^:::^', 'strawberry', 'fields', 'forever', '$:::$']]
+        >>> x.__init__()
+        >>> x.trainModel(z)
+        {'^::^': {'^:::^': 2}, '^:::^': {'strawberry': 2}, 'strawberry': {'fields': 2}, 'fields': {'nothing': 1, 'forever': 1}, 'nothing': {'is': 1}, 'is': {'real': 1}, 'real': {'$:::$': 1}, 'forever': {'$:::$': 1}}
         """
-        for index in range(len(text)):
-            self.nGramCounts [index] = text [index]
-        print(self.nGramCounts)
+
+        # Iterates through 2D dictionary
+        for i in range (0,len(text)):
+            for j in range (1,len(text[i])):
+                # Sets first term as seed
+                seed = text[i][j-1]
+                if seed not in self.nGramCounts:
+                    # Adds a new dictionary with first dictionary
+                    self.nGramCounts[seed] = {text[i][j]: 1}
+                elif text[i][j] not in self.nGramCounts[seed]:
+                    # Adds a new item within second dictionary
+                    self.nGramCounts[seed][text[i][j]] = 1
+                else:
+                    # Increments word frequency
+                    self.nGramCounts[seed][text[i][j]] += 1
+
+        return self.nGramCounts
 
     def trainingDataHasNGram(self, sentence):
         """
@@ -53,8 +76,20 @@ class BigramModel():
         Effects:  returns True if this n-gram model can be used to choose
                   the next token for the sentence. For explanations of how this
                   is determined for the BigramModel, see the spec.
+
+        >>> x = BigramModel()
+        >>> x.nGramCounts = {'strawberry': {'fields': 2}, 'fields': {'nothing': 1, 'forever': 1}, 'nothing': {'is': 1}, 'is': {'real': 1}}
+        >>> x.trainingDataHasNGram(['I', 'have', 'a', 'strawberry'])
+        True
+        >>> x.trainingDataHasNGram(['I', 'am', 'not', 'real'])
+        False
         """
-        pass
+
+        # Checks if the last item in list 'sentence' is a key in nGramCounts dictionary
+        if sentence[len(sentence)-1] in self.nGramCounts:
+            return True
+        else:
+            return False
 
     def getCandidateDictionary(self, sentence):
         """
@@ -64,8 +99,18 @@ class BigramModel():
         Effects:  returns the dictionary of candidate next words to be added
                   to the current sentence. For details on which words the
                   BigramModel sees as candidates, see the spec.
+
+        >>> x = BigramModel()
+        >>> x.nGramCounts = {'strawberry': {'fields': 2}, 'fields': {'nothing': 1, 'forever': 1}, 'nothing': {'is': 1}, 'is': {'real': 1}}
+        >>> x.getCandidateDictionary(['I', 'have', 'a', 'strawberry'])
+        {'fields': 2}
+        >>> x.getCandidateDictionary(['I', 'have', 'many', 'fields'])
+        {'nothing': 1, 'forever': 1}
         """
-        pass
+
+        # Returns dictionary of all candidate words
+        x = self.nGramCounts[sentence[len(sentence)-1]]
+        return x
 
 ###############################################################################
 # End Core
@@ -76,6 +121,5 @@ class BigramModel():
 ###############################################################################
 
 if __name__ == '__main__':
-    # remove 'pass' before adding test cases
-    pass
-    # Add your test cases here
+    import doctest
+    doctest.testmod()

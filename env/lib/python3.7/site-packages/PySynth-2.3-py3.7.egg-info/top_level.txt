@@ -1,0 +1,13 @@
+demosongs
+mixfiles
+mkfreq
+play_wav
+pysynth
+pysynth_b
+pysynth_beeper
+pysynth_c
+pysynth_d
+pysynth_e
+pysynth_p
+pysynth_s
+pysynth_samp
