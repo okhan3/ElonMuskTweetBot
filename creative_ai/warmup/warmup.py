@@ -221,15 +221,16 @@ def keysIn2D(D, L1, L2):
     """
     check = False
     # access last element in list
-    store = L1[-1]
+    store = L1[len(L1)-1]
+    store4 = len(L2)-1
     # checks to see if element is equal to keys in dictionary
     if (store in D):
         # gets value (another dictionary) from dictionary based on key
         store2 = D[store]
         # gets keys of the inner dictionary
-        store3 = store2.keys()
+        store3 = list(store2.keys())
         # compares the final element in the list with the key from the inner dictionary
-        if(L2[-1] == store3[0]):
+        if(L2[store4] == store3[0]):
             check = True
     return check
 
