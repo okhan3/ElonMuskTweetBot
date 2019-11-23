@@ -89,7 +89,27 @@ class LanguageModel():
         Effects:  returns a candidate item (a key in the candidates dictionary)
                   based on the algorithm described in the spec.
         """
-        pass
+        
+        keysList = []
+        valuesList = []
+        cumulativeList = []
+        
+        for i in candidates:
+            keysList.append(i)
+            valuesList.append(candidates[i])
+    
+        
+        cumulativeList[0] = valuesList[0]
+        for i in range(1, lens(valuesList) - 1):
+            cumulativeList.append(valuesList[i] + cumulativeList[i - 1])
+            
+        x = random.randrange(0, valuesList[len(valuesList) - 1])
+        
+        j = 0
+        while x >= cumulativeList[j]:
+            j += 1
+        
+        return keysList[j]
 
 
     def getNextToken(self, sentence, filter=None):
@@ -117,6 +137,9 @@ class LanguageModel():
 ###############################################################################
 
 if __name__ == '__main__':
-    # remove 'pass' before adding test cases
-    pass
-    # test cases here
+  
+  test1 = LanguageModel()
+  dict1 = {"north" : 4, "south" : 1, "east" : 3, "west" : 2}
+  
+  print("Test1 output should be east: ", test1.weightedChoice(dict1))
+  
