@@ -89,22 +89,27 @@ class LanguageModel():
         Effects:  returns a candidate item (a key in the candidates dictionary)
                   based on the algorithm described in the spec.
         """
-        
+
+        ''' Initializing lists '''
         keysList = []
         valuesList = []
         cumulativeList = []
-        
-        for i in candidates:
-            keysList.append(i)
-            valuesList.append(candidates[i])
-    
-        
-        cumulativeList[0] = valuesList[0]
-        for i in range(1, lens(valuesList) - 1):
+
+        ''' Indexing keysList & valuesList '''
+        keysList = list(candidates.keys())
+        valuesList = list(candidates.values())
+
+        '''Indexes the first element of cumulativeList outside of the for loop because it calls 
+        cumulativeLists[i-1]'''
+        cumulativeList.append(valuesList[0])
+        for i in range(1, len(valuesList)):
             cumulativeList.append(valuesList[i] + cumulativeList[i - 1])
-            
-        x = random.randrange(0, valuesList[len(valuesList) - 1])
-        
+
+        '''Random number generator. COMMENT PRINT COMMAND IN WHILE TESTING'''
+        x = random.randrange(0, cumulativeList[len(cumulativeList) - 1])
+        '''print(x)'''
+
+        '''To find the first element in cumulativeList that x is greater than'''
         j = 0
         while x >= cumulativeList[j]:
             j += 1
@@ -137,9 +142,64 @@ class LanguageModel():
 ###############################################################################
 
 if __name__ == '__main__':
-  
-  test1 = LanguageModel()
-  dict1 = {"north" : 4, "south" : 1, "east" : 3, "west" : 2}
-  
-  print("Test1 output should be east: ", test1.weightedChoice(dict1))
-  
+
+    print("Now Testing weightedChoice")
+
+    print()
+    print("when number is 0 - 3: north")
+    print("when number is 4: south")
+    print("when number is 5 - 7: east")
+    print("when number is 8 - 9: west")
+
+    test = LanguageModel()
+    dict1 = {"north" : 4, "south" : 1, "east" : 3, "west" : 2}
+
+    print()
+    print("Output: ", test.weightedChoice(dict1))
+    print()
+    print("Output: ", test.weightedChoice(dict1))
+    print()
+    print("Output: ", test.weightedChoice(dict1))
+    print()
+    print("Output: ", test.weightedChoice(dict1))
+    print()
+    print("Output: ", test.weightedChoice(dict1))
+    print()
+    print("Output: ", test.weightedChoice(dict1))
+    print()
+    print("Output: ", test.weightedChoice(dict1))
+    print()
+    print("Output: ", test.weightedChoice(dict1))
+    print()
+
+    print("when number is 0 - 2: Alex")
+    print("when number is 3 - 4: Is")
+    print("when number is 5 - 8: Very")
+    print("when number is 9 - 11: Crazy")
+
+    test2 = LanguageModel()
+    dict2 = {"Alex" : 3, "Is" : 2, "Very" : 4, "Crazy" : 3}
+
+    print()
+    print("Output: ", test2.weightedChoice(dict2))
+    print()
+    print("Output: ", test2.weightedChoice(dict2))
+    print()
+    print("Output: ", test2.weightedChoice(dict2))
+    print()
+    print("Output: ", test2.weightedChoice(dict2))
+    print()
+    print("Output: ", test2.weightedChoice(dict2))
+    print()
+    print("Output: ", test2.weightedChoice(dict2))
+    print()
+    print("Output: ", test2.weightedChoice(dict2))
+    print()
+    print("Output: ", test2.weightedChoice(dict2))
+    print()
+
+    print("Finished Testing weightedChoice")
+
+
+
+
