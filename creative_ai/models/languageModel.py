@@ -110,7 +110,7 @@ class LanguageModel():
                   can produce a next token using the filter, then a random
                   token from the filter is returned instead.
         """
-
+        #use getCanidateDictionary and weighted  choice functions 
         pass
 
 ###############################################################################
