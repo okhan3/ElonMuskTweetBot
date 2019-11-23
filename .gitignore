@@ -1,0 +1,10 @@
+*.pyc
+.DS_Store
+*.swp
+*.swo
+env/
+.env
+*/*.egg-info/
+*.egg-info/
+saved/*
+wav/*
