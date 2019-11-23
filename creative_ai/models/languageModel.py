@@ -5,6 +5,7 @@ from creative_ai.models.bigramModel import BigramModel
 from creative_ai.models.trigramModel import TrigramModel
 from creative_ai.utils.print_helpers import key_value_pairs
 
+
 class LanguageModel():
 
     def __init__(self, models=None):
@@ -13,7 +14,7 @@ class LanguageModel():
         Modifies: self (this instance of the LanguageModel object)
         Effects:  This is the LanguageModel constructor. It sets up an empty
                   dictionary as a member variable.
-        
+
         This function is done for you.
         """
 
@@ -31,15 +32,15 @@ class LanguageModel():
                   It will show the number of trained paths
                   for each model it contains. It may be
                   useful for testing.
-        
+
         This function is done for you.
         """
 
         output_list = [
             '{} contains {} trained paths.'.format(
                 model.__class__.__name__, key_value_pairs(model.nGramCounts)
-                ) for model in self.models
-            ]
+            ) for model in self.models
+        ]
 
         output = '\n'.join(output_list)
 
@@ -67,6 +68,7 @@ class LanguageModel():
 # Begin Core >> FOR CORE IMPLEMENTION, DO NOT EDIT ABOVE OF THIS SECTION <<
 ###############################################################################
 
+
     def selectNGramModel(self, sentence):
         """
         Requires: self.models is a list of NGramModel objects sorted by descending
@@ -79,7 +81,11 @@ class LanguageModel():
                   (Remember that you wrote a function that checks if a model can
                   be used to pick a word for a sentence!)
         """
-        pass
+        # iterates through list from trigram to bigram to unigram models
+        for index in range(len(self.models)):
+            # checks if that list model can be used for the sentance
+            if(self.models[index].trainingDataHasNGram(sentence) == True):
+                return self.models[index]
 
     def weightedChoice(self, candidates):
         """
@@ -89,28 +95,6 @@ class LanguageModel():
         Effects:  returns a candidate item (a key in the candidates dictionary)
                   based on the algorithm described in the spec.
         """
-        
-        keysList = []
-        valuesList = []
-        cumulativeList = []
-        
-        for i in candidates:
-            keysList.append(i)
-            valuesList.append(candidates[i])
-    
-        
-        cumulativeList[0] = valuesList[0]
-        for i in range(1, lens(valuesList) - 1):
-            cumulativeList.append(valuesList[i] + cumulativeList[i - 1])
-            
-        x = random.randrange(0, valuesList[len(valuesList) - 1])
-        
-        j = 0
-        while x >= cumulativeList[j]:
-            j += 1
-        
-        return keysList[j]
-
 
     def getNextToken(self, sentence, filter=None):
         """
@@ -126,6 +110,7 @@ class LanguageModel():
                   can produce a next token using the filter, then a random
                   token from the filter is returned instead.
         """
+
         pass
 
 ###############################################################################
@@ -136,10 +121,26 @@ class LanguageModel():
 # Main
 ###############################################################################
 
+
 if __name__ == '__main__':
-  
-  test1 = LanguageModel()
-  dict1 = {"north" : 4, "south" : 1, "east" : 3, "west" : 2}
-  
-  print("Test1 output should be east: ", test1.weightedChoice(dict1))
-  
+    # method1
+    testList = ['I', 'have', 'a', 'strawberry']
+    test2 = LanguageModel()
+    test2.updateTrainedData(testList)
+    print(test2.selectNGramModel(testList))
+    # omar plz check
+    # text = [['strawberry', 'fields', 'nothing', 'is', 'real'],
+    # ['strawberry', 'fields', 'forever']]
+    #test3 = LanguageModel()
+    # test3.updateTrainedData(text)
+    # print(test3.selectNGramModel(text))
+
+    #text2 = [['the', 'brown', 'fox'], ['the', 'lazy', 'dog']]
+    #test4 = LanguageModel()
+    # test4.updateTrainedData(text2)
+    # print(test4.selectNGramModel(text2))
+
+    test1 = LanguageModel()
+    dict1 = {"north": 4, "south": 1, "east": 3, "west": 2}
+
+    print("Test1 output should be east: ", test1.weightedChoice(dict1))
