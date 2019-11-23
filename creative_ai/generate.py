@@ -11,7 +11,7 @@ from creative_ai.models.musicInfo import *
 from creative_ai.models.languageModel import LanguageModel
 
 # FIXME Add your team name
-TEAM = 'YOUR NAME HERE'
+TEAM = 'Turing Machine'
 LYRICSDIRS = ['the_beatles']
 TESTLYRICSDIRS = ['the_beatles_test']
 MUSICDIRS = ['gamecube']
@@ -51,7 +51,7 @@ def printSongLyrics(verseOne, verseTwo, chorus):
     Requires: verseOne, verseTwo, and chorus are lists of lists of strings
     Modifies: nothing
     Effects:  prints the song.
-    
+
     This function is done for you.
     """
     verses = [verseOne, chorus, verseTwo, chorus]
@@ -72,7 +72,7 @@ def trainLyricModels(lyricDirs, test=False):
               them using the text loaded from the data loader. The list
               should be in tri-, then bi-, then unigramModel order.
               Returns the list of trained models.
-              
+
     This function is done for you.
     """
     model = LanguageModel()
@@ -92,7 +92,7 @@ def trainMusicModels(musicDirs):
               and takes a music directory name instead of an artist name.
               Returns a list of trained models in order of tri-, then bi-, then
               unigramModel objects.
-              
+
     This function is done for you.
     """
     model = LanguageModel()
@@ -163,7 +163,13 @@ def generateTokenSentence(model, desiredLength):
               For more details about generating a sentence using the
               NGramModels, see the spec.
     """
-    pass
+    L = []
+    x = getNextToken(["^::^", "^:::^"], None)
+    while sentenceTooLong(desiredLength,len(L)-3) is False and x != "$:::$":
+        L.append(x)
+        x = getNextToken(L, None)
+    return L
+
 
 ###############################################################################
 # End Core
@@ -213,7 +219,7 @@ def main():
                 musicTrained = True
 
             songName = input('What would you like to name your song? ')
-            
+
             runMusicGenerator(musicModel, WAVDIR + songName + '.wav')
 
         elif userInput == 3:
