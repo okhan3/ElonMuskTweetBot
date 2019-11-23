@@ -144,3 +144,64 @@ if __name__ == '__main__':
     dict1 = {"north": 4, "south": 1, "east": 3, "west": 2}
 
     print("Test1 output should be east: ", test1.weightedChoice(dict1))
+
+    print("Now Testing weightedChoice")
+
+    print()
+    print("when number is 0 - 3: north")
+    print("when number is 4: south")
+    print("when number is 5 - 7: east")
+    print("when number is 8 - 9: west")
+
+    test = LanguageModel()
+    dict1 = {"north" : 4, "south" : 1, "east" : 3, "west" : 2}
+
+    print()
+    print("Output: ", test.weightedChoice(dict1))
+    print()
+    print("Output: ", test.weightedChoice(dict1))
+    print()
+    print("Output: ", test.weightedChoice(dict1))
+    print()
+    print("Output: ", test.weightedChoice(dict1))
+    print()
+    print("Output: ", test.weightedChoice(dict1))
+    print()
+    print("Output: ", test.weightedChoice(dict1))
+    print()
+    print("Output: ", test.weightedChoice(dict1))
+    print()
+    print("Output: ", test.weightedChoice(dict1))
+    print()
+
+    print("when number is 0 - 2: Alex")
+    print("when number is 3 - 4: Is")
+    print("when number is 5 - 8: Very")
+    print("when number is 9 - 11: Crazy")
+
+    test2 = LanguageModel()
+    dict2 = {"Alex" : 3, "Is" : 2, "Very" : 4, "Crazy" : 3}
+
+    print()
+    print("Output: ", test2.weightedChoice(dict2))
+    print()
+    print("Output: ", test2.weightedChoice(dict2))
+    print()
+    print("Output: ", test2.weightedChoice(dict2))
+    print()
+    print("Output: ", test2.weightedChoice(dict2))
+    print()
+    print("Output: ", test2.weightedChoice(dict2))
+    print()
+    print("Output: ", test2.weightedChoice(dict2))
+    print()
+    print("Output: ", test2.weightedChoice(dict2))
+    print()
+    print("Output: ", test2.weightedChoice(dict2))
+    print()
+
+    print("Finished Testing weightedChoice")
+
+
+
+
