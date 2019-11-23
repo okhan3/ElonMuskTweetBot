@@ -8,7 +8,7 @@ class TrigramModel():
         Modifies: self (this instance of the NGramModel object)
         Effects:  This is the NGramModel constructor. It sets up an empty
                   dictionary as a member variable.
-        
+
         This function is done for you.
         """
 
@@ -21,7 +21,7 @@ class TrigramModel():
         Effects:  Returns the string to print when you call print on an
                   NGramModel object. This string will be formatted in JSON
                   and display the currently trained dataset.
-        
+
         This function is done for you.
         """
 
@@ -44,7 +44,25 @@ class TrigramModel():
                   and dictionaries of {string: integer} pairs as values.
                   Returns self.nGramCounts
         """
-        pass
+        # Iterates through 2D list
+        for i in range (0,len(text)):
+            for j in range (2,len(text[i])):
+                # Sets first term as seed
+                seed = text[i][j-2]
+                if seed not in self.nGramCounts:
+                    # Adds a new dictionary within first dictionary
+                    self.nGramCounts[seed] = {text[i][j-1]: {text[i][j]: 1}}
+                elif text[i][j-1] not in self.nGramCounts[seed]:
+                    # Adds a new dictionary within second dictionary
+                    self.nGramCounts[seed][text[i][j-1]] = {text[i][j]: 1}
+                elif text[i][j] not in self.nGramCounts[seed][text[i][j-1]]:
+                    # Adds a new item within third dictionary
+                    self.nGramCounts[seed][text[i][j-1]][text[i][j]] = 1
+                else:
+                    # Increments word frequency
+                    self.nGramCounts[seed][text[i][j-1]][text[i][j]] += 1
+
+        return self.nGramCounts
 
     def trainingDataHasNGram(self, sentence):
         """
@@ -54,7 +72,12 @@ class TrigramModel():
                   the next token for the sentence. For explanations of how this
                   is determined for the TrigramModel, see the spec.
         """
-        pass
+        # Checks if the second to last item in list 'sentence' is a key in nGramCounts dictionary
+        if sentence[len(sentence)-2] in self.nGramCounts:
+            # Checks if the last item in list 'sentence' is a key in second layer of nGramCounts dictionary
+            if sentence[len(sentence)-1] in self.nGramCounts[sentence[len(sentence)-2]]:
+                return True
+        return False
 
     def getCandidateDictionary(self, sentence):
         """
@@ -65,7 +88,9 @@ class TrigramModel():
                   to the current sentence. For details on which words the
                   TrigramModel sees as candidates, see the spec.
         """
-        pass
+        # Returns dictionary of all candidate words
+        x = self.nGramCounts[sentence[len(sentence)-2]][sentence[len(sentence)-1]]
+        return x
 
 ###############################################################################
 # End Core
@@ -78,8 +103,18 @@ class TrigramModel():
 if __name__ == '__main__':
     # An example trainModel test case
     uni = TrigramModel()
+    x = TrigramModel()
 
     text = [ ['the', 'brown', 'fox'], ['the', 'lazy', 'dog'] ]
     uni.trainModel(text)
-    
+    text = [['strawberry', 'fields', 'nothing', 'is', 'real'], ['strawberry', 'fields', 'forever']]
+    x.trainModel(text)
+
     print(uni)
+    print(x)
+
+    print(x.trainingDataHasNGram(['strawberry', 'fields']))
+    print(x.trainingDataHasNGram(['strawberry', 'forever']))
+
+    print(x.getCandidateDictionary(['strawberry', 'fields']))
+    print(x.getCandidateDictionary(['I', 'love', 'fields', 'nothing']))

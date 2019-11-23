@@ -52,13 +52,13 @@ class BigramModel():
         {'^::^': {'^:::^': 2}, '^:::^': {'strawberry': 2}, 'strawberry': {'fields': 2}, 'fields': {'nothing': 1, 'forever': 1}, 'nothing': {'is': 1}, 'is': {'real': 1}, 'real': {'$:::$': 1}, 'forever': {'$:::$': 1}}
         """
 
-        # Iterates through 2D dictionary
+        # Iterates through 2D list
         for i in range (0,len(text)):
             for j in range (1,len(text[i])):
                 # Sets first term as seed
                 seed = text[i][j-1]
                 if seed not in self.nGramCounts:
-                    # Adds a new dictionary with first dictionary
+                    # Adds a new dictionary within first dictionary
                     self.nGramCounts[seed] = {text[i][j]: 1}
                 elif text[i][j] not in self.nGramCounts[seed]:
                     # Adds a new item within second dictionary
