@@ -21,7 +21,7 @@ class UnigramModel():
         Effects:  Returns the string to print when you call print on an
                   NGramModel object. This string will be formatted in JSON
                   and display the currently trained dataset.
-        
+
         This function is done for you.
         """
 
@@ -63,7 +63,7 @@ class UnigramModel():
             return True
         else:
             return False
-        
+
 
     def getCandidateDictionary(self, sentence):
         """
@@ -74,7 +74,7 @@ class UnigramModel():
                   to the current sentence. For details on which words the
                   UnigramModel sees as candidates, see the spec.
         """
-        
+
         return self.nGramCounts
 
 ###############################################################################
@@ -94,7 +94,7 @@ if __name__ == '__main__':
     uni.trainModel(text)
     # Should print: { 'brown' : 1 }
     print(uni)
-    
+
     text = [ ['the', 'brown', 'fox'], ['the', 'lazy', 'dog'] ]
     uni.trainModel(text)
     # Should print: { 'brown': 2, 'dog': 1, 'fox': 1, 'lazy': 1, 'the': 2 }
@@ -102,15 +102,14 @@ if __name__ == '__main__':
 
     # An example trainingDataHasNGram test case
     uni = UnigramModel()
-    sentence = "Eagles fly in the sky"
+    sentence = [['Eagles', 'fly', 'in', 'the', 'sky']]
     print(uni.trainingDataHasNGram(sentence)) # should be False
     uni.trainModel(text)
     print(uni.trainingDataHasNGram(sentence)) # should be True
-    
+
     #A getCandidateDictionary test case
     uni = UnigramModel()
     text = [['the', 'brown', 'fox'], ['the', 'lazy', 'dog']]
     uni.trainModel(text)
     uni2 = uni.getCandidateDictionary(text)
     print(uni2)
-
