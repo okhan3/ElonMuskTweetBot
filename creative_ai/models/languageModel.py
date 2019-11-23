@@ -83,7 +83,7 @@ class LanguageModel():
         """
         # iterates through list from trigram to bigram to unigram models
         for index in range(len(self.models)):
-            # checks if that list model can be used for the sentance
+            # checks if that list model can be used for the sentence
             if(self.models[index].trainingDataHasNGram(sentence) == True):
                 return self.models[index]
 
@@ -135,8 +135,27 @@ class LanguageModel():
                   can produce a next token using the filter, then a random
                   token from the filter is returned instead.
         """
-        #use getCanidateDictionary and weighted  choice functions 
-        pass
+        
+        B = self.selectNGramModel(sentence)
+        D = B.getCandidateDictionary(sentence)
+        if (filter == None):
+            S = self.weightedChoice(D)
+            return S
+        else:
+            filteredCandidates = {}
+            store = D.keys()
+            #check index out of bounds 
+            for index in range(len(D)):
+                if store(index) == filter[index]:
+                  filteredCandidates[store(index)] = D[index]
+            if filteredCandidates[len(filteredCandidates) - 1] == None:
+                x = random.randrange(0, filter[len(filter) - 1])
+                return filter[x]
+            else:
+                r = self.weightedChoice(filteredCandidates)
+                return r
+
+                
 
 ###############################################################################
 # End Core
@@ -146,7 +165,6 @@ class LanguageModel():
 # Main
 ###############################################################################
 
-
 if __name__ == '__main__':
     # method1
     testList = ['I', 'have', 'a', 'strawberry']
@@ -154,11 +172,11 @@ if __name__ == '__main__':
     test2.updateTrainedData(testList)
     print(test2.selectNGramModel(testList))
     # omar plz check
-    # text = [['strawberry', 'fields', 'nothing', 'is', 'real'],
-    # ['strawberry', 'fields', 'forever']]
+    #text = [['strawberry', 'fields', 'nothing', 'is', 'real'],
+    #['strawberry', 'fields', 'forever']]
     #test3 = LanguageModel()
-    # test3.updateTrainedData(text)
-    # print(test3.selectNGramModel(text))
+    #test3.updateTrainedData(text)
+    #print(test3.selectNGramModel(text))
 
     #text2 = [['the', 'brown', 'fox'], ['the', 'lazy', 'dog']]
     #test4 = LanguageModel()
@@ -227,6 +245,8 @@ if __name__ == '__main__':
 
     print("Finished Testing weightedChoice")
 
-
-
-
+    test10 = LanguageModel()
+    sentence = [['Eagles', 'fly', 'in', 'the', 'sky']]
+   
+    testVal = test10.getNextToken(sentence)
+    print (testVal)
