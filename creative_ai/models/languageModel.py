@@ -95,6 +95,31 @@ class LanguageModel():
         Effects:  returns a candidate item (a key in the candidates dictionary)
                   based on the algorithm described in the spec.
         """
+        
+        keysList = []
+        valuesList = []
+        cumulativeList = []
+
+        ''' Indexing keysList & valuesList '''
+        keysList = list(candidates.keys())
+        valuesList = list(candidates.values())
+
+        '''Indexes the first element of cumulativeList outside of the for loop because it calls 
+        cumulativeLists[i-1]'''
+        cumulativeList.append(valuesList[0])
+        for i in range(1, len(valuesList)):
+            cumulativeList.append(valuesList[i] + cumulativeList[i - 1])
+
+        '''Random number generator. COMMENT PRINT COMMAND IN WHILE TESTING'''
+        x = random.randrange(0, cumulativeList[len(cumulativeList) - 1])
+        '''print(x)'''
+
+        '''To find the first element in cumulativeList that x is greater than'''
+        j = 0
+        while x >= cumulativeList[j]:
+            j += 1
+        
+        return keysList[j]
 
     def getNextToken(self, sentence, filter=None):
         """
