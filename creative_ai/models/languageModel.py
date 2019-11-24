@@ -86,6 +86,7 @@ class LanguageModel():
             # checks if that list model can be used for the sentence
             if(self.models[index].trainingDataHasNGram(sentence) == True):
                 return self.models[index]
+                
 
     def weightedChoice(self, candidates):
         """
@@ -135,7 +136,6 @@ class LanguageModel():
                   can produce a next token using the filter, then a random
                   token from the filter is returned instead.
         """
-        
         B = self.selectNGramModel(sentence)
         D = B.getCandidateDictionary(sentence)
         if (filter == None):
@@ -149,7 +149,7 @@ class LanguageModel():
                 if store(index) == filter[index]:
                   filteredCandidates[store(index)] = D[index]
             if filteredCandidates[len(filteredCandidates) - 1] == None:
-                x = random.randrange(0, filter[len(filter) - 1])
+                x = random.choice(filter)
                 return filter[x]
             else:
                 r = self.weightedChoice(filteredCandidates)
@@ -172,16 +172,16 @@ if __name__ == '__main__':
     test2.updateTrainedData(testList)
     print(test2.selectNGramModel(testList))
     # omar plz check
-    #text = [['strawberry', 'fields', 'nothing', 'is', 'real'],
-    #['strawberry', 'fields', 'forever']]
-    #test3 = LanguageModel()
-    #test3.updateTrainedData(text)
-    #print(test3.selectNGramModel(text))
+    text = [['strawberry', 'fields', 'nothing', 'is', 'real'],
+    ['strawberry', 'fields', 'forever']]
+    test3 = LanguageModel()
+    test3.updateTrainedData(text)
+    print(test3.selectNGramModel(text))
 
-    #text2 = [['the', 'brown', 'fox'], ['the', 'lazy', 'dog']]
-    #test4 = LanguageModel()
-    # test4.updateTrainedData(text2)
-    # print(test4.selectNGramModel(text2))
+    text2 = [['the', 'brown', 'fox'], ['the', 'lazy', 'dog']]
+    test4 = LanguageModel()
+    test4.updateTrainedData(text2)
+    print(test4.selectNGramModel(text2))
 
     test1 = LanguageModel()
     dict1 = {"north": 4, "south": 1, "east": 3, "west": 2}
@@ -247,6 +247,6 @@ if __name__ == '__main__':
 
     test10 = LanguageModel()
     sentence = [['Eagles', 'fly', 'in', 'the', 'sky']]
-   
+    test10.updateTrainedData(sentence)
     testVal = test10.getNextToken(sentence)
     print (testVal)
