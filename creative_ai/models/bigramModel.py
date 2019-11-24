@@ -86,7 +86,8 @@ class BigramModel():
         """
 
         # Checks if the last item in list 'sentence' is a key in nGramCounts dictionary
-        if sentence[len(sentence)-1] in self.nGramCounts:
+        str1 = str(sentence[len(sentence)-1])
+        if str1 in self.nGramCounts:
             return True
         else:
             return False

@@ -73,9 +73,11 @@ class TrigramModel():
                   is determined for the TrigramModel, see the spec.
         """
         # Checks if the second to last item in list 'sentence' is a key in nGramCounts dictionary
-        if sentence[len(sentence)-2] in self.nGramCounts:
+        str1 = str(sentence[len(sentence)-1])
+        str2 = str(sentence[len(sentence)-2])
+        if str2 in self.nGramCounts:
             # Checks if the last item in list 'sentence' is a key in second layer of nGramCounts dictionary
-            if sentence[len(sentence)-1] in self.nGramCounts[sentence[len(sentence)-2]]:
+            if str1 in self.nGramCounts[str2]:
                 return True
         return False
 
