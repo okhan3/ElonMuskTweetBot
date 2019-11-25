@@ -102,13 +102,6 @@ class BigramModel():
         Effects:  returns the dictionary of candidate next words to be added
                   to the current sentence. For details on which words the
                   BigramModel sees as candidates, see the spec.
-
-        >>> x = BigramModel()
-        >>> x.nGramCounts = {'strawberry': {'fields': 2}, 'fields': {'nothing': 1, 'forever': 1}, 'nothing': {'is': 1}, 'is': {'real': 1}}
-        >>> x.getCandidateDictionary(['I', 'have', 'a', 'strawberry'])
-        {'fields': 2}
-        >>> x.getCandidateDictionary(['I', 'have', 'many', 'fields'])
-        {'nothing': 1, 'forever': 1}
         """
 
         # Returns dictionary of all candidate words
@@ -128,9 +121,55 @@ if __name__ == '__main__':
     import doctest
     doctest.testmod()
 
-    # test1
+    # TrainModel Tests
+    # Test 1
     bi = BigramModel()
     list1 = [["hello", "my", "name", "is", "macintosh"],
              ["hello", "my", "house", "is", "big"]]
     bi.trainModel(list1)
-    # Should print: {hello: {my}: {}}
+    print(bi)
+    # Should print: {hello: {my: 2}, house: {is: 1}, is: {big: 1, macintosh: 1}, my: {house: 1, name: 1}, name: {is: 1}}
+
+    # Test 2
+    bi2 = BigramModel()
+    list2 = [["hello", "hello", "hello", "hello", "hello"],
+             ["hello", "hello", "hello", "hello", "hello"]]
+    bi2.trainModel(list2)
+    print(bi2)
+    # Should print: {hello: {hello: 8}}
+
+    # Test3
+    bi3 = BigramModel()
+    list3 = [["AAABBB", "AAABBB", "ABABAB", "ABABAB", "AZAZAZ"],
+             ["ABABAB", "AZAZAZ", "AAABBB", "ABABAB", "AZAZAZ"]]
+    bi3.trainModel(list3)
+    print(bi3)
+    # Should print: {hello: {my: 2}, house: {is: 1}, is: {big: 1, macintosh: 1}, my: {house: 1, name: 1}, name: {is: 1}}
+
+    # Test4
+    bi4 = BigramModel()
+    list4 = [["The", "fox", "jumps", "over", "houses"],
+             ["fox", "jumps", "over", "houses", "The"]]
+    bi4.trainModel(list4)
+    print(bi4)
+    # Should print: {hello: {my: 2}, house: {is: 1}, is: {big: 1, macintosh: 1}, my: {house: 1, name: 1}, name: {is: 1}}
+
+    # Test5
+    bi5 = BigramModel()
+    list5 = [["00000", "0000", "00000", "000", "0000"],
+             ["0000", "00000", "0000", "00000", "000000"]]
+    bi.trainModel(list5)
+    print(bi5)
+    # Should print: {hello: {my: 2}, house: {is: 1}, is: {big: 1, macintosh: 1}, my: {house: 1, name: 1}, name: {is: 1}}
+
+
+
+    # TestingDatahasNGram Tests
+    #Test 1
+    
+
+
+
+    # getCandidateDictionary Tests
+    # Test1
+
