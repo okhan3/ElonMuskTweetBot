@@ -158,7 +158,7 @@ if __name__ == '__main__':
     bi5 = BigramModel()
     list5 = [["00000", "0000", "00000", "000", "0000"],
              ["0000", "00000", "0000", "00000", "000000"]]
-    bi.trainModel(list5)
+    bi5.trainModel(list5)
     print(bi5)
     # Should print: {hello: {my: 2}, house: {is: 1}, is: {big: 1, macintosh: 1}, my: {house: 1, name: 1}, name: {is: 1}}
 
@@ -166,10 +166,22 @@ if __name__ == '__main__':
 
     # TestingDatahasNGram Tests
     #Test 1
+    bi6 = BigramModel()
+    list6 = [["The", "fox", "jumps", "over", "houses"],
+             ["fox", "jumps", "over", "houses", "The"]]
+    bi6.trainModel(list6)
+    x = bi6.trainingDataHasNGram(['dog', 'jumps', 'over'])
+    print(x)
+    # Should print: True
 
-
+    # Test 2
+    x = bi6.trainingDataHasNGram(['dog', 'jumps', 'houses'])
+    print(x)
+    # Should print: False
 
 
     # getCandidateDictionary Tests
     # Test1
-
+    x = bi6.getCandidateDictionary(['dog', 'jumps', 'over'])
+    print(x)
+    # Should print: {'houses': 2}
