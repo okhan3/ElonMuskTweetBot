@@ -1,5 +1,6 @@
 from creative_ai.utils.print_helpers import ppGramJson
 
+
 class BigramModel():
 
     def __init__(self):
@@ -31,6 +32,7 @@ class BigramModel():
 # Begin Core >> FOR CORE IMPLEMENTION, DO NOT EDIT ABOVE OF THIS SECTION <<
 ###############################################################################
 
+
     def trainModel(self, text):
         """
         Requires: text is a list of lists of strings
@@ -53,8 +55,8 @@ class BigramModel():
         """
 
         # Iterates through 2D list
-        for i in range (0,len(text)):
-            for j in range (1,len(text[i])):
+        for i in range(0, len(text)):
+            for j in range(1, len(text[i])):
                 # Sets first term as seed
                 seed = text[i][j-1]
                 if seed not in self.nGramCounts:
@@ -121,6 +123,14 @@ class BigramModel():
 # Main
 ###############################################################################
 
+
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
+
+    # test1
+    bi = BigramModel()
+    list1 = [["hello", "my", "name", "is", "macintosh"],
+             ["hello", "my", "house", "is", "big"]]
+    bi.trainModel(list1)
+    # Should print: {hello: {my}: {}}

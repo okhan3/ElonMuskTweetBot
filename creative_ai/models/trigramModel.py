@@ -105,12 +105,12 @@ class TrigramModel():
 if __name__ == '__main__':
     # An example trainModel test case
     uni = TrigramModel()
-    text = [ ['the', 'brown', 'fox'], ['the', 'lazy', 'dog'] ]
+    text = [['the', 'brown', 'fox'], ['the', 'lazy', 'dog']]
     uni.trainModel(text)
     # Should get: {"'the'": {"'brown'": {"'fox'": 1}, "'lazy'": {"'dog'": 1} } }
     print(uni)
 
-    text = [ ['the', 'brown', 'dog'], ['the', 'lazy', 'fox'] ]
+    text = [['the', 'brown', 'dog'], ['the', 'lazy', 'fox']]
     uni.trainModel(text)
     # Should get: {"'the'": {"'brown'": {"'fox'": 1, "'dog'": 1}, "'lazy'": {"'dog'": 1, "'fox'": 1} } }
     print(uni)
