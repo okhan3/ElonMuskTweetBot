@@ -173,7 +173,7 @@ if __name__ == '__main__':
     trigramText = [['this', 'is', 'a', 'test', 'case'], ['this', 'is', 'very', 'fun'],
                   ['this', 'test', 'case', 'should', 'work']]
 
-    bigramText = [['eecs', 'is'], ['love,', 'eecs'], ['is', 'life'], ['eecs', 'love'], ['eecs', 'life'],
+    bigramText = [['eecs', 'is'], ['love', 'eecs'], ['is', 'life'], ['eecs', 'love'], ['eecs', 'life'],
                   ['love', 'life'], ['love', 'eecs']]
 
     unigramText = [['test'], ['cases'], ['test'], ['cases'], ['fun'], ['fun']]
