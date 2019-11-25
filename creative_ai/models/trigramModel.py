@@ -110,6 +110,11 @@ if __name__ == '__main__':
     # Should get: {"'the'": {"'brown'": {"'fox'": 1}, "'lazy'": {"'dog'": 1} } }
     print(uni)
 
+    text = [ ['the', 'brown', 'dog'], ['the', 'lazy', 'fox'] ]
+    uni.trainModel(text)
+    # Should get: {"'the'": {"'brown'": {"'fox'": 1, "'dog'": 1}, "'lazy'": {"'dog'": 1, "'fox'": 1} } }
+    print(uni)
+
     uni = TrigramModel()
     text = [['strawberry', 'fields', 'nothing', 'is', 'real'], ['strawberry', 'fields', 'forever']]
     uni.trainModel(text)
