@@ -86,7 +86,7 @@ class LanguageModel():
         for i in range(len(self.models)):
 
             """ checks which list model can be used for the sentence """
-            if (self.models[i].trainingDataHasNGram(sentence) == True):
+            if (self.models[i].trainingDataHasNGram(sentence)):
                 return self.models[i]
 
 
@@ -170,72 +170,38 @@ if __name__ == '__main__':
     print("Now Testing selectNGramModel()")
     print()
 
-    textA = [['let'], ['it'], ['let'],  ['it'], ['be']]
-    textB = [['it', 'speaking']]
-    textC = [['let', 'it', 'be'], ['words', 'of', 'wisdom']]
-    textD = [['Mother', 'Mary'], ['comes', 'to']]
-    textE = [['will', 'be'], ['an', 'answer']]
-    textF = [['whisper', 'words'], ['of', 'wisdom']]
-    textG = [['hour', 'of', 'darkness'], ['she', 'is', 'standing']]
-    textH = [['find', 'myself', 'in'], ['times', 'of', 'trouble']]
-    textI = [['let', 'it', 'be'], ['words', 'of', 'wisdom']]
+    trigramText = [['this', 'is', 'a', 'test', 'case'], ['this', 'is', 'very', 'fun'],
+                  ['this', 'test', 'case', 'should', 'work']]
+
+    bigramText = [['eecs', 'is'], ['love,', 'eecs'], ['is', 'life'], ['eecs', 'love'], ['eecs', 'life'],
+                  ['love', 'life'], ['love', 'eecs']]
+
+    unigramText = [['test'], ['cases'], ['test'], ['cases'], ['fun'], ['fun']]
 
 
-    textZ = [['this', 'is', 'a', 'test', 'case'], ['this', 'is', 'very', 'fun'], ['this', 'test', 'case', 'should', 'work']]
-
-    test2 = LanguageModel()
-    test2.updateTrainedData(textZ)
-    print("Should Print: {"'a'": {"'test'": {"'case'": 1}}, " 'case'": {"'should'": {"'work'": 1}}," 
+    trigramTest = LanguageModel()
+    trigramTest.updateTrainedData(trigramText)
+    print("Should Print: {"'a'": {"'test'": {"'case'": 1}}, "'case'": {"'should'": {"'work'": 1}}," 
           " "'is'": {"'a'": {"'test'": 1},"'very'": {"'fun'": 1}}, "'test'": {"'case'": {"'should'": 1}},"
-          ""'this'": {"'is'": {"'a'": 1,"'very'": 1}, "'test'": {"'case'": 1}}}"),
-    print(test2.selectNGramModel(textZ[0]))
-    print(test2)
+          ""'this'": {"'is'": {"'a'": 1,"'very'": 1}, "'test'": {"'case'": 1}}}")
+    print(trigramTest.selectNGramModel(trigramText[0]))
+    print(trigramTest)
+    print()
 
+    bigramTest = LanguageModel()
+    bigramTest.updateTrainedData(bigramText)
+    print("Should Print: {'eecs': {'is': 1, 'life': 1, 'love': 1}, 'is', {'life': 1},"
+          "'love': {'eecs': 2, 'life': 1}}")
+    print(bigramTest.selectNGramModel(bigramText[0]))
+    print(bigramTest)
+    print()
 
-    test1 = LanguageModel()
-
-    test1.updateTrainedData(textA)
-    print("Should Print: { 'be' : 1, 'it': 2, 'let': 2 }"),
-    print(test1.selectNGramModel(textA))
-
-    test1.updateTrainedData(textB)
-    print("Should Print: { 'be' : 1, 'it': 3, 'let': 2, 'speaking': 1}"),
-    print(test1.selectNGramModel(textB))
-
-    test1.updateTrainedData(textC)
-    print("Should Print: { 'be' : 2, 'it': 4, 'let': 3, 'of': 1, 'speaking': 1, 'wisdom': 1, 'words: 1'}"),
-    print(test1.selectNGramModel(textC))
-
-
-
-
-
-    test2 = LanguageModel()
-    textC = [['Two']]
-    test2.updateTrainedData(textC)
-    print("Should Print: { 'Two' : 1 }"),
-    print(test2.selectNGramModel(textA))
-
-
-
-
-
-
-
-    test1 = LanguageModel()
-    testList1 = ['I', 'have', 'a', 'strawberry']
-    test1.updateTrainedData(testList1)
-    print(test1.selectNGramModel(testList1))
-
-    test2 = LanguageModel()
-    testList2 = [['strawberry', 'fields', 'nothing', 'is', 'real'], ['strawberry', 'fields', 'forever']]
-    test2.updateTrainedData(testList2)
-    print(test2.selectNGramModel(testList2))
-
-    test3 = LanguageModel()
-    testList3 = [['the', 'brown', 'fox'], ['the', 'lazy', 'dog']]
-    test3.updateTrainedData(testList3)
-    print(test3.selectNGramModel(testList3))
+    unigramTest = LanguageModel()
+    unigramTest.updateTrainedData(unigramText)
+    print("Should Print: {'cases': 2, 'fun': 2, 'test': 2}")
+    print(unigramTest.selectNGramModel(unigramText[0]))
+    print(unigramTest)
+    print()
 
     print("Finished Testing selectNGramModel")
     print()
@@ -244,70 +210,67 @@ if __name__ == '__main__':
 
 
 
+
     print("Now Testing weightedChoice()")
     print()
 
-    print("Test 4 Expected Output -- comment in print(x)")
+    print("Test 1 Expected Output -- comment in print(x)")
     print("when number is 0 - 3: north")
     print("when number is 4: south")
     print("when number is 5 - 7: east")
     print("when number is 8 - 9: west")
 
-    test4 = LanguageModel()
+    test1 = LanguageModel()
     dict1 = {"north" : 4, "south" : 1, "east" : 3, "west" : 2}
 
     print()
-    print("Output: ", test4.weightedChoice(dict1))
+    print("Output: ", test1.weightedChoice(dict1))
     print()
-    print("Output: ", test4.weightedChoice(dict1))
+    print("Output: ", test1.weightedChoice(dict1))
     print()
-    print("Output: ", test4.weightedChoice(dict1))
+    print("Output: ", test1.weightedChoice(dict1))
     print()
-    print("Output: ", test4.weightedChoice(dict1))
+    print("Output: ", test1.weightedChoice(dict1))
     print()
-    print("Output: ", test4.weightedChoice(dict1))
+    print("Output: ", test1.weightedChoice(dict1))
     print()
-    print("Output: ", test4.weightedChoice(dict1))
+    print("Output: ", test1.weightedChoice(dict1))
     print()
-    print("Output: ", test4.weightedChoice(dict1))
+    print("Output: ", test1.weightedChoice(dict1))
     print()
-    print("Output: ", test4.weightedChoice(dict1))
+    print("Output: ", test1.weightedChoice(dict1))
     print()
 
-    print("Test 5 Expected Output -- comment in print(x)")
+    print("Test 2 Expected Output -- comment in print(x)")
     print("when number is 0 - 2: Alex")
     print("when number is 3 - 4: Is")
     print("when number is 5 - 8: Very")
     print("when number is 9 - 11: Crazy")
 
-    test5 = LanguageModel()
+    test2 = LanguageModel()
     dict2 = {"Alex" : 3, "Is" : 2, "Very" : 4, "Crazy" : 3}
 
     print()
-    print("Output: ", test5.weightedChoice(dict2))
+    print("Output: ", test2.weightedChoice(dict2))
     print()
-    print("Output: ", test5.weightedChoice(dict2))
+    print("Output: ", test2.weightedChoice(dict2))
     print()
-    print("Output: ", test5.weightedChoice(dict2))
+    print("Output: ", test2.weightedChoice(dict2))
     print()
-    print("Output: ", test5.weightedChoice(dict2))
+    print("Output: ", test2.weightedChoice(dict2))
     print()
-    print("Output: ", test5.weightedChoice(dict2))
+    print("Output: ", test2.weightedChoice(dict2))
     print()
-    print("Output: ", test5.weightedChoice(dict2))
+    print("Output: ", test2.weightedChoice(dict2))
     print()
-    print("Output: ", test5.weightedChoice(dict2))
+    print("Output: ", test2.weightedChoice(dict2))
     print()
-    print("Output: ", test5.weightedChoice(dict2))
+    print("Output: ", test2.weightedChoice(dict2))
     print()
 
     print("Finished Testing weightedChoice")
     print()
     print()
-
-
-
-
 
 
 
@@ -318,5 +281,3 @@ if __name__ == '__main__':
     test10.updateTrainedData(sentence)
     testVal = test10.getNextToken(sentence)
     print (testVal)
-
-    print("i hate git")
