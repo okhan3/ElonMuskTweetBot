@@ -233,13 +233,12 @@ if __name__ == '__main__':
     # note that if you want to individually test functions from this file,
     # you can comment out main() and call those functions here. Just make
     # sure to call main() in your final submission of the project!
-    #text = [["^::^", "^:::^", 'the', 'quick', 'brown', 'fox', "$:::$"], ["^::^", "^:::^", 'the', 'lazy', 'quick', 'dog', 'jumped', 'over', "$:::$"], ["^::^", "^:::^", 'the', 'quick', 'brown', 'dog', 'barked', "$:::$"],
-            #["^::^", "^:::^", 'dog', 'jumped', 'over', 'the', 'fox', "$:::$"], ["^::^", "^:::^", 'brown', 'cat', "$:::$"], ["^::^", "^:::^",'the','quick','brown','fox','jumped','over','the','lazy','dog', "$:::$"], ["^::^", "^:::^",'the','brown','dog','fox','quick','brown','the','dog','jumped','the','jumped',"$:::$"]]
-    #x = LanguageModel()
-    #x.updateTrainedData(text)
-    #y=generateTokenSentence(x,1)
-    #print(y)
-    #print(generateTokenSentence(x,2))
-    #print(generateTokenSentence(x,3))
-    #print(generateTokenSentence(x,4))
-    #print(generateTokenSentence(x,5))
+    # text = [["^::^", "^:::^", 'the', 'quick', 'brown', 'fox', "$:::$"], ["^::^", "^:::^", 'the', 'lazy', 'quick', 'dog', 'jumped', 'over', "$:::$"], ["^::^", "^:::^", 'the', 'quick', 'brown', 'dog', 'barked', "$:::$"],
+    #         ["^::^", "^:::^", 'dog', 'jumped', 'over', 'the', 'fox', "$:::$"], ["^::^", "^:::^", 'brown', 'cat', "$:::$"], ["^::^", "^:::^",'the','quick','brown','fox','jumped','over','the','lazy','dog', "$:::$"], ["^::^", "^:::^",'the','brown','dog','fox','quick','brown','the','dog','jumped','the','jumped',"$:::$"]]
+    # x = LanguageModel()
+    # x.updateTrainedData(text)
+    # print(generateTokenSentence(x,1))
+    # print(generateTokenSentence(x,2))
+    # print(generateTokenSentence(x,3))
+    # print(generateTokenSentence(x,4))
+    # print(generateTokenSentence(x,5))
