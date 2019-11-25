@@ -105,18 +105,65 @@ class TrigramModel():
 if __name__ == '__main__':
     # An example trainModel test case
     uni = TrigramModel()
-    x = TrigramModel()
-
     text = [ ['the', 'brown', 'fox'], ['the', 'lazy', 'dog'] ]
     uni.trainModel(text)
-    text = [['strawberry', 'fields', 'nothing', 'is', 'real'], ['strawberry', 'fields', 'forever']]
-    x.trainModel(text)
-
+    # Should get: {"'the'": {"'brown'": {"'fox'": 1}, "'lazy'": {"'dog'": 1} } }
     print(uni)
-    print(x)
 
-    print(x.trainingDataHasNGram(['strawberry', 'fields']))
-    print(x.trainingDataHasNGram(['strawberry', 'forever']))
+    uni = TrigramModel()
+    text = [['strawberry', 'fields', 'nothing', 'is', 'real'], ['strawberry', 'fields', 'forever']]
+    uni.trainModel(text)
+    # Should get: {"'strawberry'": {"'fields'": {"'nothing'": 1, "'forever'": 1}},
+    #              "'fields'": {"'nothing'": {"'is'": 1}}, "'nothing'": {"'is'": {"'real'": 1}}}
+    print(uni)
 
-    print(x.getCandidateDictionary(['strawberry', 'fields']))
-    print(x.getCandidateDictionary(['I', 'love', 'fields', 'nothing']))
+    uni = TrigramModel()
+    text = [['this', 'is', 'a', 'test', 'case'], ['this', 'is', 'very', 'fun'], ['this', 'test', 'case', 'should', 'work']]
+    uni.trainModel(text)
+    # Should get: {"'a'": {"'test'": {"'case'": 1}},"'case'": {"'should'": {"'work'": 1}},"'is'": {"'a'": {"'test'": 1},"'very'": {"'fun'": 1}},
+    #              "'test'": {"'case'": {"'should'": 1}},"'this'": {"'is'": {"'a'": 1,"'very'": 1},"'test'": {"'case'": 1}}}
+    print(uni)
+
+    uni = TrigramModel()
+    text = [['the', 'quick', 'brown', 'fox'], ['the', 'lazy', 'quick', 'dog', 'jumped', 'over'], ['the', 'quick', 'brown', 'dog', 'barked'],
+            ['dog', 'jumped', 'over', 'the', 'fox'], ['brown', 'cat']]
+    uni.trainModel(text)
+    # Should get: {"'brown'": {"'dog'": {"'barked'": 1}},"'dog'": {"'jumped'": {"'over'": 2}},"'jumped'": {"'over'": {"'the'": 1}},
+    #              "'lazy'": {"'quick'": {"'dog'": 1}},"'over'": {"'the'": {"'fox'": 1}},"'quick'": {"'brown'": {"'dog'": 1,"'fox'": 1},
+    #              "'dog'": {"'jumped'": 1}},"'the'": {"'lazy'": {"'quick'": 1},"'quick'": {"'brown'": 2}}}
+    print(uni)
+
+
+    # An example trainingDataHasNGram test case
+    # Should get True
+    print(uni.trainingDataHasNGram(['the', 'quick', 'brown']))
+    # Should get True
+    print(uni.trainingDataHasNGram(['very', 'cool', 'the', 'lazy', 'quick']))
+    # Should get True
+    print(uni.trainingDataHasNGram(['the', 'boring', 'dog', 'jumped']))
+    # Should get False
+    print(uni.trainingDataHasNGram(['ugly', 'fox', 'brown']))
+    # Should get False
+    print(uni.trainingDataHasNGram(['dog', 'barked']))
+    # Should get False
+    print(uni.trainingDataHasNGram(['brown', 'cat']))
+    # Should get False
+    print(uni.trainingDataHasNGram(['I', 'jumped', 'the', 'fox']))
+
+    # An example getCandidateDictionary test case
+    # {'fox': 1, 'dog': 1}
+    print(uni.getCandidateDictionary(['strawberry', 'fields', 'quick', 'brown']))
+    # {'barked': 1}
+    print(uni.getCandidateDictionary(['I', 'love', 'fields', 'brown', 'dog']))
+    # {'jumped': 1}
+    print(uni.getCandidateDictionary(['hello', 'I', 'am', 'a', 'quick', 'dog']))
+    # {'over': 2}
+    print(uni.getCandidateDictionary(['the', 'green', 'dog', 'jumped']))
+    # {'brown': 2}
+    print(uni.getCandidateDictionary(['jumped', 'the', 'quick']))
+    # {'dog': 1}
+    print(uni.getCandidateDictionary(['she', 'is', 'very', 'lazy', 'quick']))
+    # {'quick': 1}
+    print(uni.getCandidateDictionary(['the', 'cat', 'is', 'the', 'lazy']))
+    # {'the': 1}
+    print(uni.getCandidateDictionary(['jumped', 'over']))
