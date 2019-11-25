@@ -65,7 +65,7 @@ class LanguageModel():
 
 
 ###############################################################################
-# Begin Core >> FOR CORE IMPLEMENTION, DO NOT EDIT ABOVE OF THIS SECTION <<
+# Begin Core >> FOR CORE IMPLEMENTATION, DO NOT EDIT ABOVE OF THIS SECTION <<
 ###############################################################################
 
 
@@ -81,12 +81,14 @@ class LanguageModel():
                   (Remember that you wrote a function that checks if a model can
                   be used to pick a word for a sentence!)
         """
-        # iterates through list from trigram to bigram to unigram models
-        for index in range(len(self.models)):
-            # checks if that list model can be used for the sentence
-            if(self.models[index].trainingDataHasNGram(sentence) == True):
-                return self.models[index]
-                
+
+        """ iterates through list from models starting with trigram -> bigram -> unigram """
+        for i in range(len(self.models)):
+
+            """ checks which list model can be used for the sentence """
+            if (self.models[i].trainingDataHasNGram(sentence) == True):
+                return self.models[i]
+
 
     def weightedChoice(self, candidates):
         """
@@ -96,31 +98,29 @@ class LanguageModel():
         Effects:  returns a candidate item (a key in the candidates dictionary)
                   based on the algorithm described in the spec.
         """
-        
-        keysList = []
-        valuesList = []
-        cumulativeList = []
 
-        ''' Indexing keysList & valuesList '''
         keysList = list(candidates.keys())
         valuesList = list(candidates.values())
 
-        '''Indexes the first element of cumulativeList outside of the for loop because it calls 
-        cumulativeLists[i-1]'''
+        """ for loop calls cumulativeList[i-1], so the first element is populated outside of the loop """
+        cumulativeList = []
         cumulativeList.append(valuesList[0])
+
         for i in range(1, len(valuesList)):
+            """ creates a cumulative list containing the values in valuesList """
             cumulativeList.append(valuesList[i] + cumulativeList[i - 1])
 
-        '''Random number generator. COMMENT PRINT COMMAND IN WHILE TESTING'''
+        """ random number generator. comment-in print command while testing """
         x = random.randrange(0, cumulativeList[len(cumulativeList) - 1])
-        '''print(x)'''
+        print(x)
 
-        '''To find the first element in cumulativeList that x is greater than'''
+        """ finds the first element in cumulativeList that is greater than x """
         j = 0
         while x >= cumulativeList[j]:
             j += 1
         
         return keysList[j]
+
 
     def getNextToken(self, sentence, filter=None):
         """
@@ -166,87 +166,157 @@ class LanguageModel():
 ###############################################################################
 
 if __name__ == '__main__':
-    # method1
-    testList = ['I', 'have', 'a', 'strawberry']
-    test2 = LanguageModel()
-    test2.updateTrainedData(testList)
-    print(test2.selectNGramModel(testList))
-    # omar plz check
-    text = [['strawberry', 'fields', 'nothing', 'is', 'real'],
-    ['strawberry', 'fields', 'forever']]
-    test3 = LanguageModel()
-    test3.updateTrainedData(text)
-    print(test3.selectNGramModel(text))
 
-    text2 = [['the', 'brown', 'fox'], ['the', 'lazy', 'dog']]
-    test4 = LanguageModel()
-    test4.updateTrainedData(text2)
-    print(test4.selectNGramModel(text2))
+    print("Now Testing selectNGramModel()")
+    print()
+
+    textA = [['let'], ['it'], ['let'],  ['it'], ['be']]
+    textB = [['it', 'speaking']]
+    textC = [['let', 'it', 'be'], ['words', 'of', 'wisdom']]
+    textD = [['Mother', 'Mary'], ['comes', 'to']]
+    textE = [['will', 'be'], ['an', 'answer']]
+    textF = [['whisper', 'words'], ['of', 'wisdom']]
+    textG = [['hour', 'of', 'darkness'], ['she', 'is', 'standing']]
+    textH = [['find', 'myself', 'in'], ['times', 'of', 'trouble']]
+    textI = [['let', 'it', 'be'], ['words', 'of', 'wisdom']]
+
+
+    textZ = [['this', 'is', 'a', 'test', 'case'], ['this', 'is', 'very', 'fun'], ['this', 'test', 'case', 'should', 'work']]
+
+    test2 = LanguageModel()
+    test2.updateTrainedData(textZ)
+    print("Should Print: {"'a'": {"'test'": {"'case'": 1}}, " 'case'": {"'should'": {"'work'": 1}}," 
+          " "'is'": {"'a'": {"'test'": 1},"'very'": {"'fun'": 1}}, "'test'": {"'case'": {"'should'": 1}},"
+          ""'this'": {"'is'": {"'a'": 1,"'very'": 1}, "'test'": {"'case'": 1}}}"),
+    print(test2.selectNGramModel(textZ[0]))
+    print(test2)
+
 
     test1 = LanguageModel()
-    dict1 = {"north": 4, "south": 1, "east": 3, "west": 2}
 
-    print("Test1 output should be east: ", test1.weightedChoice(dict1))
+    test1.updateTrainedData(textA)
+    print("Should Print: { 'be' : 1, 'it': 2, 'let': 2 }"),
+    print(test1.selectNGramModel(textA))
 
-    print("Now Testing weightedChoice")
+    test1.updateTrainedData(textB)
+    print("Should Print: { 'be' : 1, 'it': 3, 'let': 2, 'speaking': 1}"),
+    print(test1.selectNGramModel(textB))
 
+    test1.updateTrainedData(textC)
+    print("Should Print: { 'be' : 2, 'it': 4, 'let': 3, 'of': 1, 'speaking': 1, 'wisdom': 1, 'words: 1'}"),
+    print(test1.selectNGramModel(textC))
+
+
+
+
+
+    test2 = LanguageModel()
+    textC = [['Two']]
+    test2.updateTrainedData(textC)
+    print("Should Print: { 'Two' : 1 }"),
+    print(test2.selectNGramModel(textA))
+
+
+
+
+
+
+
+    test1 = LanguageModel()
+    testList1 = ['I', 'have', 'a', 'strawberry']
+    test1.updateTrainedData(testList1)
+    print(test1.selectNGramModel(testList1))
+
+    test2 = LanguageModel()
+    testList2 = [['strawberry', 'fields', 'nothing', 'is', 'real'], ['strawberry', 'fields', 'forever']]
+    test2.updateTrainedData(testList2)
+    print(test2.selectNGramModel(testList2))
+
+    test3 = LanguageModel()
+    testList3 = [['the', 'brown', 'fox'], ['the', 'lazy', 'dog']]
+    test3.updateTrainedData(testList3)
+    print(test3.selectNGramModel(testList3))
+
+    print("Finished Testing selectNGramModel")
     print()
+    print()
+
+
+
+
+    print("Now Testing weightedChoice()")
+    print()
+
+    print("Test 4 Expected Output -- comment in print(x)")
     print("when number is 0 - 3: north")
     print("when number is 4: south")
     print("when number is 5 - 7: east")
     print("when number is 8 - 9: west")
 
-    test = LanguageModel()
+    test4 = LanguageModel()
     dict1 = {"north" : 4, "south" : 1, "east" : 3, "west" : 2}
 
     print()
-    print("Output: ", test.weightedChoice(dict1))
+    print("Output: ", test4.weightedChoice(dict1))
     print()
-    print("Output: ", test.weightedChoice(dict1))
+    print("Output: ", test4.weightedChoice(dict1))
     print()
-    print("Output: ", test.weightedChoice(dict1))
+    print("Output: ", test4.weightedChoice(dict1))
     print()
-    print("Output: ", test.weightedChoice(dict1))
+    print("Output: ", test4.weightedChoice(dict1))
     print()
-    print("Output: ", test.weightedChoice(dict1))
+    print("Output: ", test4.weightedChoice(dict1))
     print()
-    print("Output: ", test.weightedChoice(dict1))
+    print("Output: ", test4.weightedChoice(dict1))
     print()
-    print("Output: ", test.weightedChoice(dict1))
+    print("Output: ", test4.weightedChoice(dict1))
     print()
-    print("Output: ", test.weightedChoice(dict1))
+    print("Output: ", test4.weightedChoice(dict1))
     print()
 
+    print("Test 5 Expected Output -- comment in print(x)")
     print("when number is 0 - 2: Alex")
     print("when number is 3 - 4: Is")
     print("when number is 5 - 8: Very")
     print("when number is 9 - 11: Crazy")
 
-    test2 = LanguageModel()
+    test5 = LanguageModel()
     dict2 = {"Alex" : 3, "Is" : 2, "Very" : 4, "Crazy" : 3}
 
     print()
-    print("Output: ", test2.weightedChoice(dict2))
+    print("Output: ", test5.weightedChoice(dict2))
     print()
-    print("Output: ", test2.weightedChoice(dict2))
+    print("Output: ", test5.weightedChoice(dict2))
     print()
-    print("Output: ", test2.weightedChoice(dict2))
+    print("Output: ", test5.weightedChoice(dict2))
     print()
-    print("Output: ", test2.weightedChoice(dict2))
+    print("Output: ", test5.weightedChoice(dict2))
     print()
-    print("Output: ", test2.weightedChoice(dict2))
+    print("Output: ", test5.weightedChoice(dict2))
     print()
-    print("Output: ", test2.weightedChoice(dict2))
+    print("Output: ", test5.weightedChoice(dict2))
     print()
-    print("Output: ", test2.weightedChoice(dict2))
+    print("Output: ", test5.weightedChoice(dict2))
     print()
-    print("Output: ", test2.weightedChoice(dict2))
+    print("Output: ", test5.weightedChoice(dict2))
     print()
 
     print("Finished Testing weightedChoice")
+    print()
+    print()
 
+
+
+
+
+
+
+
+    """start at test 6"""
     test10 = LanguageModel()
     sentence = [['Eagles', 'fly', 'in', 'the', 'sky']]
     test10.updateTrainedData(sentence)
     testVal = test10.getNextToken(sentence)
     print (testVal)
+
+    print("i hate git")
