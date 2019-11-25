@@ -170,8 +170,11 @@ if __name__ == '__main__':
     print("Now Testing selectNGramModel()")
     print()
 
-    trigramText = [['this', 'is', 'a', 'test', 'case'], ['this', 'is', 'very', 'fun'],
+    trigramText1 = [['this', 'is', 'a', 'test', 'case'], ['this', 'is', 'very', 'fun'],
                   ['this', 'test', 'case', 'should', 'work']]
+
+    trigramText2 = [['this', 'is', 'a', 'test', 'case'], ['this', 'is', 'a', 'test', 'case'],
+                   ['this', 'test', 'case', 'should', 'work']]
 
     bigramText = [['eecs', 'is'], ['love', 'eecs'], ['is', 'life'], ['eecs', 'love'], ['eecs', 'life'],
                   ['love', 'life'], ['love', 'eecs']]
@@ -179,13 +182,22 @@ if __name__ == '__main__':
     unigramText = [['test'], ['cases'], ['test'], ['cases'], ['fun'], ['fun']]
 
 
-    trigramTest = LanguageModel()
-    trigramTest.updateTrainedData(trigramText)
+    trigramTest1 = LanguageModel()
+    trigramTest1.updateTrainedData(trigramText1)
     print("Should Print: {"'a'": {"'test'": {"'case'": 1}}, "'case'": {"'should'": {"'work'": 1}}," 
           " "'is'": {"'a'": {"'test'": 1},"'very'": {"'fun'": 1}}, "'test'": {"'case'": {"'should'": 1}},"
           ""'this'": {"'is'": {"'a'": 1,"'very'": 1}, "'test'": {"'case'": 1}}}")
-    print(trigramTest.selectNGramModel(trigramText[0]))
-    print(trigramTest)
+    print(trigramTest1.selectNGramModel(trigramText1[0]))
+    print(trigramTest1)
+    print()
+
+    trigramTest2 = LanguageModel()
+    trigramTest2.updateTrainedData(trigramText2)
+    print("Should Print: {"'a'": {"'test'": {"'case'": 2}}, "'case'": {"'should'": {"'work'": 1}},"
+          " "'is'": {"'a'": {"'test'": 2}}, "'test'": {"'case'": {"'should'": 1}},"
+          ""'this'": {"'is'": {"'a'": 2, {"'test'": {"'case'": 1}}}")
+    print(trigramTest2.selectNGramModel(trigramText2[0]))
+    print(trigramTest2)
     print()
 
     bigramTest = LanguageModel()
