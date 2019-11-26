@@ -10,6 +10,7 @@ from creative_ai.data.dataLoader import *
 from creative_ai.models.musicInfo import *
 from creative_ai.models.languageModel import LanguageModel
 
+# FIXME Add your team name
 TEAM = 'Turing Machine'
 LYRICSDIRS = ['the_beatles']
 TESTLYRICSDIRS = ['the_beatles_test']
@@ -162,13 +163,13 @@ def generateTokenSentence(model, desiredLength):
               For more details about generating a sentence using the
               NGramModels, see the spec.
     """
-    L = []
-    x = model.getNextToken(["^::^", "^:::^"])
-    while sentenceTooLong(desiredLength,len(L)) is False and x != "$:::$":
+    L = ["^::^", "^:::^"]
+    x = model.getNextToken(L)
+    while sentenceTooLong(desiredLength,len(L) - 2) == False and x != "$:::$":
         L.append(x)
         x = model.getNextToken(L)
 
-    return L
+    return L[2:]
 
 
 ###############################################################################
@@ -228,16 +229,16 @@ def main():
 
 # This is how python tells if the file is being run as main
 if __name__ == '__main__':
-    main()
+    # main()
     # note that if you want to individually test functions from this file,
     # you can comment out main() and call those functions here. Just make
     # sure to call main() in your final submission of the project!
-    # text = [["^::^", "^:::^", 'the', 'quick', 'brown', 'fox', "$:::$"], ["^::^", "^:::^", 'the', 'lazy', 'quick', 'dog', 'jumped', 'over', "$:::$"], ["^::^", "^:::^", 'the', 'quick', 'brown', 'dog', 'barked', "$:::$"],
-    #         ["^::^", "^:::^", 'dog', 'jumped', 'over', 'the', 'fox', "$:::$"], ["^::^", "^:::^", 'brown', 'cat', "$:::$"], ["^::^", "^:::^",'the','quick','brown','fox','jumped','over','the','lazy','dog', "$:::$"], ["^::^", "^:::^",'the','brown','dog','fox','quick','brown','the','dog','jumped','the','jumped',"$:::$"]]
-    # x = LanguageModel()
-    # x.updateTrainedData(text)
-    # print(generateTokenSentence(x,1))
-    # print(generateTokenSentence(x,2))
-    # print(generateTokenSentence(x,3))
-    # print(generateTokenSentence(x,4))
-    # print(generateTokenSentence(x,5))
+    text = [["^::^", "^:::^", 'the', 'quick', 'brown', 'fox', "$:::$"], ["^::^", "^:::^", 'the', 'lazy', 'quick', 'dog', 'jumped', 'over', "$:::$"], ["^::^", "^:::^", 'the', 'quick', 'brown', 'dog', 'barked', "$:::$"],
+            ["^::^", "^:::^", 'dog', 'jumped', 'over', 'the', 'fox', "$:::$"], ["^::^", "^:::^", 'brown', 'cat', "$:::$"], ["^::^", "^:::^",'the','quick','brown','fox','jumped','over','the','lazy','dog', "$:::$"], ["^::^", "^:::^",'the','brown','dog','fox','quick','brown','the','dog','jumped','the','jumped',"$:::$"]]
+    x = LanguageModel()
+    x.updateTrainedData(text)
+    print(generateTokenSentence(x,1))
+    print(generateTokenSentence(x,2))
+    print(generateTokenSentence(x,3))
+    print(generateTokenSentence(x,4))
+    print(generateTokenSentence(x,5))
