@@ -112,13 +112,12 @@ class LanguageModel():
 
         """ random number generator. comment-in print command while testing """
         x = random.randrange(0, cumulativeList[len(cumulativeList) - 1])
-        print(x)
 
         """ finds the first element in cumulativeList that is greater than x """
         j = 0
         while x >= cumulativeList[j]:
             j += 1
-        
+
         return keysList[j]
 
 
@@ -144,7 +143,7 @@ class LanguageModel():
         else:
             filteredCandidates = {}
             store = D.keys()
-            #check index out of bounds 
+            #check index out of bounds
             for index in range(len(D)):
                 if store(index) == filter[index]:
                   filteredCandidates[store(index)] = D[index]
@@ -155,7 +154,7 @@ class LanguageModel():
                 r = self.weightedChoice(filteredCandidates)
                 return r
 
-                
+
 
 ###############################################################################
 # End Core
@@ -184,7 +183,7 @@ if __name__ == '__main__':
 
     trigramTest1 = LanguageModel()
     trigramTest1.updateTrainedData(trigramText1)
-    print("Should Print: {"'a'": {"'test'": {"'case'": 1}}, "'case'": {"'should'": {"'work'": 1}}," 
+    print("Should Print: {"'a'": {"'test'": {"'case'": 1}}, "'case'": {"'should'": {"'work'": 1}},"
           " "'is'": {"'a'": {"'test'": 1},"'very'": {"'fun'": 1}}, "'test'": {"'case'": {"'should'": 1}},"
           ""'this'": {"'is'": {"'a'": 1,"'very'": 1}, "'test'": {"'case'": 1}}}")
     print(trigramTest1.selectNGramModel(trigramText1[0]))
