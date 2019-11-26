@@ -85,8 +85,8 @@ def setKeyValList(D, K, V1, V2, V3, V4):
     >>> setKeyValList({}, 'taxman', 'cause', 'im', 'the', 'taxman') == {'taxman': ['cause', 'im', 'the', 'taxman']}
     True
     """
-    list = [V1, V2, V3, V4]
-    D[K] = list
+    testlist = [V1, V2, V3, V4]
+    D[K] = testlist
     return D
 
 
@@ -180,6 +180,14 @@ def nestedDictionary3D(L1, L2):
     >>> attributes = ['sales', 'songs']
     >>> nestedDictionary3D(albums, attributes)
     {'help': {'sales': {}, 'songs': {}}, 'revolver': {'sales': {}, 'songs': {}}}
+    >>> Library = ['Art of War', 'The Prince', 'BFG', 'Moby Dick']
+    >>> Characteristics = ['Author', 'Pages', 'Genre']
+    >>> nestedDictionary3D(Library, Characteristics)
+    {'Art of War': {'Author': {}, 'Pages': {}, 'Genre': {}}, 'The Prince': {'Author': {}, 'Pages': {}, 'Genre': {}}, 'BFG': {'Author': {}, 'Pages': {}, 'Genre': {}}, 'Moby Dick': {'Author': {}, 'Pages': {}, 'Genre': {}}}
+    >>> Coffee = ['Mocha', 'Latte', 'Cappuccino', 'Black']
+    >>> Description = ['Flavor', 'Bean Used', 'Caffeine']
+    >>> nestedDictionary3D(Coffee, Description)
+    {'Mocha': {'Flavor': {}, 'Bean Used': {}, 'Caffeine': {}}, 'Latte': {'Flavor': {}, 'Bean Used': {}, 'Caffeine': {}}, 'Cappuccino': {'Flavor': {}, 'Bean Used': {}, 'Caffeine': {}}, 'Black': {'Flavor': {}, 'Bean Used': {}, 'Caffeine': {}}}
     """
     D = {}
     D2 = {}
@@ -217,6 +225,18 @@ def keysIn2D(D, L1, L2):
               if the last item of list L1 is a key in D, and that key
               is associated with a dictionary that contains the last
               item of list L2 as a key.
+    >>> D = {'d#2': {'e3': 'ab3'}}
+    >>> keysIn2D(D, ['c4', 'f#6'], ['ab3', 'd5', 'e3'])
+    False
+    >>> D = {'f#6': {'e3': 5}}
+    >>> keysIn2D(D, ['c4', 'f#6'], ['ab3', 'd5', 'e3'])
+    True
+    >>> D = {'d#2': {'e3': 'ab3'}}
+    >>> keysIn2D(D, ['c4', 'f#6'], ['ab3', 'd5', 'e3'])
+    False
+    >>> D = {'f#6': {'e3': 5}}
+    >>> keysIn2D(D, ['c4', 'f#6'], ['ab3', 'd5', 'e3'])
+    True
     >>> D = {'d#2': {'e3': 'ab3'}}
     >>> keysIn2D(D, ['c4', 'f#6'], ['ab3', 'd5', 'e3'])
     False
