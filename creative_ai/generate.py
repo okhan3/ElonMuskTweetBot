@@ -229,12 +229,14 @@ def main():
 
 # This is how python tells if the file is being run as main
 if __name__ == '__main__':
-    #main()
+    main()
     # note that if you want to individually test functions from this file,
     # you can comment out main() and call those functions here. Just make
     # sure to call main() in your final submission of the project!
-    text = [["^::^", "^:::^", 'the', 'quick', 'brown', 'fox', "$:::$"], ["^::^", "^:::^", 'the', 'lazy', 'quick', 'dog', 'jumped', 'over', "$:::$"], ["^::^", "^:::^", 'the', 'quick', 'brown', 'dog', 'barked', "$:::$"],
-           ["^::^", "^:::^", 'dog', 'jumped', 'over', 'the', 'fox', "$:::$"], ["^::^", "^:::^", 'brown', 'cat', "$:::$"], ["^::^", "^:::^",'the','quick','brown','fox','jumped','over','the','lazy','dog', "$:::$"], ["^::^", "^:::^",'the','brown','dog','fox','quick','brown','the','dog','jumped','the','jumped',"$:::$"]]
+    #first set of tests
+    # text = [["^::^", "^:::^", 'the', 'quick', 'brown', 'fox', "$:::$"], ["^::^", "^:::^", 'the', 'lazy', 'quick', 'dog', 'jumped', 'over', "$:::$"], ["^::^", "^:::^", 'the', 'quick', 'brown', 'dog', 'barked', "$:::$"],
+    #           ["^::^", "^:::^", 'dog', 'jumped', 'over', 'the', 'fox', "$:::$"], ["^::^", "^:::^", 'brown', 'cat', "$:::$"], ["^::^", "^:::^",'the','quick','brown','fox','jumped','over','the','lazy','dog', "$:::$"], ["^::^", "^:::^",'the','brown','dog','fox','quick','brown','the','dog','jumped','the','jumped',"$:::$"]]
+    ''' 
     x = LanguageModel()
     x.updateTrainedData(text)
     print(generateTokenSentence(x,1))
@@ -242,3 +244,38 @@ if __name__ == '__main__':
     print(generateTokenSentence(x,3))
     print(generateTokenSentence(x,4))
     print(generateTokenSentence(x,5))
+    print(generateTokenSentence(x,10))
+
+    #next set of tests
+    text2 = [["^::^", "^:::^", 'rocket', 'to', 'the', 'moon', "$:::$"], ["^::^", "^:::^", 'dad', 'is', 'from', 'nyc', "$:::$"], ["^::^", "^:::^", 'the', 'quick', 'brown', 'dog', 'barked', "$:::$"],
+           ["^::^", "^:::^", 'hello', 'world', 'I', 'am', 'Macintosh', "$:::$"], ["^::^", "^:::^", 'I', 'am', 'from', 'mars', "$:::$"], ["^::^", "^:::^",'A','friend','went','to','the','moon',"$:::$"], ["^::^", "^:::^",'The','new','Macbook','Pro','has','a','better','keyboard','and','it','sells', "well","$:::$"],
+           ["^::^", "^:::^", 'My', 'hopes', 'are', 'high', "$:::$"]]
+    y = LanguageModel()
+    y.updateTrainedData(text2)
+    print(generateTokenSentence(y, 1))
+    print(generateTokenSentence(y, 2))
+    print(generateTokenSentence(y, 3))
+    print(generateTokenSentence(y, 4))
+    print(generateTokenSentence(y, 5))
+    print(generateTokenSentence(y, 10))
+
+    # next set of tests
+    text3 = [["^::^", "^:::^", 'hello', 'my', 'name', 'is', 'nikhil', "$:::$"],
+             ["^::^", "^:::^", 'dad', 'is', 'from', 'nyc', "$:::$"],
+             ["^::^", "^:::^", 'the', 'quick', 'brown', 'dog', 'barked', "$:::$"],
+             ["^::^", "^:::^", 'hello', 'world', 'I', 'am', 'iMac', "$:::$"],
+             ["^::^", "^:::^", 'I', 'am', 'from', 'venus' , "$:::$"],
+             ["^::^", "^:::^", 'A', 'friend', 'went', 'to', 'the', 'Soviet', 'Union', "$:::$"],
+             ["^::^", "^:::^", 'The', 'new', 'iPhone', '11', 'has', 'a', 'better', 'camera', 'and', 'it', 'sells',
+              "well", "$:::$"],
+             ["^::^", "^:::^", 'My', 'hopes', 'are', 'high', "$:::$"]]
+    z = LanguageModel()
+    z.updateTrainedData(text3)
+    print(generateTokenSentence(z, 1))
+    print(generateTokenSentence(z, 2))
+    print(generateTokenSentence(z, 3))
+    print(generateTokenSentence(z, 4))
+    print(generateTokenSentence(z, 5))
+    print(generateTokenSentence(z, 7))
+    print(generateTokenSentence(z, 30))
+    '''''
