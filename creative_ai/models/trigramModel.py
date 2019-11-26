@@ -105,33 +105,33 @@ class TrigramModel():
 if __name__ == '__main__':
     # An example trainModel test case
     uni = TrigramModel()
-    text = [['the', 'brown', 'fox'], ['the', 'lazy', 'dog']]
+    text = [["^::^", "^:::^", 'the', 'brown', 'fox', "$:::$"], ["^::^", "^:::^", 'the', 'lazy', 'dog', "$:::$"]]
     uni.trainModel(text)
     # Should get: {"'the'": {"'brown'": {"'fox'": 1}, "'lazy'": {"'dog'": 1} } }
     print(uni)
 
-    text = [['the', 'brown', 'dog'], ['the', 'lazy', 'fox']]
+    text = [["^::^", "^:::^", 'the', 'brown', 'dog', "$:::$"], ["^::^", "^:::^", 'the', 'lazy', 'fox', "$:::$"]]
     uni.trainModel(text)
     # Should get: {"'the'": {"'brown'": {"'fox'": 1, "'dog'": 1}, "'lazy'": {"'dog'": 1, "'fox'": 1} } }
     print(uni)
 
     uni = TrigramModel()
-    text = [['strawberry', 'fields', 'nothing', 'is', 'real'], ['strawberry', 'fields', 'forever']]
+    text = [["^::^", "^:::^", 'strawberry', 'fields', 'nothing', 'is', 'real', "$:::$"], ["^::^", "^:::^", 'strawberry', 'fields', 'forever', "$:::$"]]
     uni.trainModel(text)
     # Should get: {"'strawberry'": {"'fields'": {"'nothing'": 1, "'forever'": 1}},
     #              "'fields'": {"'nothing'": {"'is'": 1}}, "'nothing'": {"'is'": {"'real'": 1}}}
     print(uni)
 
     uni = TrigramModel()
-    text = [['this', 'is', 'a', 'test', 'case'], ['this', 'is', 'very', 'fun'], ['this', 'test', 'case', 'should', 'work']]
+    text = [["^::^", "^:::^", 'this', 'is', 'a', 'test', 'case', "$:::$"], ["^::^", "^:::^", 'this', 'is', 'very', 'fun', "$:::$"], ["^::^", "^:::^", 'this', 'test', 'case', 'should', 'work', "$:::$"]]
     uni.trainModel(text)
     # Should get: {"'a'": {"'test'": {"'case'": 1}},"'case'": {"'should'": {"'work'": 1}},"'is'": {"'a'": {"'test'": 1},"'very'": {"'fun'": 1}},
     #              "'test'": {"'case'": {"'should'": 1}},"'this'": {"'is'": {"'a'": 1,"'very'": 1},"'test'": {"'case'": 1}}}
     print(uni)
 
     uni = TrigramModel()
-    text = [['the', 'quick', 'brown', 'fox'], ['the', 'lazy', 'quick', 'dog', 'jumped', 'over'], ['the', 'quick', 'brown', 'dog', 'barked'],
-            ['dog', 'jumped', 'over', 'the', 'fox'], ['brown', 'cat']]
+    text = [["^::^", "^:::^", 'the', 'quick', 'brown', 'fox', "$:::$"], ["^::^", "^:::^", 'the', 'lazy', 'quick', 'dog', 'jumped', 'over', "$:::$"], ["^::^", "^:::^", 'the', 'quick', 'brown', 'dog', 'barked', "$:::$"],
+            ["^::^", "^:::^", 'dog', 'jumped', 'over', 'the', 'fox', "$:::$"], ["^::^", "^:::^", 'brown', 'cat', "$:::$"]]
     uni.trainModel(text)
     # Should get: {"'brown'": {"'dog'": {"'barked'": 1}},"'dog'": {"'jumped'": {"'over'": 2}},"'jumped'": {"'over'": {"'the'": 1}},
     #              "'lazy'": {"'quick'": {"'dog'": 1}},"'over'": {"'the'": {"'fox'": 1}},"'quick'": {"'brown'": {"'dog'": 1,"'fox'": 1},
@@ -159,7 +159,7 @@ if __name__ == '__main__':
     # {'fox': 1, 'dog': 1}
     print(uni.getCandidateDictionary(['strawberry', 'fields', 'quick', 'brown']))
     # {'barked': 1}
-    print(uni.getCandidateDictionary(['I', 'love', 'fields', 'brown', 'dog']))
+    print(uni.getCandidateDictionary(['I', 'love', 'fields', 'brown', 'fox']))
     # {'jumped': 1}
     print(uni.getCandidateDictionary(['hello', 'I', 'am', 'a', 'quick', 'dog']))
     # {'over': 2}
