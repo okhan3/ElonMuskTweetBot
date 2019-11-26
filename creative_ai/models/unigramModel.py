@@ -42,7 +42,7 @@ class UnigramModel():
                   Returns self.nGramCounts
         """
         for index in range(len(text)):
-            for index2 in range(len(text[index])):
+            for index2 in range(2,len(text[index])):
                 store = text[index][index2]
                 if (store in self.nGramCounts):
                     self.nGramCounts[store] = self.nGramCounts[store] + 1
@@ -90,12 +90,12 @@ if __name__ == '__main__':
 
     # An example trainModel test case
     uni1 = UnigramModel()
-    text = [['brown']]
+    text = [["^::^", "^:::^", 'brown', "$:::$"]]
     uni1.trainModel(text)
     # Should print: { 'brown' : 1 }
     print(uni1)
 
-    text = [['the', 'brown', 'fox'], ['the', 'lazy', 'dog']]
+    text = [["^::^", "^:::^", 'the', 'brown', 'fox', "$:::$"], ["^::^", "^:::^", 'the', 'lazy', 'dog', "$:::$"]]
     uni1.trainModel(text)
     # Should print: { 'brown': 2, 'dog': 1, 'fox': 1, 'lazy': 1, 'the': 2 }
     print(uni1)
