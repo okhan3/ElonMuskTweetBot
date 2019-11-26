@@ -9,7 +9,7 @@ class UnigramModel():
         Effects:  This is the NGramModel constructor. It sets up an empty
                   dictionary as a member variable.
 
-        This function is done for you.
+        This function is done for you. 
         """
 
         self.nGramCounts = {}
