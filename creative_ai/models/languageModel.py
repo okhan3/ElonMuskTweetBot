@@ -170,15 +170,25 @@ if __name__ == '__main__':
     trigramText2 = [['this', 'is', 'a', 'test', 'case'], ['this', 'is', 'a', 'test', 'case'],
                    ['this', 'test', 'case', 'should', 'work']]
 
+    trigramText3 = [['a', 'a', 'a', 'a', 'a'], ['a', 'a', 'a', 'a', 'a'],
+                   ['a', 'a', 'a', 'a', 'a']]
+
     bigramText = [['eecs', 'is'], ['love', 'eecs'], ['is', 'life'], ['eecs', 'love'], ['eecs', 'life'],
                   ['love', 'life'], ['love', 'eecs']]
 
-    unigramText = [['test'], ['cases'], ['test'], ['cases'], ['fun'], ['fun']]
+    bigramText2 = [['a', 'a'], ['a', 'a'], ['a', 'a'], ['a', 'a'], ['a', 'a'],
+                  ['a', 'a'], ['a', 'a']]
+
+    unigramText = [["^::^", "^:::^", 'test', "$:::$"], ["^::^", "^:::^", 'cases', "$:::$"], ["^::^", "^:::^", 'test', "$:::$"],
+                   ["^::^", "^:::^", 'cases', "$:::$"], ["^::^", "^:::^", 'fun', "$:::$"], ["^::^", "^:::^", 'fun', "$:::$"]]
+
+    unigramText2 = [["^::^", "^:::^", 'a', "$:::$"], ["^::^", "^:::^", 'a', "$:::$"], ["^::^", "^:::^", 'a', "$:::$"],
+                   ["^::^", "^:::^", 'a', "$:::$"], ["^::^", "^:::^", 'a', "$:::$"], ["^::^", "^:::^", 'a', "$:::$"]]
 
 
     trigramTest1 = LanguageModel()
     trigramTest1.updateTrainedData(trigramText1)
-    print("Should Print: {"'a'": {"'test'": {"'case'": 1}}, "'case'": {"'should'": {"'work'": 1}},"
+    print("Should Print: {"'a'": {"'test'": {"'case'": 1}}, "'case'": {"'should'": {"'work'": 1}}," 
           " "'is'": {"'a'": {"'test'": 1},"'very'": {"'fun'": 1}}, "'test'": {"'case'": {"'should'": 1}},"
           ""'this'": {"'is'": {"'a'": 1,"'very'": 1}, "'test'": {"'case'": 1}}}")
     print(trigramTest1.selectNGramModel(trigramText1[0]))
@@ -194,12 +204,26 @@ if __name__ == '__main__':
     print(trigramTest2)
     print()
 
+    trigramTest3 = LanguageModel()
+    trigramTest3.updateTrainedData(trigramText3)
+    print("Should Print: {"'a'": {"'a'": {"'a'": 9}}}}")
+    print(trigramTest3.selectNGramModel(trigramText3[0]))
+    print(trigramTest3)
+    print()
+
     bigramTest = LanguageModel()
     bigramTest.updateTrainedData(bigramText)
     print("Should Print: {'eecs': {'is': 1, 'life': 1, 'love': 1}, 'is', {'life': 1},"
           "'love': {'eecs': 2, 'life': 1}}")
     print(bigramTest.selectNGramModel(bigramText[0]))
     print(bigramTest)
+    print()
+
+    bigramTest2 = LanguageModel()
+    bigramTest2.updateTrainedData(bigramText2)
+    print("Should Print: {'a': {'a': 7}}")
+    print(bigramTest2.selectNGramModel(bigramText2[0]))
+    print(bigramTest2)
     print()
 
     unigramTest = LanguageModel()
@@ -209,13 +233,16 @@ if __name__ == '__main__':
     print(unigramTest)
     print()
 
+    unigramTest2 = LanguageModel()
+    unigramTest2.updateTrainedData(unigramText2)
+    print("Should Print: {'cases': 2, 'fun': 2, 'test': 2}")
+    print(unigramTest2.selectNGramModel(unigramText2[0]))
+    print(unigramTest2)
+    print()
+
     print("Finished Testing selectNGramModel")
     print()
     print()
-
-
-
-
 
     print("Now Testing weightedChoice()")
     print()
