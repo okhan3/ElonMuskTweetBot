@@ -14,7 +14,6 @@ class LanguageModel():
         Modifies: self (this instance of the LanguageModel object)
         Effects:  This is the LanguageModel constructor. It sets up an empty
                   dictionary as a member variable.
-
         This function is done for you.
         """
 
@@ -32,7 +31,6 @@ class LanguageModel():
                   It will show the number of trained paths
                   for each model it contains. It may be
                   useful for testing.
-
         This function is done for you.
         """
 
@@ -53,7 +51,6 @@ class LanguageModel():
         Effects:  adds new trained data to each of the languageModel models.
         If this data is not prepped (prepped==False) then it is prepepd first
         before being passed to the models.
-
         This function is done for you.
         """
 
@@ -73,7 +70,6 @@ class LanguageModel():
         """
         Requires: self.models is a list of NGramModel objects sorted by descending
                   priority: tri-, then bi-, then unigrams.
-
                   sentence is a list of strings.
         Modifies: nothing
         Effects:  returns the best possible model that can be used for the
@@ -112,13 +108,12 @@ class LanguageModel():
 
         """ random number generator. comment-in print command while testing """
         x = random.randrange(0, cumulativeList[len(cumulativeList) - 1])
-        print(x)
 
         """ finds the first element in cumulativeList that is greater than x """
         j = 0
         while x >= cumulativeList[j]:
             j += 1
-        
+
         return keysList[j]
 
 
@@ -131,7 +126,6 @@ class LanguageModel():
                   the getCandidateDictionary and weightedChoice functions.
                   For more information on how to put all these functions
                   together, see the spec.
-
                   If a filter is being used, and none of the models
                   can produce a next token using the filter, then a random
                   token from the filter is returned instead.
@@ -144,7 +138,7 @@ class LanguageModel():
         else:
             filteredCandidates = {}
             store = D.keys()
-            #check index out of bounds 
+            #check index out of bounds
             for index in range(len(D)):
                 if store(index) == filter[index]:
                   filteredCandidates[store(index)] = D[index]
@@ -155,7 +149,7 @@ class LanguageModel():
                 r = self.weightedChoice(filteredCandidates)
                 return r
 
-                
+
 
 ###############################################################################
 # End Core
@@ -184,7 +178,7 @@ if __name__ == '__main__':
 
     trigramTest1 = LanguageModel()
     trigramTest1.updateTrainedData(trigramText1)
-    print("Should Print: {"'a'": {"'test'": {"'case'": 1}}, "'case'": {"'should'": {"'work'": 1}}," 
+    print("Should Print: {"'a'": {"'test'": {"'case'": 1}}, "'case'": {"'should'": {"'work'": 1}},"
           " "'is'": {"'a'": {"'test'": 1},"'very'": {"'fun'": 1}}, "'test'": {"'case'": {"'should'": 1}},"
           ""'this'": {"'is'": {"'a'": 1,"'very'": 1}, "'test'": {"'case'": 1}}}")
     print(trigramTest1.selectNGramModel(trigramText1[0]))

@@ -8,7 +8,6 @@ class UnigramModel():
         Modifies: self (this instance of the NGramModel object)
         Effects:  This is the NGramModel constructor. It sets up an empty
                   dictionary as a member variable.
-
         This function is done for you.
         """
 
@@ -21,7 +20,6 @@ class UnigramModel():
         Effects:  Returns the string to print when you call print on an
                   NGramModel object. This string will be formatted in JSON
                   and display the currently trained dataset.
-
         This function is done for you.
         """
 
@@ -42,7 +40,7 @@ class UnigramModel():
                   Returns self.nGramCounts
         """
         for index in range(len(text)):
-            for index2 in range(len(text[index])):
+            for index2 in range(2,len(text[index])):
                 store = text[index][index2]
                 if (store in self.nGramCounts):
                     self.nGramCounts[store] = self.nGramCounts[store] + 1
@@ -90,12 +88,12 @@ if __name__ == '__main__':
 
     # An example trainModel test case
     uni1 = UnigramModel()
-    text = [['brown']]
+    text = [["^::^", "^:::^", 'brown', "$:::$"]]
     uni1.trainModel(text)
     # Should print: { 'brown' : 1 }
     print(uni1)
 
-    text = [['the', 'brown', 'fox'], ['the', 'lazy', 'dog']]
+    text = [["^::^", "^:::^", 'the', 'brown', 'fox', "$:::$"], ["^::^", "^:::^", 'the', 'lazy', 'dog', "$:::$"]]
     uni1.trainModel(text)
     # Should print: { 'brown': 2, 'dog': 1, 'fox': 1, 'lazy': 1, 'the': 2 }
     print(uni1)
