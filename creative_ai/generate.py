@@ -10,7 +10,6 @@ from creative_ai.data.dataLoader import *
 from creative_ai.models.musicInfo import *
 from creative_ai.models.languageModel import LanguageModel
 
-# FIXME Add your team name
 TEAM = 'Turing Machine'
 LYRICSDIRS = ['the_beatles']
 TESTLYRICSDIRS = ['the_beatles_test']
