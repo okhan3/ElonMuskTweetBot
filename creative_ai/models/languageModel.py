@@ -229,23 +229,28 @@ if __name__ == '__main__':
     test1 = LanguageModel()
     dict1 = {"north" : 4, "south" : 1, "east" : 3, "west" : 2}
 
-    print()
-    print("Output: ", test1.weightedChoice(dict1))
-    print()
-    print("Output: ", test1.weightedChoice(dict1))
-    print()
-    print("Output: ", test1.weightedChoice(dict1))
-    print()
-    print("Output: ", test1.weightedChoice(dict1))
-    print()
-    print("Output: ", test1.weightedChoice(dict1))
-    print()
-    print("Output: ", test1.weightedChoice(dict1))
-    print()
-    print("Output: ", test1.weightedChoice(dict1))
-    print()
-    print("Output: ", test1.weightedChoice(dict1))
-    print()
+    i = 0
+    n = 0
+    s = 0
+    e = 0
+    w = 0
+    while i < 500:
+        x = test1.weightedChoice(dict1)
+        if x == "north":
+            n += 1
+        if x == "south":
+            s += 1
+        if x == "east":
+            e += 1
+        if x == "west":
+            w += 1
+        i += 1
+    print("We expect descending order to be north, east, west, south")
+    print("North count: ", n)
+    print("South count: ", s)
+    print("East count: ", e)
+    print("West count: ", w)
+
 
     print("Test 2 Expected Output -- comment in print(x)")
     print("when number is 0 - 2: Alex")
