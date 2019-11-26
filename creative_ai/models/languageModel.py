@@ -112,7 +112,6 @@ class LanguageModel():
 
         """ random number generator. comment-in print command while testing """
         x = random.randrange(0, cumulativeList[len(cumulativeList) - 1])
-        print(x)
 
         """ finds the first element in cumulativeList that is greater than x """
         j = 0
