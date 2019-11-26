@@ -124,40 +124,40 @@ if __name__ == '__main__':
     # TrainModel Tests
     # Test 1
     bi = BigramModel()
-    list1 = [["hello", "my", "name", "is", "macintosh"],
-             ["hello", "my", "house", "is", "big"]]
+    list1 = [["^::^", "^:::^", "hello", "my", "name", "is", "macintosh", '$:::$'],
+             ["^::^", "^:::^", "hello", "my", "house", "is", "big", '$:::$']]
     bi.trainModel(list1)
     print(bi)
     # Should print: {hello: {my: 2}, house: {is: 1}, is: {big: 1, macintosh: 1}, my: {house: 1, name: 1}, name: {is: 1}}
 
     # Test 2
     bi2 = BigramModel()
-    list2 = [["hello", "hello", "hello", "hello", "hello"],
-             ["hello", "hello", "hello", "hello", "hello"]]
+    list2 = [["^::^", "^:::^", "hello", "hello", "hello", "hello", "hello", '$:::$'],
+             ["^::^", "^:::^", "hello", "hello", "hello", "hello", "hello", '$:::$']]
     bi2.trainModel(list2)
     print(bi2)
     # Should print: {hello: {hello: 8}}
 
     # Test3
     bi3 = BigramModel()
-    list3 = [["AAABBB", "AAABBB", "ABABAB", "ABABAB", "AZAZAZ"],
-             ["ABABAB", "AZAZAZ", "AAABBB", "ABABAB", "AZAZAZ"]]
+    list3 = [["^::^", "^:::^", "AAABBB", "AAABBB", "ABABAB", "ABABAB", "AZAZAZ", '$:::$'],
+             ["^::^", "^:::^", "ABABAB", "AZAZAZ", "AAABBB", "ABABAB", "AZAZAZ", '$:::$']]
     bi3.trainModel(list3)
     print(bi3)
     # Should print: {hello: {my: 2}, house: {is: 1}, is: {big: 1, macintosh: 1}, my: {house: 1, name: 1}, name: {is: 1}}
 
     # Test4
     bi4 = BigramModel()
-    list4 = [["The", "fox", "jumps", "over", "houses"],
-             ["fox", "jumps", "over", "houses", "The"]]
+    list4 = [["^::^", "^:::^", "The", "fox", "jumps", "over", "houses",'$:::$'],
+             ["^::^", "^:::^", "fox", "jumps", "over", "houses", "The", '$:::$']]
     bi4.trainModel(list4)
     print(bi4)
     # Should print: {hello: {my: 2}, house: {is: 1}, is: {big: 1, macintosh: 1}, my: {house: 1, name: 1}, name: {is: 1}}
 
     # Test5
     bi5 = BigramModel()
-    list5 = [["00000", "0000", "00000", "000", "0000"],
-             ["0000", "00000", "0000", "00000", "000000"]]
+    list5 = [["^::^", "^:::^", "00000", "0000", "00000", "000", "0000", '$:::$'],
+             ["^::^", "^:::^", "0000", "00000", "0000", "00000", "000000", '$:::$']]
     bi5.trainModel(list5)
     print(bi5)
     # Should print: {hello: {my: 2}, house: {is: 1}, is: {big: 1, macintosh: 1}, my: {house: 1, name: 1}, name: {is: 1}}
@@ -167,8 +167,8 @@ if __name__ == '__main__':
     # TestingDatahasNGram Tests
     #Test 1
     bi6 = BigramModel()
-    list6 = [["The", "fox", "jumps", "over", "houses"],
-             ["fox", "jumps", "over", "houses", "The"]]
+    list6 = [["^::^", "^:::^", "The", "fox", "jumps", "over", "houses", '$:::$'],
+             ["^::^", "^:::^", "fox", "jumps", "over", "houses", "The", '$:::$']]
     bi6.trainModel(list6)
     x = bi6.trainingDataHasNGram(['dog', 'jumps', 'over'])
     print(x)
