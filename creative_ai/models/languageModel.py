@@ -108,7 +108,6 @@ class LanguageModel():
 
         """ random number generator. comment-in print command while testing """
         x = random.randrange(0, cumulativeList[len(cumulativeList) - 1])
-        """print(x)"""
 
         """ finds the first element in cumulativeList that is greater than x """
         j = 0
@@ -301,6 +300,7 @@ if __name__ == '__main__':
 
     test2 = LanguageModel()
     dict2 = {"Alex" : 3, "Is" : 2, "Very" : 4, "Crazy" : 3}
+    dict3 = {"Alex": 4, "Hello": 4, "World": 4, "moon": 2}
 
     print()
     print("Output: ", test2.weightedChoice(dict2))
@@ -317,7 +317,7 @@ if __name__ == '__main__':
     print()
     print("Output: ", test2.weightedChoice(dict2))
     print()
-    print("Output: ", test2.weightedChoice(dict2))
+    print("Output: ", test2.weightedChoice(dict3))
     print()
 
     print("Finished Testing weightedChoice")
@@ -407,5 +407,14 @@ if __name__ == '__main__':
     testFilter6.updateTrainedData(sentence11)
     testVal11 = testFilter5.getNextToken(sentence11, filter6)
     print(testVal11)
+
+    testFilter7 = LanguageModel()
+    sentence12 = [['rocket', 'to', 'moon', 'goal', 'of', 'NASA', 'by', '2023']]
+    filter7 = ['not moon', 'mars', 'venus']
+    testFilter7.updateTrainedData(sentence12)
+    testVal12 = testFilter5.getNextToken(sentence12, filter7)
+    print(testVal12)
+    dict10 = {'Hello':1, 'World':2, "this": 3, "is": 4, 'death':5}
+    print(testFilter7.weightedChoice(dict10))
 
     print("Finished Testing getNextToken")

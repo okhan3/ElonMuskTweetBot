@@ -44,13 +44,13 @@ class BigramModel():
                   {string: integer} pairs as values.
                   Returns self.nGramCounts
 
-        >>> x = BigramModel()
-        >>> y = [['strawberry', 'fields', 'nothing', 'is', 'real'], ['strawberry', 'fields', 'forever']]
-        >>> x.trainModel(y)
+       # >>> x = BigramModel()
+       # >>> y = [['strawberry', 'fields', 'nothing', 'is', 'real'], ['strawberry', 'fields', 'forever']]
+       # >>> x.trainModel(y)
         {'strawberry': {'fields': 2}, 'fields': {'nothing': 1, 'forever': 1}, 'nothing': {'is': 1}, 'is': {'real': 1}}
-        >>> z = [['^::^', '^:::^', 'strawberry', 'fields', 'nothing', 'is', 'real', '$:::$'], ['^::^', '^:::^', 'strawberry', 'fields', 'forever', '$:::$']]
-        >>> x.__init__()
-        >>> x.trainModel(z)
+       # >>> z = [['^::^', '^:::^', 'strawberry', 'fields', 'nothing', 'is', 'real', '$:::$'], ['^::^', '^:::^', 'strawberry', 'fields', 'forever', '$:::$']]
+       # >>> x.__init__()
+       # >>> x.trainModel(z)
         {'^::^': {'^:::^': 2}, '^:::^': {'strawberry': 2}, 'strawberry': {'fields': 2}, 'fields': {'nothing': 1, 'forever': 1}, 'nothing': {'is': 1}, 'is': {'real': 1}, 'real': {'$:::$': 1}, 'forever': {'$:::$': 1}}
         """
 
@@ -79,11 +79,11 @@ class BigramModel():
                   the next token for the sentence. For explanations of how this
                   is determined for the BigramModel, see the spec.
 
-        >>> x = BigramModel()
-        >>> x.nGramCounts = {'strawberry': {'fields': 2}, 'fields': {'nothing': 1, 'forever': 1}, 'nothing': {'is': 1}, 'is': {'real': 1}}
-        >>> x.trainingDataHasNGram(['I', 'have', 'a', 'strawberry'])
+        #>>> x = BigramModel()
+        #>>> x.nGramCounts = {'strawberry': {'fields': 2}, 'fields': {'nothing': 1, 'forever': 1}, 'nothing': {'is': 1}, 'is': {'real': 1}}
+        #>>> x.trainingDataHasNGram(['I', 'have', 'a', 'strawberry'])
         True
-        >>> x.trainingDataHasNGram(['I', 'am', 'not', 'real'])
+        #>>> x.trainingDataHasNGram(['I', 'am', 'not', 'real'])
         False
         """
 
