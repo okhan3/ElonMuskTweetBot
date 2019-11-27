@@ -108,6 +108,7 @@ class LanguageModel():
 
         """ random number generator. comment-in print command while testing """
         x = random.randrange(0, cumulativeList[len(cumulativeList) - 1])
+        """print(x)"""
 
         """ finds the first element in cumulativeList that is greater than x """
         j = 0
@@ -137,19 +138,30 @@ class LanguageModel():
             return S
         else:
             filteredCandidates = {}
-            store = D.keys()
+            store = list(D.keys())
             #check index out of bounds
-            for index in range(len(D)):
-                if store(index) == filter[index]:
-                  filteredCandidates[store(index)] = D[index]
-            if filteredCandidates[len(filteredCandidates) - 1] == None:
+            smaller = filter
+            larger = store
+            if (len(filter) >= len(store)):
+                larger = filter
+                smaller = store
+            else:
+                smaller = filter
+                larger = store
+                #replace filter with larger
+                #replace store with smaller
+            for index in range(len(larger)):
+                for index2 in range(len(smaller)):
+                    if smaller[index2] == larger[index]:
+                        filteredCandidates[smaller[index2]] = D[smaller[index2]]
+
+            #filteredCandidates = index for index in store if index in filter
+            if not bool(filteredCandidates):
                 x = random.choice(filter)
-                return filter[x]
+                return x
             else:
                 r = self.weightedChoice(filteredCandidates)
                 return r
-
-
 
 ###############################################################################
 # End Core
@@ -244,6 +256,8 @@ if __name__ == '__main__':
     print()
     print()
 
+
+
     print("Now Testing weightedChoice()")
     print()
 
@@ -312,10 +326,86 @@ if __name__ == '__main__':
 
 
 
+    print("Now Testing getNextToken()")
+    print()
 
-    """start at test 6"""
-    test10 = LanguageModel()
-    sentence = [['Eagles', 'fly', 'in', 'the', 'sky']]
-    test10.updateTrainedData(sentence)
-    testVal = test10.getNextToken(sentence)
-    print (testVal)
+    testNonFilter1 = LanguageModel()
+    sentence1 = [['Eagles', 'fly', 'in', 'the', 'sky']]
+    testNonFilter1.updateTrainedData(sentence1)
+    testVal1 = testNonFilter1.getNextToken(sentence1)
+    print(testVal1)
+
+    testNonFilter2 = LanguageModel()
+    sentence2 = [["^::^", "^:::^", 'rocket', 'to', 'the', 'moon', "$:::$"],
+                ["^::^", "^:::^", 'dad', 'is', 'from', 'nyc', "$:::$"],
+                ["^::^", "^:::^", 'the', 'quick', 'brown', 'dog', 'barked', "$:::$"],
+                ["^::^", "^:::^", 'hello', 'world', 'I', 'am', 'Macintosh', "$:::$"],
+                ["^::^", "^:::^", 'I', 'am', 'from', 'mars', "$:::$"],
+                ["^::^", "^:::^",'A','friend','went','to','the','moon',"$:::$"],
+                ["^::^", "^:::^",'The','new','Macbook','Pro','has','a','better','keyboard','and','it','sells', "well","$:::$"],
+                ["^::^", "^:::^", 'My', 'hopes', 'are', 'high', "$:::$"]]
+    testNonFilter2.updateTrainedData(sentence2)
+    testVal2 = testNonFilter2.getNextToken(sentence2)
+    print(testVal2)
+
+    testNonFilter3 = LanguageModel()
+    sentence3 = [['Eagles', 'Eagles', 'Eagles'], ['Eagles', 'Eagles', 'Eagles'], ['Eagles', 'Eagles', 'Eagles']]
+    testNonFilter3.updateTrainedData(sentence3)
+    testVal3 = testNonFilter3.getNextToken(sentence3)
+    print(testVal3)
+
+    testNonFilter4 = LanguageModel()
+    sentence4 = [['Eagles', 'Eagles', 'Eagles']]
+    testNonFilter4.updateTrainedData(sentence4)
+    testVal4 = testNonFilter4.getNextToken(sentence4)
+    print(testVal4)
+
+    sentence5 = ["^::^", "^:::^", 'rocket', 'to', 'the', 'moon', "$:::$"]
+    testNonFilter5 = LanguageModel()
+    testNonFilter5.updateTrainedData(sentence2)
+    testVal5 = testNonFilter5.getNextToken(sentence5)
+    print(testVal5)
+
+    testFilter1 = LanguageModel()
+    sentence6 = [['Eagles', 'Eagles', 'Eagles', 'fly', 'in', 'the', 'sky']]
+    filter1 = ['Eagles', 'Eagles', 'Eagles', 'die']
+    testFilter1.updateTrainedData(sentence6)
+    testVal6 = testFilter1.getNextToken(sentence6, filter1)
+    print(testVal6)
+
+    testFilter2 = LanguageModel()
+    sentence7 = [['Eagles', 'Eagles', 'Eagles', 'fly', 'in', 'the', 'sky']]
+    filter2 = ['Eagles', 'Eagles', 'Eagles', 'fly', 'die']
+    testFilter2.updateTrainedData(sentence7)
+    testVal7 = testFilter2.getNextToken(sentence7, filter2)
+    print(testVal7)
+
+    testFilter3 = LanguageModel()
+    sentence8 = [['Eagles', 'Eagles', 'Eagles', 'fly', 'in', 'the', 'sky']]
+    filter3 = ['Aidan', 'Nikhil', 'Joe']
+    testFilter3.updateTrainedData(sentence8)
+    testVal8 = testFilter3.getNextToken(sentence8, filter3)
+    print(testVal8)
+    
+    testFilter4 = LanguageModel()
+    sentence9 = [['rocket', 'to', 'the', 'moon']]
+    filter4 = ['moon', 'mars', 'venus']
+    testFilter4.updateTrainedData(sentence9)
+    testVal9 = testFilter4.getNextToken(sentence9, filter4)
+    print(testVal9)
+
+    testFilter5 = LanguageModel()
+    sentence10 = [['rocket', 'to', 'moon']]
+    filter5 = ['moon', 'mars', 'venus']
+    testFilter5.updateTrainedData(sentence10)
+    testVal10 = testFilter5.getNextToken(sentence10, filter5)
+    print(testVal10)
+
+    testFilter6 = LanguageModel()
+    sentence11 = [['rocket', 'to', 'moon']]
+    filter6 = ['not moon', 'mars', 'venus']
+    testFilter6.updateTrainedData(sentence11)
+    testVal11 = testFilter5.getNextToken(sentence11, filter6)
+    print(testVal11)
+
+    print("Finished Testing getNextToken")
