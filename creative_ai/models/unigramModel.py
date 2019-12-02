@@ -39,14 +39,15 @@ class UnigramModel():
                   self.nGramCounts, see the spec.
                   Returns self.nGramCounts
         """
-        for index in range(len(text)):
-            for index2 in range(2,len(text[index])):
-                store = text[index][index2]
-                if (store in self.nGramCounts):
-                    self.nGramCounts[store] = self.nGramCounts[store] + 1
+        for i in range(len(text)):
+            for j in range(len(text[i])):
+                key = text[i][j]
+                if key in self.nGramCounts:
+                    self.nGramCounts[key] = self.nGramCounts[key] + 1
                 else:
-                    self.nGramCounts[store] = 1
+                    self.nGramCounts[key] = 1
         return self.nGramCounts
+
 
     def trainingDataHasNGram(self, sentence):
         """
@@ -93,8 +94,8 @@ if __name__ == '__main__':
     # Should print: { 'brown' : 1 }
     print(uni1)
 
-    text = [["^::^", "^:::^", 'the', 'brown', 'fox', "$:::$"], ["^::^", "^:::^", 'the', 'lazy', 'dog', "$:::$"]]
-    uni1.trainModel(text)
+    text1 = [["^::^", "^:::^", 'the', 'brown', 'fox', "$:::$"], ["^::^", "^:::^", 'the', 'lazy', 'dog', "$:::$"]]
+    uni1.trainModel(text1)
     # Should print: { 'brown': 2, 'dog': 1, 'fox': 1, 'lazy': 1, 'the': 2 }
     print(uni1)
 
