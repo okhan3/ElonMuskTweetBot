@@ -42,10 +42,11 @@ class UnigramModel():
         for i in range(len(text)):
             for j in range(len(text[i])):
                 key = text[i][j]
-                if key in self.nGramCounts:
-                    self.nGramCounts[key] = self.nGramCounts[key] + 1
-                else:
-                    self.nGramCounts[key] = 1
+                if key != "^::^" and key != "^:::^":
+                    if key in self.nGramCounts:
+                        self.nGramCounts[key] = self.nGramCounts[key] + 1
+                    else:
+                        self.nGramCounts[key] = 1
         return self.nGramCounts
 
 
