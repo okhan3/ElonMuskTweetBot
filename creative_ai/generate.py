@@ -4,6 +4,7 @@ sys.dont_write_bytecode = True # Suppress .pyc files
 
 import random
 
+
 import pysynth
 from creative_ai.utils.menu import Menu
 from creative_ai.data.dataLoader import *
@@ -235,7 +236,7 @@ if __name__ == '__main__':
     #first set of tests
     # text = [["^::^", "^:::^", 'the', 'quick', 'brown', 'fox', "$:::$"], ["^::^", "^:::^", 'the', 'lazy', 'quick', 'dog', 'jumped', 'over', "$:::$"], ["^::^", "^:::^", 'the', 'quick', 'brown', 'dog', 'barked', "$:::$"],
     #           ["^::^", "^:::^", 'dog', 'jumped', 'over', 'the', 'fox', "$:::$"], ["^::^", "^:::^", 'brown', 'cat', "$:::$"], ["^::^", "^:::^",'the','quick','brown','fox','jumped','over','the','lazy','dog', "$:::$"], ["^::^", "^:::^",'the','brown','dog','fox','quick','brown','the','dog','jumped','the','jumped',"$:::$"]]
-    ''' 
+    '''
     x = LanguageModel()
     x.updateTrainedData(text)
     print(generateTokenSentence(x,1))
