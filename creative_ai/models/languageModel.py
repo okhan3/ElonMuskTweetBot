@@ -1,6 +1,7 @@
 import random
 
 import spacy
+from spacy.lang.en import English
 
 from creative_ai.data.dataLoader import prepData
 from creative_ai.models.unigramModel import UnigramModel
@@ -67,6 +68,39 @@ class LanguageModel():
 ###############################################################################
 # Begin Core >> FOR CORE IMPLEMENTATION, DO NOT EDIT ABOVE OF THIS SECTION <<
 ###############################################################################
+
+    def refine(self):
+        nlp = English()
+        nlp = spacy.load('en')  # load model with shortcut link "en"
+
+        # Created by processing a string of text with the nlp object
+        doc = nlp("Hello my name is Nikhil.")
+
+        print('parts of speech')
+        for token in doc:
+            # Print the text and the predicted part-of-speech tag
+            #use to indentify parts of speech in a sentance
+            print(token.text, token.pos_, token.dep_)
+        print()
+
+        print('entities')
+        #iterates over entities in doc
+        for ent in doc.ents:
+            #prints name of enity and their label
+            #use to identify Tesla, SpaceX and NASA
+            print(ent.text, ent.label_)
+        print()
+
+        print('type of text')
+        for token in doc:
+            # Index into the Doc to get a single Token
+            print(token.text)
+            print(token.is_punct)
+            print(token.like_num)
+        print('is_alpha:', [token.is_alpha for token in doc])
+        print('is_punct:', [token.is_punct for token in doc])
+        print('like_num:', [token.like_num for token in doc])
+        print()
 
 
     def selectNGramModel(self, sentence):
@@ -174,7 +208,10 @@ class LanguageModel():
 ###############################################################################
 
 if __name__ == '__main__':
+    hello = LanguageModel()
+    hello.refine()
 
+    '''
     print("Now Testing selectNGramModel()")
     print()
 
@@ -421,3 +458,4 @@ if __name__ == '__main__':
     print(testFilter7.weightedChoice(dict10))
 
     print("Finished Testing getNextToken")
+    '''

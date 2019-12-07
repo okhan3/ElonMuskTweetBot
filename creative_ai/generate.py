@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 import sys
+
+import spacy
+from spacy.lang.en import English
+
 sys.dont_write_bytecode = True # Suppress .pyc files
 
 import random
