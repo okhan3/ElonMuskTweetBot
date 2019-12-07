@@ -1,14 +1,10 @@
 #!/usr/bin/env python
 import sys
-
-import spacy
-from spacy.lang.en import English
-
 sys.dont_write_bytecode = True # Suppress .pyc files
 
 import random
-
-
+import os
+import tweepy
 import pysynth
 from creative_ai.utils.menu import Menu
 from creative_ai.data.dataLoader import *
@@ -155,6 +151,24 @@ def runMusicGenerator(models, songName):
 # Begin Core >> FOR CORE IMPLEMENTION, DO NOT EDIT OUTSIDE OF THIS SECTION <<
 ###############################################################################
 
+def getTimeline():
+    consumer_key = "jwRrpCUD5nicMU8bkd31Eh9yV"
+    consumer_secret = "ojFtjsecfskKeXso2IM8Jbekj5bZZCPECubfgmaOOaI9mWnNVg"
+    access_token = "1203360136691011585-oEHF6waSe3DHWyKuWb4zbdLR2x0K5I"
+    access_token_secret = "ShTIm1K0p9aEQKFaa711l97hoymIFUkwtthyV9zsouMVb"
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+
+    api = tweepy.API(auth)
+
+    f = open('elonTweets.txt', 'w')
+    for item in tweepy.Cursor(api.user_timeline, id = "elonmusk", tweet_mode = 'extended').items():
+        if item.full_text[0:2] != "RT":
+            f.write(item.full_text)
+            f.write('\n')
+    f.close()
+    # api.update_status("plz work")
+
 def generateTokenSentence(model, desiredLength):
     """
     Requires: model is a single trained languageModel object.
@@ -233,7 +247,9 @@ def main():
 
 # This is how python tells if the file is being run as main
 if __name__ == '__main__':
-    main()
+    # main()
+    print(getTimeline())
+
     # note that if you want to individually test functions from this file,
     # you can comment out main() and call those functions here. Just make
     # sure to call main() in your final submission of the project!
