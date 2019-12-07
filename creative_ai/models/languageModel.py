@@ -1,4 +1,7 @@
 import random
+
+import spacy
+
 from creative_ai.data.dataLoader import prepData
 from creative_ai.models.unigramModel import UnigramModel
 from creative_ai.models.bigramModel import BigramModel
