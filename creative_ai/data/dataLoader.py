@@ -119,12 +119,12 @@ def loadLyrics(dirName):
     cleans that line by removing punctuation and extraneous
     whitespaces, and lowercasing all words in the line.
     """
-
+    '''
     try:
         return loadSavedLyrics(dirName)
     except:
         pass
-
+    '''
     lyricsDir = os.path.dirname(os.path.abspath(__file__)) + "/lyrics/"
     artistDir = os.path.join(lyricsDir, dirName) + "/"
 
@@ -147,7 +147,7 @@ def loadLyrics(dirName):
                 lyrics.append(line.split())
 
 
-    saveData(lyrics, dirName)
+    saveTweetData(lyrics, dirName)
 
     return lyrics
 
@@ -158,12 +158,12 @@ def loadTweets(dirName):
     cleans that line by removing punctuation and extraneous
     whitespaces, and lowercasing all words in the line.
     """
-
+    '''
     try:
         return loadSavedTweets(dirName)
     except:
         pass
-
+    '''
     tweetsDir = os.path.dirname(os.path.abspath(__file__)) + "/elonMusk/"
     elonDir = os.path.join(tweetsDir, dirName) + "/"
 
