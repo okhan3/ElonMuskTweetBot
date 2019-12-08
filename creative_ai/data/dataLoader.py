@@ -1,10 +1,20 @@
 #!/usr/bin/env python
-import os
-import re
 import string
 from creative_ai.utils.print_helpers import ppListJson
 import json
+import spacy
+from spacy.pipeline import Sentencizer
+from spacy.tokens import Doc
+from spacy.lang.en import English
+import os
 from tqdm import tqdm
+
+nlp = English()
+sentencizer = Sentencizer()
+sentencizer = nlp.create_pipe('sentencizer')
+nlp.add_pipe(sentencizer)
+nlp = spacy.load('en_core_web_sm')
+
 
 def prepData(text):
     """
@@ -19,17 +29,25 @@ def prepData(text):
         textCopy.append(['^::^', '^:::^'] + line + ['$:::$'])
     return textCopy
 
+
 def prepTweetData(text):
-    """
-    Returns a copy of text where each inner list starts with the special symbols
-    '^::^' and '^:::^', and ends with the symbol '$:::$'.
-    >>> prepData(['hello', 'goodbye'])
-    ['^::^', '^:::^', 'hello', 'goodbye', '$:::$]
-    """
     textCopy = []
-    # chnage ncols to 280
-    for line in tqdm(text, total=len(list(text)), desc="Prepping data", ncols=280):
-        textCopy.append(['^::^', '^:::^'] + list(line) + ['$:::$'])
+    for i in text:
+        doc = nlp(i)
+        for token in doc.sent:
+            sentenceList = token.text
+            inputList = []
+            hello = ''
+            for j in sentenceList:
+                if (j != ' '):
+                    hello += j
+                else:
+                    inputList.append(hello)
+                    hello = ' '
+            textCopy.append(['^::^', '^:::^'] + inputList + ['$:::$'])
+        # add symbols to end of sentances not tweets
+        # for line in tqdm(text, total=len(list(text)), desc="Prepping data", ncols=80):
+        # textCopy.append(['^::^', '^:::^'] + line + ['$:::$'])
 
     return textCopy
 

@@ -279,7 +279,8 @@ def getTweet():
        if item.full_text[0:2] != "RT":
            editedString = ' '.join(x for x in item.full_text.split() if not (x.startswith('@') or x.startswith('https')))
            f.write(editedString)
-           f.write('\n')
+           if item.full_text[len(item.full_text)-1] != '.' and item.full_text[len(item.full_text)-1] != '?' and item.full_text[len(item.full_text)-1] != '!':
+               f.write('.')
    f.close()
 
 
