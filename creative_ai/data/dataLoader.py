@@ -4,17 +4,8 @@ import re
 import string
 from creative_ai.utils.print_helpers import ppListJson
 import json
-import spacy
-from spacy.pipeline import Sentencizer
-from spacy.tokens import Doc
-from spacy.lang.en import English
-
 from tqdm import tqdm
 
-nlp = English()
-sentencizer = Sentencizer()
-sentencizer = nlp.create_pipe('sentencizer')
-nlp.add_pipe(sentencizer)
 def prepData(text):
     """
     Returns a copy of text where each inner list starts with the special symbols
@@ -29,24 +20,30 @@ def prepData(text):
     return textCopy
 
 def prepTweetData(text):
-     """
+    """
     Returns a copy of text where each inner list starts with the special symbols
     '^::^' and '^:::^', and ends with the symbol '$:::$'.
     >>> prepData(['hello', 'goodbye'])
     ['^::^', '^:::^', 'hello', 'goodbye', '$:::$]
     """
-
-    doc = nlp(text)
     textCopy = []
-    for token in doc.sents:
-        print(token)
-        textCopy.append(['^::^', '^:::^'] + token + ['$:::$'])
-    # add symbols to end of sentances not tweets
-    # for line in tqdm(text, total=len(list(text)), desc="Prepping data", ncols=80):
-        # textCopy.append(['^::^', '^:::^'] + line + ['$:::$'])
+    # chnage ncols to 280
+    for line in tqdm(text, total=len(list(text)), desc="Prepping data", ncols=280):
+        textCopy.append(['^::^', '^:::^'] + list(line) + ['$:::$'])
+
     return textCopy
 
 def saveData(data, dirName):
+
+    saveDir = os.path.dirname(os.path.abspath(__file__)) + "/saved/"
+    fileToSave = os.path.join(saveDir, dirName) + ".json"
+
+    data = ppListJson(data)
+
+    with open(fileToSave, 'w+') as f:
+        f.write(data)
+
+def saveTweetData(data, dirName):
 
     saveDir = os.path.dirname(os.path.abspath(__file__)) + "/saved/"
     fileToSave = os.path.join(saveDir, dirName) + ".json"
@@ -174,7 +171,7 @@ def loadTweets(dirName):
 
     saveData(lyrics, dirName)
 
-    return
+    return lyrics
 
 def loadMusic(dirName):
     """

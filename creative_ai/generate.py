@@ -262,45 +262,46 @@ def main():
 
 
 def getTweet():
-    consumer_key = "jwRrpCUD5nicMU8bkd31Eh9yV"
-    consumer_secret = "ojFtjsecfskKeXso2IM8Jbekj5bZZCPECubfgmaOOaI9mWnNVg"
-    access_token = "1203360136691011585-oEHF6waSe3DHWyKuWb4zbdLR2x0K5I"
-    access_token_secret = "ShTIm1K0p9aEQKFaa711l97hoymIFUkwtthyV9zsouMVb"
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
+   consumer_key = "jwRrpCUD5nicMU8bkd31Eh9yV"
+   consumer_secret = "ojFtjsecfskKeXso2IM8Jbekj5bZZCPECubfgmaOOaI9mWnNVg"
+   access_token = "1203360136691011585-oEHF6waSe3DHWyKuWb4zbdLR2x0K5I"
+   access_token_secret = "ShTIm1K0p9aEQKFaa711l97hoymIFUkwtthyV9zsouMVb"
+   auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+   auth.set_access_token(access_token, access_token_secret)
 
-    api = tweepy.API(auth)
+   api = tweepy.API(auth)
 
-    print('Welcome to the Elon Musk tweet generator!'.format(TEAM))
+   print('Welcome to the Elon Musk tweet generator!'.format(TEAM))
 
-    #ignore links, retweets and replies
-    '''
-    f = open('elonTweets.txt', 'w')
-    for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items():
-        if item.full_text[0:2] != "RT":
-            f.write(item.full_text)
-            f.write('\n')
-    f.close()
-    '''
+   #copy path to your text file
+   f = open('/Users/nk/Downloads/Michigan/Computer-Science/Code/Creative_AI_3003_Repository/creative_ai/data/elonMusk/elon/elonTweets.txt', 'w')
+   for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items(500):
+       if item.full_text[0:2] != "RT":
+           editedString = ' '.join(x for x in item.full_text.split() if not (x.startswith('@') or x.startswith('https')))
+           f.write(editedString)
+           f.write('\n')
+   f.close()
 
-    mainMenu = Menu(PROMPT2)
 
-    tweetsTrained = False
+   mainMenu = Menu(PROMPT2)
 
-    while True:
-        userInput = mainMenu.getChoice()
+   tweetsTrained = False
 
-        if userInput == 1:
-            if not tweetsTrained:
-                print('Starting tweet generator...')
-                #change two tweetdirs
-                tweetModel = trainTweetModels(TWEETSDIRS)
-                tweetsTrained = True
+   while True:
+       userInput = mainMenu.getChoice()
 
-            runTweetGenerator(tweetModel)
-        elif userInput == 2:
-            print('Thank you for using the {} tweet generator!'.format(TEAM))
-            sys.exit()
+       if userInput == 1:
+           if not tweetsTrained:
+               print('Starting tweet generator...')
+               #change two tweetdirs
+               tweetModel = trainTweetModels(TWEETSDIRS)
+               tweetsTrained = True
+
+           runTweetGenerator(tweetModel)
+       elif userInput == 2:
+           print('Thank you for using the {} tweet generator!'.format(TEAM))
+           sys.exit()
+
 
 def runTweetGenerator(models):
     """
@@ -317,17 +318,18 @@ def runTweetGenerator(models):
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
-    for _ in range(1):
-        Tweet.append(generateTokenSentence(models, 10))
+    for _ in range(2):
+        Tweet.append(generateTokenSentence(models, 12))
+
     tweetPost = " "
     for index in range(len(Tweet)):
         for index2 in range(len(Tweet[index])):
             store = str(Tweet[index][index2])
             tweetPost += store
-            tweetPost += " "
+            #tweetPost += " "
     print(tweetPost)
 
-    #api.update_status(tweetPost)
+    api.update_status(tweetPost)
 
 # This is how python tells if the file is being run as main
 if __name__ == '__main__':
