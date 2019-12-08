@@ -14,7 +14,8 @@ def prepData(text):
     ['^::^', '^:::^', 'hello', 'goodbye', '$:::$]
     """
     textCopy = []
-    for line in tqdm(text, total=len(text), desc="Prepping data", ncols=80):
+    #issue here
+    for line in tqdm(text, total=len(list(text)), desc="Prepping data", ncols=80):
         textCopy.append(['^::^', '^:::^'] + line + ['$:::$'])
     return textCopy
 
@@ -31,6 +32,16 @@ def saveData(data, dirName):
 
 def loadSavedLyrics(dirName):
 
+    saveDir = os.path.dirname(os.path.abspath(__file__)) + "/saved/"
+    fileToLoad = os.path.join(saveDir, dirName) + ".json"
+
+    with open(fileToLoad, 'r') as f:
+        data = json.load(f)
+
+    return data
+
+def loadSavedTweets(dirName):
+    #puts it into a JSON file
     saveDir = os.path.dirname(os.path.abspath(__file__)) + "/saved/"
     fileToLoad = os.path.join(saveDir, dirName) + ".json"
 
@@ -97,6 +108,45 @@ def loadLyrics(dirName):
     saveData(lyrics, dirName)
 
     return lyrics
+
+def loadTweets(dirName):
+    """
+    Loads the lyrics files from the directory specified by dirName,
+    if that directory exists. For each line in each file,
+    cleans that line by removing punctuation and extraneous
+    whitespaces, and lowercasing all words in the line.
+    """
+
+    try:
+        return loadSavedTweets(dirName)
+    except:
+        pass
+
+    tweetsDir = os.path.dirname(os.path.abspath(__file__)) + "/elonMusk/"
+    elonDir = os.path.join(tweetsDir, dirName) + "/"
+
+    if not os.path.isdir(elonDir):
+        print("No artist named", elonDir, "in directory", tweetsDir)
+        return None
+
+    lyrics = []
+
+    songs = os.listdir(elonDir)
+    for song in tqdm(songs, total=len(songs), desc="Loading lyric files", ncols=80):
+        with open(elonDir + song, 'r') as songFile:
+            songLines = songFile.readlines()
+
+        # clean each line in each song and add if not empty
+        for line in songLines:
+            line = line.translate(str.maketrans('','',string.punctuation))
+            line = line.lower().strip()
+            if line:
+                lyrics.append(line.split())
+
+
+    saveData(lyrics, dirName)
+
+    return
 
 def loadMusic(dirName):
     """

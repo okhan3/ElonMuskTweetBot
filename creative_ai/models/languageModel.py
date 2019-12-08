@@ -2,7 +2,9 @@ import random
 
 import spacy
 from spacy.lang.en import English
-
+from spacy.matcher import PhraseMatcher
+from spacy.matcher import Matcher
+from spacy.tokens import Doc
 from creative_ai.data.dataLoader import prepData
 from creative_ai.models.unigramModel import UnigramModel
 from creative_ai.models.bigramModel import BigramModel
@@ -71,10 +73,12 @@ class LanguageModel():
 
     def refine(self):
         nlp = English()
-        nlp = spacy.load('en')  # load model with shortcut link "en"
+        #change to .lg if needed
+        nlp = spacy.load('en_core_web_sm')  # load model with shortcut link "en"
 
         # Created by processing a string of text with the nlp object
         doc = nlp("Hello my name is Nikhil.")
+        print(nlp.pipe_names)
 
         print('parts of speech')
         for token in doc:
@@ -91,6 +95,23 @@ class LanguageModel():
             print(ent.text, ent.label_)
         print()
 
+        print('exploring matcher')
+        #could be used to match organization names SpaceX, Tesla
+        matcher = Matcher(nlp.vocab)
+        #also works for {"IS_DIGIT": True}
+        pattern = [{'TEXT': 'iPhone'}, {'TEXT': 'X'}]
+        matcher.add('IPHONE_PATTERN', None, pattern)
+        # Process some text
+        doc = nlp("New iPhone X release date leaked")
+        # Call the matcher on the doc
+        matches = matcher(doc)
+        # Iterate over the matches
+        for match_id, start, end in matches:
+            # Get the matched span
+            matched_span = doc[start:end]
+            print(matched_span.text)
+        print()
+
         print('type of text')
         for token in doc:
             # Index into the Doc to get a single Token
@@ -100,7 +121,23 @@ class LanguageModel():
         print('is_alpha:', [token.is_alpha for token in doc])
         print('is_punct:', [token.is_punct for token in doc])
         print('like_num:', [token.like_num for token in doc])
+        #gets the hash value
+        print(nlp.vocab.strings['iPhone'])
+
         print()
+        matcher = PhraseMatcher(nlp.vocab)
+
+        pattern = nlp("Golden Retriever")
+        matcher.add('DOG', None, pattern)
+        doc = nlp("I have a Golden Retriever")
+
+        # Iterate over the matches
+        for match_id, start, end in matcher(doc):
+            # Get the matched span
+            span = doc[start:end]
+            print('Matched span:', span.text)
+
+        nlp.begin_training
 
 
     def selectNGramModel(self, sentence):
@@ -169,6 +206,20 @@ class LanguageModel():
         """
         B = self.selectNGramModel(sentence)
         D = B.getCandidateDictionary(sentence)
+
+        nlp = English()
+        # change to .lg if needed
+        nlp = spacy.load('en_core_web_sm')  # load model with shortcut link "en"
+
+        # Created by processing a string of text with the nlp object
+        doc = nlp(str(sentence))
+
+        for token in doc:
+            # Print the text and the predicted part-of-speech tag
+            # use to indentify parts of speech in a sentance
+            if(token.text != '^:::^' or token.text != "^::^" or token.text != "$:::$" or token.text != '[' or token.text != ']' or token.text != ','):
+                print(token.text, token.pos_, token.dep_)
+
         if (filter == None):
             S = self.weightedChoice(D)
             return S
@@ -208,10 +259,10 @@ class LanguageModel():
 ###############################################################################
 
 if __name__ == '__main__':
-    hello = LanguageModel()
-    hello.refine()
+    #hello = LanguageModel()
+    #hello.refine()
 
-    '''
+
     print("Now Testing selectNGramModel()")
     print()
 
@@ -445,7 +496,7 @@ if __name__ == '__main__':
     sentence11 = [['rocket', 'to', 'moon']]
     filter6 = ['not moon', 'mars', 'venus']
     testFilter6.updateTrainedData(sentence11)
-    testVal11 = testFilter5.getNextToken(sentence11, filter6)
+    testVal11 = testFilter5.getNextToken(sentence11)
     print(testVal11)
 
     testFilter7 = LanguageModel()
@@ -458,4 +509,3 @@ if __name__ == '__main__':
     print(testFilter7.weightedChoice(dict10))
 
     print("Finished Testing getNextToken")
-    '''
