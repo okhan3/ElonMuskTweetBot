@@ -5,7 +5,7 @@ from spacy.lang.en import English
 from spacy.matcher import PhraseMatcher
 from spacy.matcher import Matcher
 from spacy.tokens import Doc
-from creative_ai.data.dataLoader import prepData
+from creative_ai.data.dataLoader import prepData, prepTweetData
 from creative_ai.models.unigramModel import UnigramModel
 from creative_ai.models.bigramModel import BigramModel
 from creative_ai.models.trigramModel import TrigramModel
@@ -66,6 +66,23 @@ class LanguageModel():
         for model in self.models:
             model.trainModel(text)
 
+    def updateTrainedTweetData(self, text, prepped=True):
+        """
+        Requires: text is a 2D list of strings
+        Modifies: self (this instance of the LanguageModel object)
+        Effects:  adds new trained data to each of the languageModel models.
+        If this data is not prepped (prepped==False) then it is prepepd first
+        before being passed to the models.
+        This function is done for you.
+        """
+
+        if (not prepped):
+            text = prepTweetData(text)
+
+        for model in self.models:
+            model.trainModel(text)
+
+
 
 ###############################################################################
 # Begin Core >> FOR CORE IMPLEMENTATION, DO NOT EDIT ABOVE OF THIS SECTION <<
@@ -74,7 +91,7 @@ class LanguageModel():
     def refine(self):
         nlp = English()
         #change to .lg if needed
-        nlp = spacy.load('en_core_web_sm')  # load model with shortcut link "en"
+        nlp = spacy.load('en')  # load model with shortcut link "en"
 
         # Created by processing a string of text with the nlp object
         doc = nlp("Hello my name is Nikhil.")

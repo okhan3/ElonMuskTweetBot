@@ -100,8 +100,8 @@ def trainTweetModels(tweetDirs, test=False):
     model = LanguageModel()
 
     for ldir in tweetDirs:
-        tweets = prepData(loadTweets(ldir))
-        model.updateTrainedData(tweets)
+        tweets = prepTweetData(loadTweets(ldir))
+        model.updateTrainedTweetData(tweets)
 
     return model
 
@@ -295,7 +295,6 @@ def getTweet():
                 tweetModel = trainTweetModels(TWEETSDIRS)
                 tweetsTrained = True
 
-
             runTweetGenerator(tweetModel)
         elif userInput == 2:
             print('Thank you for using the {} tweet generator!'.format(TEAM))
@@ -317,11 +316,14 @@ def runTweetGenerator(models):
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
     for _ in range(2):
-        Tweet.append(generateTokenSentence(models, 7))
-    tweetPost = ' '
+        Tweet.append(generateTokenSentence(models, 12))
+    tweetPost = " "
     for index in range(len(Tweet)):
-        store = str(Tweet[index])
-        tweetPost += store
+        for index2 in range(len(Tweet[index])):
+            store = str(Tweet[index][index2])
+            tweetPost += store
+            tweetPost += " "
+    print(tweetPost)
     api.update_status(tweetPost)
 
 # This is how python tells if the file is being run as main
