@@ -143,6 +143,11 @@ def runLyricsGenerator(models):
 
     printSongLyrics(verseOne, verseTwo, chorus)
 
+
+
+
+
+
 def runMusicGenerator(models, songName):
     """
     Requires: models is a list of trained models
@@ -268,9 +273,10 @@ def getTweet():
 
     print('Welcome to the Elon Musk tweet generator!'.format(TEAM))
 
+    #ignore links, retweets and replies
     f = open('elonTweets.txt', 'w')
     for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items():
-        if item.full_text[0:2] != "RT":
+        if item.full_text[0:2] != "RT" and item.full_text.count('@') == 0:
             f.write(item.full_text)
             f.write('\n')
     f.close()
@@ -290,17 +296,38 @@ def getTweet():
                 tweetsTrained = True
 
 
-            runLyricsGenerator(tweetModel)
+            runTweetGenerator(tweetModel)
         elif userInput == 2:
             print('Thank you for using the {} tweet generator!'.format(TEAM))
             sys.exit()
 
-
+def runTweetGenerator(models):
+    """
+    Requires: models is a list of a trained nGramModel child class objects
+    Modifies: nothing
+    Effects:  generates a verse one, a verse two, and a chorus, then
+              calls printSongLyrics to print the song out.
+    """
+    Tweet = []
+    consumer_key = "jwRrpCUD5nicMU8bkd31Eh9yV"
+    consumer_secret = "ojFtjsecfskKeXso2IM8Jbekj5bZZCPECubfgmaOOaI9mWnNVg"
+    access_token = "1203360136691011585-oEHF6waSe3DHWyKuWb4zbdLR2x0K5I"
+    access_token_secret = "ShTIm1K0p9aEQKFaa711l97hoymIFUkwtthyV9zsouMVb"
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
+    for _ in range(2):
+        Tweet.append(generateTokenSentence(models, 7))
+    tweetPost = ' '
+    for index in range(len(Tweet)):
+        store = str(Tweet[index])
+        tweetPost += store
+    api.update_status(tweetPost)
 
 # This is how python tells if the file is being run as main
 if __name__ == '__main__':
-    main()
-    #getTweet()
+    #main()
+    getTweet()
 
     # note that if you want to individually test functions from this file,
     # you can comment out main() and call those functions here. Just make

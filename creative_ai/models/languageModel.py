@@ -218,7 +218,7 @@ class LanguageModel():
             # Print the text and the predicted part-of-speech tag
             # use to indentify parts of speech in a sentance
             if(token.text != '^:::^' or token.text != "^::^" or token.text != "$:::$" or token.text != '[' or token.text != ']' or token.text != ','):
-                print(token.text, token.pos_, token.dep_)
+                store = (token.text, token.pos_, token.dep_)
 
         if (filter == None):
             S = self.weightedChoice(D)
