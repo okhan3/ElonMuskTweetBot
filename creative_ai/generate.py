@@ -299,7 +299,7 @@ def getTweet():
 
 # This is how python tells if the file is being run as main
 if __name__ == '__main__':
-     main()
+    main()
     #getTweet()
 
     # note that if you want to individually test functions from this file,
