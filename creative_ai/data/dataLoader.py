@@ -28,8 +28,9 @@ def prepTweetData(text):
     """
     textCopy = []
     # add symbols to end of sentances not tweets
-    for line in tqdm(text, total=len(list(text)), desc="Prepping data", ncols=80):
+    for line in tqdm(text, total=len(list(text)), desc="Prepping data", ncols=280):
         textCopy.append(['^::^', '^:::^'] + line + ['$:::$'])
+
     return textCopy
 
 def saveData(data, dirName):
@@ -145,16 +146,17 @@ def loadTweets(dirName):
     lyrics = []
 
     songs = os.listdir(elonDir)
-    for song in tqdm(songs, total=len(songs), desc="Loading lyric files", ncols=80):
+    for song in tqdm(songs, total=len(songs), desc="Loading tweet files", ncols=280):
         with open(elonDir + song, 'r') as songFile:
             songLines = songFile.readlines()
 
         # clean each line in each song and add if not empty
+
         for line in songLines:
-            line = line.translate(str.maketrans('','',string.punctuation))
-            line = line.lower().strip()
-            if line:
-                lyrics.append(line.split())
+            #line = line.translate(str.maketrans('','',string.punctuation))
+            #line = line.lower().strip()
+            #if line:
+            lyrics.append(line)
 
 
     saveData(lyrics, dirName)

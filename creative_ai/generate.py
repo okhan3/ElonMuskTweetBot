@@ -274,12 +274,14 @@ def getTweet():
     print('Welcome to the Elon Musk tweet generator!'.format(TEAM))
 
     #ignore links, retweets and replies
+    '''
     f = open('elonTweets.txt', 'w')
     for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items():
-        if item.full_text[0:2] != "RT" and item.full_text.count('@') == 0:
+        if item.full_text[0:2] != "RT":
             f.write(item.full_text)
             f.write('\n')
     f.close()
+    '''
 
     mainMenu = Menu(PROMPT2)
 
@@ -315,8 +317,8 @@ def runTweetGenerator(models):
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
-    for _ in range(2):
-        Tweet.append(generateTokenSentence(models, 12))
+    for _ in range(1):
+        Tweet.append(generateTokenSentence(models, 10))
     tweetPost = " "
     for index in range(len(Tweet)):
         for index2 in range(len(Tweet[index])):
@@ -324,7 +326,8 @@ def runTweetGenerator(models):
             tweetPost += store
             tweetPost += " "
     print(tweetPost)
-    api.update_status(tweetPost)
+
+    #api.update_status(tweetPost)
 
 # This is how python tells if the file is being run as main
 if __name__ == '__main__':
