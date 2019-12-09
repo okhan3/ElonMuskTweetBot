@@ -295,7 +295,6 @@ def getTweet():
        if userInput == 1:
            if not tweetsTrained:
                print('Starting tweet generator...')
-               #change two tweetdirs
                tweetModel = trainTweetModels(TWEETSDIRS)
                tweetsTrained = True
 

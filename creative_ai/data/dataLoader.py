@@ -41,21 +41,16 @@ def prepTweetData(text):
             for j in range(len(sentenceList)):
                 if (sentenceList[j] != ' '):
                     hello += sentenceList[j]
-                    if(hello == '&amp;'):
-                        hello = '&'
                     if (j == len(sentenceList) - 1):
-                        #hello += sentenceList[j]
+                        if (hello == '&amp;'):
+                            hello = '&'
                         inputList.append(hello)
-                        inputList.append(' ')
                 else:
+                    if (hello == '&amp;'):
+                        hello = '&'
                     inputList.append(hello)
-                    inputList.append(' ')
                     hello = ' '
-            textCopy.append(['^::^', '^:::^'] + inputList + ['$:::$'])
-        # add symbols to end of sentances not tweets
-        # for line in tqdm(text, total=len(list(text)), desc="Prepping data", ncols=80):
-        # textCopy.append(['^::^', '^:::^'] + line + ['$:::$'])
-
+            textCopy.append(['^::^', '^:::^'] + inputList + [' '] + ['$:::$'])
     return textCopy
 
 def saveData(data, dirName):
