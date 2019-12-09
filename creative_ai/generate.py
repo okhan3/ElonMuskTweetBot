@@ -274,13 +274,14 @@ def getTweet():
    print('Welcome to the Elon Musk tweet generator!'.format(TEAM))
 
    #copy path to your text file
-   f = open('/Users/omarkhan/Documents/EECS 183/FinalProject/Creative_AI_3003_Repository/creative_ai/data/elonMusk/elon/elonTweets.txt', 'w')
+   f = open('/Users/nk/Downloads/Michigan/Computer-Science/Code/Creative_AI_3003_Repository/creative_ai/data/elonMusk/elon/elonTweets.txt', 'w')
    for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items(10000):
        if item.full_text[0:2] != "RT":
            editedString = ' '.join(x for x in item.full_text.split() if not (x.startswith('@') or x.startswith('https')))
            f.write(editedString)
            if item.full_text[len(item.full_text)-1] != '.' and item.full_text[len(item.full_text)-1] != '?' and item.full_text[len(item.full_text)-1] != '!':
                f.write('.')
+           f.write('\n')
    f.close()
 
 

@@ -34,13 +34,16 @@ def prepTweetData(text):
     textCopy = []
     for i in text:
         doc = nlp(i)
-        for token in doc.sent:
+        for token in doc.sents:
             sentenceList = token.text
             inputList = []
             hello = ''
-            for j in sentenceList:
-                if (j != ' '):
-                    hello += j
+            for j in range(len(sentenceList)):
+                if (sentenceList[j] != ' '):
+                    hello += sentenceList[j]
+                    if (j == len(sentenceList) - 1):
+                        #hello += sentenceList[j]
+                        inputList.append(hello)
                 else:
                     inputList.append(hello)
                     hello = ' '
