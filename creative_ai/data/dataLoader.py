@@ -41,11 +41,15 @@ def prepTweetData(text):
             for j in range(len(sentenceList)):
                 if (sentenceList[j] != ' '):
                     hello += sentenceList[j]
+                    if(hello == '&amp;'):
+                        hello = '&'
                     if (j == len(sentenceList) - 1):
                         #hello += sentenceList[j]
                         inputList.append(hello)
+                        inputList.append(' ')
                 else:
                     inputList.append(hello)
+                    inputList.append(' ')
                     hello = ' '
             textCopy.append(['^::^', '^:::^'] + inputList + ['$:::$'])
         # add symbols to end of sentances not tweets
