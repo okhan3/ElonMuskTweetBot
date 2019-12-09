@@ -10,6 +10,8 @@ from creative_ai.utils.menu import Menu
 from creative_ai.data.dataLoader import *
 from creative_ai.models.musicInfo import *
 from creative_ai.models.languageModel import LanguageModel
+#pattern implementation
+#from pattern.en import sentiment
 
 TEAM = 'Turing Machine'
 LYRICSDIRS = ['the_beatles']
@@ -327,7 +329,39 @@ def runTweetGenerator(models):
         for index2 in range(len(Tweet[index])):
             store = str(Tweet[index][index2])
             tweetPost += store
-            #tweetPost += " "
+
+    #Future sentiment and subjectvity analysis 
+    '''
+    store = sentiment(tweetPost)
+    sentiment = 'postive or negative'
+    subjectivity = 'opinion or fact'
+    if (store[0] >= 0 and store[0] < 0.25 ):
+        sentiment = 'highly negative'
+    elif (store[0] >= 0.25 and store[0] < 0.4):
+        sentiment = 'negative'
+    elif (store[0] >= 0.4 and store[0] < 0.6):
+        sentiment = 'neutral'
+    elif (store[0] >= 0.6 and store[0] < 0.75):
+        sentiment = 'postive'
+    elif (store[0] >= 0.75 and store[0] <= 1):
+        sentiment = 'highly postive'
+
+    tweetPost += '\n' + 'Sentiment: ' + sentiment
+
+    if (store[0] >= 0 and store[0] < 0.25 ):
+        subjectivity = 'highly factual'
+    elif (store[0] >= 0.25 and store[0] < 0.4):
+        subjectivity = 'mostly fact'
+    elif (store[0] >= 0.4 and store[0] < 0.6):
+        subjectivity = 'not fact or opinion'
+    elif (store[0] >= 0.6 and store[0] < 0.75):
+        subjectivity = 'mostly opinion'
+    elif (store[0] >= 0.75 and store[0] <= 1):
+        subjectivity = 'personal opinion'
+
+    tweetPost += '\n' + 'Subjectivity: ' + subjectivity
+    '''
+
     print(tweetPost)
 
     api.update_status(tweetPost)
