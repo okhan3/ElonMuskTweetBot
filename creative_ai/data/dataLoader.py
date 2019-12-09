@@ -29,6 +29,19 @@ def prepData(text):
         textCopy.append(['^::^', '^:::^'] + line + ['$:::$'])
     return textCopy
 
+def prepLinkData(text):
+    """
+    Returns a copy of text where each inner list starts with the special symbols
+    '^::^' and '^:::^', and ends with the symbol '$:::$'.
+    #>>> prepData(['hello', 'goodbye'])
+    ['^::^', '^:::^', 'hello', 'goodbye', '$:::$]
+    """
+    textCopy = []
+
+    for line in tqdm(text, total=len(list(text)), desc="Prepping data", ncols=80):
+        textCopy.append(line)
+    return textCopy
+
 
 def prepTweetData(text):
     textCopy = []

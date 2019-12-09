@@ -16,6 +16,7 @@ from creative_ai.models.languageModel import LanguageModel
 TEAM = 'Turing Machine'
 LYRICSDIRS = ['the_beatles']
 TWEETSDIRS = ['elon']
+LINKDIRS = ['elon2']
 TESTLYRICSDIRS = ['the_beatles_test']
 MUSICDIRS = ['gamecube']
 WAVDIR = 'wav/'
@@ -104,6 +105,27 @@ def trainTweetModels(tweetDirs, test=False):
     for ldir in tweetDirs:
         tweets = prepTweetData(loadTweets(ldir))
         model.updateTrainedTweetData(tweets)
+
+    return model
+
+def trainLinkModels(linkDirs, test=False):
+    """
+    Requires: lyricDirs is a list of directories in data/lyrics/
+    Modifies: nothing
+    Effects:  loads data from the folders in the lyricDirs list,
+              using the pre-written DataLoader class, then creates an
+              instance of each of the NGramModel child classes and trains
+              them using the text loaded from the data loader. The list
+              should be in tri-, then bi-, then unigramModel order.
+              Returns the list of trained models.
+
+    This function is done for you.
+    """
+    model = LanguageModel()
+
+    for ldir in linkDirs:
+        links = prepLinkData(loadTweets(ldir))
+        model.updateTrainedLinkData(links)
 
     return model
 
@@ -276,8 +298,8 @@ def getTweet():
    print('Welcome to the Elon Musk tweet generator!'.format(TEAM))
 
    #copy path to your text file
-   f = open('/Users/omarkhan/Documents/EECS 183/FinalProject/Creative_AI_3003_Repository/creative_ai/data/elonMusk/elon/elonTweets.txt', 'w')
-   l = open('/Users/omarkhan/Documents/EECS 183/FinalProject/Creative_AI_3003_Repository/creative_ai/data/mediaLinks/links/links.txt', 'w')
+   f = open('/Users/nk/Downloads/Michigan/Computer-Science/Code/Creative_AI_3003_Repository/creative_ai/data/elonMusk/elon/elonTweets.txt', 'w')
+   l = open('/Users/nk/Downloads/Michigan/Computer-Science/Code/Creative_AI_3003_Repository/creative_ai/data/elonMusk/elon2/elonLinks.txt', 'w')
 
    for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items(1000):
        if item.full_text[0:2] != "RT":
@@ -304,6 +326,7 @@ def getTweet():
            if not tweetsTrained:
                print('Starting tweet generator...')
                tweetModel = trainTweetModels(TWEETSDIRS)
+               linkModel = trainLinkModels(LINKDIRS)
                tweetsTrained = True
 
            runTweetGenerator(tweetModel)

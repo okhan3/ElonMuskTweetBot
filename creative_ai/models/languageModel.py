@@ -5,7 +5,7 @@ from spacy.lang.en import English
 from spacy.matcher import PhraseMatcher
 from spacy.matcher import Matcher
 from spacy.tokens import Doc
-from creative_ai.data.dataLoader import prepData, prepTweetData
+from creative_ai.data.dataLoader import prepData, prepTweetData, prepLinkData
 from creative_ai.models.unigramModel import UnigramModel
 from creative_ai.models.bigramModel import BigramModel
 from creative_ai.models.trigramModel import TrigramModel
@@ -78,6 +78,22 @@ class LanguageModel():
 
         if (not prepped):
             text = prepTweetData(text)
+
+        for model in self.models:
+            model.trainModel(text)
+
+    def updateTrainedLinkData(self, text, prepped=True):
+        """
+        Requires: text is a 2D list of strings
+        Modifies: self (this instance of the LanguageModel object)
+        Effects:  adds new trained data to each of the languageModel models.
+        If this data is not prepped (prepped==False) then it is prepepd first
+        before being passed to the models.
+        This function is done for you.
+        """
+
+        if (not prepped):
+            text = prepLinkData(text)
 
         for model in self.models:
             model.trainModel(text)
