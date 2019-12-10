@@ -189,16 +189,15 @@ def loadTweets(dirName):
     lyrics = []
 
     songs = os.listdir(elonDir)
-    for song in tqdm(songs, total=len(songs), desc="Loading tweet files", ncols=280):
+    for song in tqdm(songs, total=len(songs), desc="Loading tweet files", ncols=80):
         with open(elonDir + song, 'r') as songFile:
             songLines = songFile.readlines()
 
         # clean each line in each song and add if not empty
 
         for line in songLines:
-            #line = line.translate(str.maketrans('','',string.punctuation))
-            #line = line.lower().strip()
-            #if line:
+
+            #could be a problem with appending newlines check here
             lyrics.append(line)
 
 

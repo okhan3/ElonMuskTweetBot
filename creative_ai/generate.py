@@ -350,7 +350,7 @@ def runTweetGenerator(models):
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
-    for _ in range(2):
+    for _ in range(3):
         Tweet.append(generateTokenSentence(models, 10))
 
     tweetPost = " "
