@@ -48,25 +48,33 @@ def prepLinkData(text):
 
 def prepTweetData(text):
     textCopy = []
+
+    for line in tqdm(text, total=len(list(text)), desc="Prepping data", ncols=80):
+        textCopy.append(['^::^', '^:::^'] + line + ['$:::$'])
+    return textCopy
+
+    '''
     for i in text:
-        doc = nlp(i)
-        for token in doc.sents:
-            sentenceList = token.text
-            inputList = []
-            hello = ''
-            for j in range(len(sentenceList)):
-                if (sentenceList[j] != ' '):
-                    hello += sentenceList[j]
-                    if (j == len(sentenceList) - 1):
+        for x in i
+            doc = nlp(x)
+            for token in doc.sents:
+                sentenceList = token.text
+                inputList = []
+                hello = ''
+                for j in range(len(sentenceList)):
+                    if (sentenceList[j] != ' '):
+                        hello += sentenceList[j]
+                        if (j == len(sentenceList) - 1):
+                            if (hello == '&amp;'):
+                                hello = '&'
+                            inputList.append(hello)
+                    else:
                         if (hello == '&amp;'):
                             hello = '&'
                         inputList.append(hello)
-                else:
-                    if (hello == '&amp;'):
-                        hello = '&'
-                    inputList.append(hello)
-                    hello = ' '
-            textCopy.append(['^::^', '^:::^'] + inputList + [' '] + ['$:::$'])
+                        hello = ' '
+                textCopy.append(['^::^', '^:::^'] + inputList + [' '] + ['$:::$'])
+    '''
     return textCopy
 
 def saveData(data, dirName):
@@ -203,7 +211,7 @@ def loadTweets(dirName):
             #could be a problem with appending newlines check here
             #editedString = ' '.join(line for line in line.split() if not line.startswith('\n'))
             #l
-            lyrics.append(line)
+            lyrics.append(line.split())
 
 
     saveData(lyrics, dirName)

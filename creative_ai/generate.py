@@ -358,6 +358,7 @@ def runTweetGenerator(models):
         for index2 in range(len(Tweet[index])):
             store = str(Tweet[index][index2])
             tweetPost += store
+            tweetPost += ' '
 
     l = open('elonLinks.txt')
     links = l.readlines()
