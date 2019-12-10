@@ -10,6 +10,7 @@ setup(
         'tqdm',
         'wheel',
         'pysynth @ https://github.com/eecs183/183pysynth/archive/master.zip',
-        'spacy'
+        'spacy',
+        'tweepy'
     ]
 )

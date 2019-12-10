@@ -198,6 +198,8 @@ def loadTweets(dirName):
         for line in songLines:
 
             #could be a problem with appending newlines check here
+            #editedString = ' '.join(line for line in line.split() if not line.startswith('\n'))
+            #l
             lyrics.append(line)
 
 
