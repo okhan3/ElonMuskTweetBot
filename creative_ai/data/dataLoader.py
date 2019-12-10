@@ -38,6 +38,9 @@ def prepLinkData(text):
     """
     textCopy = []
 
+    total = len(list(text))
+    #print(total)
+
     for line in tqdm(text, total=len(list(text)), desc="Prepping data", ncols=80):
         textCopy.append(line)
     return textCopy
