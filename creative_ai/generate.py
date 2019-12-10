@@ -298,8 +298,8 @@ def getTweet():
    print('Welcome to the Elon Musk tweet generator!'.format(TEAM))
 
    #copy path to your text file
-   f = open('/Users/nk/Downloads/Michigan/Computer-Science/Code/Creative_AI_3003_Repository/creative_ai/data/elonMusk/elon/elonTweets.txt', 'w')
-   l = open('/Users/nk/Downloads/Michigan/Computer-Science/Code/Creative_AI_3003_Repository/creative_ai/data/elonMusk/elon2/elonLinks.txt', 'w')
+   f = open('/Users/omarkhan/Documents/EECS 183/FinalProject/Creative_AI_3003_Repository/creative_ai/data/elonMusk/elon/elonTweets.txt', 'w')
+   l = open('/Users/omarkhan/Documents/EECS 183/FinalProject/Creative_AI_3003_Repository/creative_ai/data/elonMusk/elon2/elonLinks.txt', 'w')
 
    for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items(1000):
        if item.full_text[0:2] != "RT":
@@ -358,6 +358,12 @@ def runTweetGenerator(models):
         for index2 in range(len(Tweet[index])):
             store = str(Tweet[index][index2])
             tweetPost += store
+
+    l = open('/Users/omarkhan/Documents/EECS 183/FinalProject/Creative_AI_3003_Repository/creative_ai/data/elonMusk/elon2/elonLinks.txt')
+    links = l.readlines()
+    x = random.randint(0,len(links)-1)
+    tweetPost = tweetPost + " " + links[x]
+
 
     #Future sentiment and subjectvity analysis
     '''
