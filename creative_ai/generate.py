@@ -301,7 +301,7 @@ def getTweet():
    f = open('elonTweets.txt', 'w')
    l = open('elonLinks.txt', 'w')
 
-   for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items(1000):
+   for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items(100):
        if item.full_text[0:2] != "RT":
            for x in item.full_text.split():
                if x.startswith('https') and x[len(x)-1] != "." and x[len(x)-1] != "!":
@@ -350,7 +350,7 @@ def runTweetGenerator(models):
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
-    for _ in range(3):
+    for _ in range(2):
         Tweet.append(generateTokenSentence(models, 10))
 
     tweetPost = " "
@@ -363,6 +363,7 @@ def runTweetGenerator(models):
     links = l.readlines()
     x = random.randint(0,len(links)-1)
     tweetPost = tweetPost + " " + links[x]
+    l.close()
 
 
     #Future sentiment and subjectvity analysis
