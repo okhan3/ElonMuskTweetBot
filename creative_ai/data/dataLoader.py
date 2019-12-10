@@ -207,11 +207,10 @@ def loadTweets(dirName):
         # clean each line in each song and add if not empty
 
         for line in songLines:
-
-            #could be a problem with appending newlines check here
-            #editedString = ' '.join(line for line in line.split() if not line.startswith('\n'))
-            #l
-            lyrics.append(line.split())
+            line = line.translate(str.maketrans('', '', string.punctuation))
+            line = line.lower().strip()
+            if line:
+                lyrics.append(line.split())
 
 
     saveData(lyrics, dirName)
