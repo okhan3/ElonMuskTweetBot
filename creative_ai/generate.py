@@ -218,11 +218,12 @@ def generateTokenSentence(model, desiredLength):
     x = model.getNextToken(L)
     while sentenceTooLong(desiredLength,len(L) - 2) == False and x != "$:::$":
         L.append(x)
-        L = grammarRules(L)
+        L = grammarRules(L, desiredLength)
         x = model.getNextToken(L)
+    L.append('.')
     return L[2:]
 
-def grammarRules(tweet):
+def grammarRules(tweet, desiredLength):
     """ this capitalizes the first word """
     if len(tweet) is 3:
         firstword = tweet[2]
@@ -233,6 +234,7 @@ def grammarRules(tweet):
     for word in range(len(tweet)):
         if tweet[word] == '&amp;':
             tweet[word] = '&'
+
     return tweet
 
 ###############################################################################
