@@ -226,13 +226,13 @@ def grammarRules(tweet):
     """ this capitalizes the first word """
     if len(tweet) is 3:
         firstword = tweet[2]
-        firstword[0].upper()
+        firstword = firstword.capitalize()
         tweet[2] = firstword
 
     """ this removes &amp and replaces it with &"""
-    for i in tweet:
-        if i is '&amp;':
-            i = '&'
+    for word in range(len(tweet)):
+        if tweet[word] == '&amp;':
+            tweet[word] = '&'
     return tweet
 
 ###############################################################################
