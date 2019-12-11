@@ -47,6 +47,7 @@ class UnigramModel():
                         self.nGramCounts[key] = self.nGramCounts[key] + 1
                     else:
                         self.nGramCounts[key] = 1
+        #print(self.nGramCounts)
         return self.nGramCounts
 
 

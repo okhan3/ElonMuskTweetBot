@@ -101,7 +101,7 @@ def trainTweetModels(tweetDirs, test=False):
     This function is done for you.
     """
     model = LanguageModel()
-
+    #import pdb;pdb.set_trace()
     for ldir in tweetDirs:
         tweets = prepTweetData(loadTweets(ldir))
         model.updateTrainedTweetData(tweets)

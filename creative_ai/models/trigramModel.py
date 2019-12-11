@@ -62,7 +62,7 @@ class TrigramModel():
                     # Increments word frequency
                     self.nGramCounts[seed][text[i][j-1]][text[i][j]] += 1
 
-        print(self.nGramCounts)
+        #print(self.nGramCounts)
         return self.nGramCounts
 
     def trainingDataHasNGram(self, sentence):

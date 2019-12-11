@@ -169,6 +169,7 @@ def loadLyrics(dirName):
         for line in songLines:
             line = line.translate(str.maketrans('','',string.punctuation))
             line = line.lower().strip()
+            #print(line.split())
             if line:
                 lyrics.append(line.split())
 
