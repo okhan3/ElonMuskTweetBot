@@ -220,7 +220,7 @@ def generateTokenSentence(model, desiredLength):
         L.append(x)
         L = grammarRules(L, desiredLength)
         x = model.getNextToken(L)
-    L.append('.')
+    L[-1] += ('.')
     return L[2:]
 
 def grammarRules(tweet, desiredLength):
@@ -231,9 +231,9 @@ def grammarRules(tweet, desiredLength):
         tweet[2] = firstword
 
     """ this removes &amp and replaces it with &"""
-    for word in range(len(tweet)):
-        if tweet[word] == '&amp;':
-            tweet[word] = '&'
+    for i in range(len(tweet)):
+        if tweet[i] == '&amp;':
+            tweet[i] = '&'
 
     return tweet
 
