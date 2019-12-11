@@ -246,7 +246,11 @@ def grammarRules(tweet, desiredLength):
 
     """ this removes amp and replaces it with & """
     for i in range(len(tweet)):
+<<<<<<< HEAD
         if tweet[i] is 'amp':
+=======
+        if tweet[i] is '&amp;' or tweet[i] is 'amp' or tweet[i] is '&amp' or tweet[i] is 'amp;':
+>>>>>>> 706ab33e761bd33c13342e7634101dab57627611
             tweet[i] = '&'
 
     return tweet
@@ -329,13 +333,13 @@ def getTweet():
    f = open('elonTweets.txt', 'w')
    l = open('elonLinks.txt', 'w')
 
-   for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items():
+   for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items(100):
        if item.full_text[0:2] != "RT":
            for x in item.full_text.split():
                if x.startswith('https') and x[len(x)-1] != "." and x[len(x)-1] != "!":
                    l.write(x)
                    l.write('\n')
-           editedString = ' '.join(x for x in item.full_text.split() if not x.startswith('@'))
+           editedString = ' '.join(x for x in item.full_text.split() if not x.startswith('@') and not x.startswith('https'))
            f.write(editedString)
            if item.full_text[len(item.full_text)-1] != '.' and item.full_text[len(item.full_text)-1] != '?' and item.full_text[len(item.full_text)-1] != '!':
                f.write('.')
@@ -390,8 +394,10 @@ def runTweetGenerator(models):
 
     l = open('elonLinks.txt')
     links = l.readlines()
-    x = random.randint(0,len(links)-1)
-    tweetPost = tweetPost + " " + links[x]
+    chance = random.randint(0,4)
+    if chance == 1:
+        x = random.randint(0,len(links)-1)
+        tweetPost = tweetPost + " " + links[x]
     l.close()
 
 
