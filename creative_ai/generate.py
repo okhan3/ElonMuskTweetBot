@@ -214,28 +214,43 @@ def generateTokenSentence(model, desiredLength):
               For more details about generating a sentence using the
               NGramModels, see the spec.
     """
-    L = ["^::^", "^:::^"]
-    x = model.getNextToken(L)
-    while sentenceTooLong(desiredLength,len(L) - 2) == False and x != "$:::$":
-        L.append(x)
-        L = grammarRules(L, desiredLength)
-        x = model.getNextToken(L)
-    L[-1] += ('.')
-    return L[2:]
+    sentence = ["^::^", "^:::^"]
+    x = model.getNextToken(sentence)
+
+    while sentenceTooLong(desiredLength,len(sentence) - 2) == False and x != "$:::$":
+        sentence.append(x)
+        sentence = grammarRules(sentence, desiredLength)
+        x = model.getNextToken(sentence)
+
+    """ this adds a ./.../!/? to the end of a the sentence """
+    i = random.randint(0, 7)
+    if i in range(0, 5):
+        sentence[-1] += '.'
+    elif i is 5:
+        sentence[-1] += '...'
+    elif i is 6:
+        sentence[-1] += '!'
+    else:
+        sentence[-1] += '?'
+
+    return sentence[2:]
+
+
 
 def grammarRules(tweet, desiredLength):
-    """ this capitalizes the first word """
+    """ this capitalizes the first word in a tweet """
     if len(tweet) is 3:
-        firstword = tweet[2]
-        firstword = firstword.capitalize()
-        tweet[2] = firstword
+        firstWord = tweet[2]
+        firstWord = firstWord.capitalize()
+        tweet[2] = firstWord
 
-    """ this removes &amp and replaces it with &"""
+    """ this removes amp and replaces it with & """
     for i in range(len(tweet)):
-        if tweet[i] == '&amp;':
+        if tweet[i] is '&amp;' or tweet[i] is 'amp' or tweet[i] is '&amp' or tweet[i] is 'amp;':
             tweet[i] = '&'
 
     return tweet
+
 
 ###############################################################################
 # End Core
