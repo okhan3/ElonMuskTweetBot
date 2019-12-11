@@ -202,7 +202,6 @@ def runMusicGenerator(models, songName):
 # Begin Core >> FOR CORE IMPLEMENTION, DO NOT EDIT OUTSIDE OF THIS SECTION <<
 ###############################################################################
 
-
 def generateTokenSentence(model, desiredLength):
     """
     Requires: model is a single trained languageModel object.
@@ -219,10 +218,22 @@ def generateTokenSentence(model, desiredLength):
     x = model.getNextToken(L)
     while sentenceTooLong(desiredLength,len(L) - 2) == False and x != "$:::$":
         L.append(x)
+        L = grammarRules(L)
         x = model.getNextToken(L)
-
     return L[2:]
 
+def grammarRules(tweet):
+    """ this capitalizes the first word """
+    if len(tweet) is 3:
+        firstword = tweet[2]
+        firstword[0].upper()
+        tweet[2] = firstword
+
+    """ this removes &amp and replaces it with &"""
+    for i in tweet:
+        if i is '&amp;':
+            i = '&'
+    return tweet
 
 ###############################################################################
 # End Core
