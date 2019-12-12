@@ -496,10 +496,10 @@ def runTweetGenerator(models):
         subjectivity = 'personal opinion'
     tweetPost += '\n' + 'Subjectivity: ' + subjectivity
     '''
-
+    tweetPost += ' #eecs183'
     print(tweetPost)
 
-    #api.update_status(tweetPost)
+    api.update_status(tweetPost)
 
 # This is how python tells if the file is being run as main
 if __name__ == '__main__':
