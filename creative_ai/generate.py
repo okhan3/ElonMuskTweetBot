@@ -216,6 +216,9 @@ def generateTokenSentence(model, desiredLength):
         sentence = grammarRules(sentence)
         x = model.getNextToken(sentence)
 
+        while x == "$:::$" and len(sentence) - 2 < 3:
+            x = model.getNextToken(sentence)
+
         if x == "$:::$" or desiredLength == len(sentence) - 2:
             endSentence(sentence)
             # x = sentenceLength(x, sentence)
@@ -233,6 +236,7 @@ def generateTokenSentence(model, desiredLength):
 
     '''print(sentence[2:])'''
     return sentence[2:]
+
 '''
 def sentenceLength(model, x, tweet):
     nlp = spacy.load("en_core_web_sm")
@@ -274,8 +278,8 @@ def grammarRules(tweet):
         tweetString += ' '
 
     doc = nlp(tweetString)
-    #for token in doc:
-        # print(token.text, ' : ', token.pos_, ':', token.tag_, ':', token.dep_)
+    for token in doc:
+        print(token.text, ' : ', token.pos_, ':', token.tag_, ':', token.dep_)
 
     '''
     if len(tweet) - 2 > 1:
@@ -314,9 +318,6 @@ def grammarRules(tweet):
     # for i in range(len(tweet)):
     #     if tweet[i] is '&amp;' or tweet[i] is 'amp' or tweet[i] is '&amp' or tweet[i] is 'amp;':
     #         tweet[i] = '&'
-
-
-
 
     return tweet
 
@@ -499,7 +500,7 @@ def runTweetGenerator(models):
 
     print(tweetPost)
 
-    #api.update_status(tweetPost)
+    api.update_status(tweetPost)
 
 # This is how python tells if the file is being run as main
 if __name__ == '__main__':
