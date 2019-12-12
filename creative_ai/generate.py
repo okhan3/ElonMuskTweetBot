@@ -371,7 +371,7 @@ def getTweet():
    f = open('data/elonMusk/elon/elonTweets.txt', 'w')
    l = open('data/elonMusk/elon2/elonLinks.txt', 'w')
 
-   for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items(100):
+   for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items():
        if item.full_text[0:2] != "RT":
            for x in item.full_text.split():
                if x.startswith('https') and x[len(x)-1] != "." and x[len(x)-1] != "!":
@@ -383,8 +383,6 @@ def getTweet():
                    editedString[index] = "and"
            editedString = ' '.join(x for x in editedString if not (x.startswith('@') or x.startswith('https')))
            f.write(editedString)
-           if editedString[len(editedString)-1] != '.' and editedString[len(editedString)-1] != '?' and editedString[len(editedString)-1] != '!':
-               f.write('.')
            f.write('\n')
 
    f.close()
@@ -437,7 +435,7 @@ def runTweetGenerator(models):
 
     l = open('data/elonMusk/elon2/elonLinks.txt')
     links = l.readlines()
-    chance = random.randint(0,4)
+    chance = random.randint(0,2)
     if chance == 1:
         x = random.randint(1,len(links)-1)
         tweetPost = tweetPost + " " + links[x]
