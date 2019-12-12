@@ -53,23 +53,27 @@ def prepTweetData(text):
         textCopy.append(['^::^', '^:::^'] + line + ['$:::$'])
     return textCopy
 
+
     '''
-    for i in text:
-        for x in i
-            doc = nlp(x)
-            for token in doc.sents:
-                sentenceList = token.text
-                inputList = []
-                hello = ''
-                for j in range(len(sentenceList)):
-                    if (sentenceList[j] != ' '):
-                        hello += sentenceList[j]
-                        if (j == len(sentenceList) - 1):
-                            if (hello == '&amp;'):
-                                hello = '&'
-                            inputList.append(hello)
+    for i in range(len(text)):
+        empty = ''
+        for index in text[i]:
+            empty += index
+            empty += ' '
+        doc = nlp(empty)
+        for token in doc.sents:
+            sentenceList = token.text
+            inputList = []
+            hello = ''
+            for j in range(len(sentenceList)):
+                if (sentenceList[j] != ' '):
+                    hello += sentenceList[j]
+                    if (j == len(sentenceList) - 1):
+                        if (hello == 'amp;'):
+                            hello = '&'
+                        inputList.append(hello)
                     else:
-                        if (hello == '&amp;'):
+                        if (hello == 'amp;'):
                             hello = '&'
                         inputList.append(hello)
                         hello = ' '

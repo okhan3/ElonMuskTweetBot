@@ -10,6 +10,8 @@ from creative_ai.utils.menu import Menu
 from creative_ai.data.dataLoader import *
 from creative_ai.models.musicInfo import *
 from creative_ai.models.languageModel import LanguageModel
+import spacy
+from spacy.lang.en import English
 #pattern implementation
 #from pattern.en import sentiment
 
@@ -219,8 +221,10 @@ def generateTokenSentence(model, desiredLength):
 
     while sentenceTooLong(desiredLength,len(sentence) - 2) == False and x != "$:::$":
         sentence.append(x)
-        sentence = grammarRules(sentence, desiredLength)
+        sentence = grammarRules(sentence)
         x = model.getNextToken(sentence)
+        if x == "$:::$" or desiredLength == len(sentence) - 2:
+            endSentence(sentence)
 
     """ this adds a ./.../!/? to the end of a the sentence """
     i = random.randint(0, 7)
@@ -233,13 +237,56 @@ def generateTokenSentence(model, desiredLength):
     else:
         sentence[-1] += '?'
 
+    print(sentence[2:])
     return sentence[2:]
 
+def endSentence(tweet):
+    nlp = spacy.load("en_core_web_sm")
+    tweetString = ''
+    for i in tweet[2:]:
+        tweetString += i
+        tweetString += ' '
 
+    doc = nlp(tweetString)
+    if doc[-1].pos_ == 'AUX' or doc[-1].pos_ == 'SCONJ' or doc[-1].pos_ == 'ADP' or doc[-1].pos_ == 'DET':
+        tweet.remove(tweet[-1])
 
-def grammarRules(tweet, desiredLength):
+def grammarRules(tweet):
     """ this capitalizes the first word in a tweet """
+    nlp = spacy.load("en_core_web_sm")
+    tweetString = ''
+    for i in tweet[2:]:
+        tweetString += i
+        tweetString += ' '
+
+    doc = nlp(tweetString)
+    # for token in doc:
+        # print(token.text, ' : ', token.pos_, ':', token.tag_, ':', token.dep_)
+
+    '''
+    if len(tweet) - 2 > 1:
+        for i in range(1, len(tweet) - 2):
+            if doc[i].pos_ == 'ADJ':
+                if doc[i - 1].pos_ == 'NOUN' or doc[i - 1].pos_ == 'PROPN':
+                    tweet.remove(tweet[i + 2])
+            if doc[i].pos_ == 'AUX':
+                if doc[i - 1].pos_ != 'NOUN' or doc[i - 1].pos_ != 'PROPN' or doc[i - 1].pos_ != 'VERB':
+                    tweet.remove(tweet[i + 2])
+            if doc[i].pos_ == 'VERB':
+                if doc[i - 1].pos_ != 'NOUN' or doc[i - 1].pos_ != 'PROPN':
+                    tweet.remove(tweet[i + 2])
+            if doc[i].pos_ == 'NOUN':
+                if doc[i - 1].pos_ == 'NOUN':
+                    tweet.remove(tweet[i + 2])
+            if doc[i].pos_ == 'ADP':
+                if doc[i - 1].pos_ == 'PRON':
+                    tweet.remove(tweet[i + 2])
+            if doc[i].pos_ == 'INTJ':
+                tweet[i + 2] += ','
+    '''
     if len(tweet) is 3:
+        if doc[0].pos_ == 'INTJ':
+            tweet[2] += ','
         firstWord = tweet[2]
         firstWord = firstWord.capitalize()
         tweet[2] = firstWord
@@ -248,6 +295,9 @@ def grammarRules(tweet, desiredLength):
     for i in range(len(tweet)):
         if tweet[i] is '&amp;' or tweet[i] is 'amp' or tweet[i] is '&amp' or tweet[i] is 'amp;':
             tweet[i] = '&'
+
+
+
 
     return tweet
 
@@ -325,11 +375,12 @@ def getTweet():
 
    print('Welcome to the Elon Musk tweet generator! Now loading... Please be patient :]'.format(TEAM))
 
+
    #copy path to your text file
    f = open('elonTweets.txt', 'w')
    l = open('elonLinks.txt', 'w')
-
-   for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items(100):
+   '''
+   for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items():
        if item.full_text[0:2] != "RT":
            for x in item.full_text.split():
                if x.startswith('https') and x[len(x)-1] != "." and x[len(x)-1] != "!":
@@ -340,6 +391,7 @@ def getTweet():
            if item.full_text[len(item.full_text)-1] != '.' and item.full_text[len(item.full_text)-1] != '?' and item.full_text[len(item.full_text)-1] != '!':
                f.write('.')
            f.write('\n')
+    '''
    f.close()
    l.close()
 
