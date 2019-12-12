@@ -392,6 +392,7 @@ def getTweet():
    api = tweepy.API(auth)
 
    print('Welcome to the Elon Musk tweet generator! Now loading... Please be patient :]'.format(TEAM))
+   print('Check out our twitter account @ElonMuskAiBot'.format(TEAM))
 
 
    #copy path to your text file
