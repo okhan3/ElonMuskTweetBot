@@ -304,7 +304,7 @@ def grammarRules(tweet):
                 tweet[i + 2] += ','
     '''
     if len(tweet) is 3:
-        if doc[0].pos_ == 'ADP':
+        if doc[0].pos_ == 'ADP' or doc[0].pos_ == 'PART' or doc[0].pos_ == 'SCONJ':
             tweet.remove(tweet[2])
 
     if len(tweet) is 3:
@@ -462,10 +462,8 @@ def runTweetGenerator(models):
             tweetPost += ' '
     l = open('data/elonMusk/elon2/elonLinks.txt')
     links = l.readlines()
-    chance = random.randint(0,2) 
-    if chance == 1:
-        x = random.randint(1,len(links)-1)
-        tweetPost = tweetPost + " " + links[x]
+    x = random.randint(1,len(links)-1)
+    tweetPost = tweetPost + " " + links[x]
     l.close()
 
 
