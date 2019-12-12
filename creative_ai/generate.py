@@ -27,7 +27,6 @@ def output_models(val, output_fn = None):
     Modifies: nothing
     Effects:  outputs the dictionary val to the given filename. Used
               in Test mode.
-
     This function has been done for you.
     """
     from pprint import pprint
@@ -43,7 +42,6 @@ def sentenceTooLong(desiredLength, currentLength):
     Modifies: nothing
     Effects:  returns a bool indicating whether or not this sentence should
               be ended based on its length.
-
     This function has been done for you.
     """
     STDEV = 1
@@ -55,7 +53,6 @@ def printSongLyrics(verseOne, verseTwo, chorus):
     Requires: verseOne, verseTwo, and chorus are lists of lists of strings
     Modifies: nothing
     Effects:  prints the song.
-
     This function is done for you.
     """
     verses = [verseOne, chorus, verseTwo, chorus]
@@ -76,7 +73,6 @@ def trainLyricModels(lyricDirs, test=False):
               them using the text loaded from the data loader. The list
               should be in tri-, then bi-, then unigramModel order.
               Returns the list of trained models.
-
     This function is done for you.
     """
     model = LanguageModel()
@@ -97,7 +93,6 @@ def trainTweetModels(tweetDirs, test=False):
               them using the text loaded from the data loader. The list
               should be in tri-, then bi-, then unigramModel order.
               Returns the list of trained models.
-
     This function is done for you.
     """
     model = LanguageModel()
@@ -118,7 +113,6 @@ def trainLinkModels(linkDirs, test=False):
               them using the text loaded from the data loader. The list
               should be in tri-, then bi-, then unigramModel order.
               Returns the list of trained models.
-
     This function is done for you.
     """
     model = LanguageModel()
@@ -138,7 +132,6 @@ def trainMusicModels(musicDirs):
               and takes a music directory name instead of an artist name.
               Returns a list of trained models in order of tri-, then bi-, then
               unigramModel objects.
-
     This function is done for you.
     """
     model = LanguageModel()
@@ -210,7 +203,6 @@ def generateTokenSentence(model, desiredLength):
     Effects:  returns a list of strings where each string is a word in the
               generated sentence. The returned list should NOT include
               any of the special starting or ending symbols.
-
               For more details about generating a sentence using the
               NGramModels, see the spec.
     """
@@ -246,11 +238,7 @@ def grammarRules(tweet, desiredLength):
 
     """ this removes amp and replaces it with & """
     for i in range(len(tweet)):
-<<<<<<< HEAD
-        if tweet[i] is 'amp':
-=======
         if tweet[i] is '&amp;' or tweet[i] is 'amp' or tweet[i] is '&amp' or tweet[i] is 'amp;':
->>>>>>> 706ab33e761bd33c13342e7634101dab57627611
             tweet[i] = '&'
 
     return tweet
@@ -281,7 +269,6 @@ def main():
     Modifies: Nothing
     Effects:  This is your main function, which is done for you. It runs the
               entire generator program for both the reach and the core.
-
               It prompts the user to choose to generate either lyrics or music.
     """
 
@@ -333,13 +320,18 @@ def getTweet():
    f = open('elonTweets.txt', 'w')
    l = open('elonLinks.txt', 'w')
 
-   for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items(100):
+   for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items():
        if item.full_text[0:2] != "RT":
            for x in item.full_text.split():
                if x.startswith('https') and x[len(x)-1] != "." and x[len(x)-1] != "!":
                    l.write(x)
                    l.write('\n')
            editedString = ' '.join(x for x in item.full_text.split() if not x.startswith('@') and not x.startswith('https'))
+           editedString.replace('&amp;','&')
+           if (editedString == '&amp;'):
+               editedString = '&'
+           editedString.translate({ord(i): None for i in '&amp;'})
+           #print(editedString)
            f.write(editedString)
            if item.full_text[len(item.full_text)-1] != '.' and item.full_text[len(item.full_text)-1] != '?' and item.full_text[len(item.full_text)-1] != '!':
                f.write('.')
@@ -383,12 +375,14 @@ def runTweetGenerator(models):
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
     for _ in range(2):
-        Tweet.append(generateTokenSentence(models, 7))
+        Tweet.append(generateTokenSentence(models, 10))
 
     tweetPost = " "
     for index in range(len(Tweet)):
         for index2 in range(len(Tweet[index])):
             store = str(Tweet[index][index2])
+            if (store == 'amp' or store == '&amp;' or store == 'amp;'):
+                store = '&'
             tweetPost += store
             tweetPost += ' '
 
@@ -416,9 +410,7 @@ def runTweetGenerator(models):
         sentiment = 'postive'
     elif (store[0] >= 0.75 and store[0] <= 1):
         sentiment = 'highly postive'
-
     tweetPost += '\n' + 'Sentiment: ' + sentiment
-
     if (store[0] >= 0 and store[0] < 0.25 ):
         subjectivity = 'highly factual'
     elif (store[0] >= 0.25 and store[0] < 0.4):
@@ -429,7 +421,6 @@ def runTweetGenerator(models):
         subjectivity = 'mostly opinion'
     elif (store[0] >= 0.75 and store[0] <= 1):
         subjectivity = 'personal opinion'
-
     tweetPost += '\n' + 'Subjectivity: ' + subjectivity
     '''
 
@@ -457,7 +448,6 @@ if __name__ == '__main__':
     print(generateTokenSentence(x,4))
     print(generateTokenSentence(x,5))
     print(generateTokenSentence(x,10))
-
     #next set of tests
     text2 = [["^::^", "^:::^", 'rocket', 'to', 'the', 'moon', "$:::$"], ["^::^", "^:::^", 'dad', 'is', 'from', 'nyc', "$:::$"], ["^::^", "^:::^", 'the', 'quick', 'brown', 'dog', 'barked', "$:::$"],
            ["^::^", "^:::^", 'hello', 'world', 'I', 'am', 'Macintosh', "$:::$"], ["^::^", "^:::^", 'I', 'am', 'from', 'mars', "$:::$"], ["^::^", "^:::^",'A','friend','went','to','the','moon',"$:::$"], ["^::^", "^:::^",'The','new','Macbook','Pro','has','a','better','keyboard','and','it','sells', "well","$:::$"],
@@ -470,7 +460,6 @@ if __name__ == '__main__':
     print(generateTokenSentence(y, 4))
     print(generateTokenSentence(y, 5))
     print(generateTokenSentence(y, 10))
-
     # next set of tests
     text3 = [["^::^", "^:::^", 'hello', 'my', 'name', 'is', 'nikhil', "$:::$"],
              ["^::^", "^:::^", 'dad', 'is', 'from', 'nyc', "$:::$"],
