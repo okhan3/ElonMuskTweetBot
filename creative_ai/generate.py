@@ -497,7 +497,7 @@ def runTweetGenerator(models):
         subjectivity = 'personal opinion'
     tweetPost += '\n' + 'Subjectivity: ' + subjectivity
     '''
-
+    tweetPost += ' #eecs183'
     print(tweetPost)
 
     api.update_status(tweetPost)
