@@ -410,7 +410,7 @@ def getTweet():
            for index in range(len(editedString)):
                if editedString[index] == '&amp;':
                    editedString[index] = "and"
-           editedString = ' '.join(x for x in editedString if not x.startswith('@') and not x.startswith('https'))
+           editedString = ' '.join(x for x in editedString if not (x.startswith('@') or not x.startswith('https')))
            f.write(editedString)
            f.write('\n')
 
