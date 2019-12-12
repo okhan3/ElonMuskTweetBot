@@ -231,7 +231,7 @@ def generateTokenSentence(model, desiredLength):
     else:
         sentence[-1] += '?'
 
-    print(sentence[2:])
+    '''print(sentence[2:])'''
     return sentence[2:]
 '''
 def sentenceLength(model, x, tweet):
@@ -274,8 +274,8 @@ def grammarRules(tweet):
         tweetString += ' '
 
     doc = nlp(tweetString)
-    for token in doc:
-        print(token.text, ' : ', token.pos_, ':', token.tag_, ':', token.dep_)
+    #for token in doc:
+        # print(token.text, ' : ', token.pos_, ':', token.tag_, ':', token.dep_)
 
     '''
     if len(tweet) - 2 > 1:
@@ -398,7 +398,7 @@ def getTweet():
    f = open('data/elonMusk/elon/elonTweets.txt', 'w')
    l = open('data/elonMusk/elon2/elonLinks.txt', 'w')
 
-   for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items(100):
+   for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items():
        if item.full_text[0:2] != "RT":
            for x in item.full_text.split():
                if x.startswith('https') and x[len(x)-1] != "." and x[len(x)-1] != "!":
@@ -410,8 +410,6 @@ def getTweet():
                    editedString[index] = "and"
            editedString = ' '.join(x for x in editedString if not (x.startswith('@') or x.startswith('https')))
            f.write(editedString)
-           if editedString[len(editedString)-1] != '.' and editedString[len(editedString)-1] != '?' and editedString[len(editedString)-1] != '!':
-               f.write('.')
            f.write('\n')
 
    f.close()
@@ -453,7 +451,7 @@ def runTweetGenerator(models):
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
     for _ in range(2):
-        Tweet.append(generateTokenSentence(models, 7))
+        Tweet.append(generateTokenSentence(models, 8))
 
     tweetPost = ""
     for index in range(len(Tweet)):
