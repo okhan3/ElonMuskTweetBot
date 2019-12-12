@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import sys
-sys.dont_write_bytecode = True # Suppress .pyc files
+
+sys.dont_write_bytecode = True  # Suppress .pyc files
 
 import random
 import os
@@ -12,8 +13,9 @@ from creative_ai.models.musicInfo import *
 from creative_ai.models.languageModel import LanguageModel
 import spacy
 from spacy.lang.en import English
-#pattern implementation
-#from pattern.en import sentiment
+
+# pattern implementation
+# from pattern.en import sentiment
 
 TEAM = 'Turing Machine'
 LYRICSDIRS = ['the_beatles']
@@ -23,7 +25,8 @@ TESTLYRICSDIRS = ['the_beatles_test']
 MUSICDIRS = ['gamecube']
 WAVDIR = 'wav/'
 
-def output_models(val, output_fn = None):
+
+def output_models(val, output_fn=None):
     """
     Requires: nothing
     Modifies: nothing
@@ -38,6 +41,7 @@ def output_models(val, output_fn = None):
     with open('TEST_OUTPUT/' + output_fn, 'wt') as out:
         pprint(val, stream=out)
 
+
 def sentenceTooLong(desiredLength, currentLength):
     """
     Requires: nothing
@@ -49,6 +53,7 @@ def sentenceTooLong(desiredLength, currentLength):
     STDEV = 1
     val = random.gauss(currentLength, STDEV)
     return val > desiredLength
+
 
 def printSongLyrics(verseOne, verseTwo, chorus):
     """
@@ -64,6 +69,7 @@ def printSongLyrics(verseOne, verseTwo, chorus):
         for line in verse:
             print((' '.join(line)).capitalize())
         print()
+
 
 def trainLyricModels(lyricDirs, test=False):
     """
@@ -85,6 +91,7 @@ def trainLyricModels(lyricDirs, test=False):
 
     return model
 
+
 def trainTweetModels(tweetDirs, test=False):
     """
     Requires: lyricDirs is a list of directories in data/lyrics/
@@ -98,12 +105,13 @@ def trainTweetModels(tweetDirs, test=False):
     This function is done for you.
     """
     model = LanguageModel()
-    #import pdb;pdb.set_trace()
+    # import pdb;pdb.set_trace()
     for ldir in tweetDirs:
         tweets = prepTweetData(loadTweets(ldir))
         model.updateTrainedTweetData(tweets)
 
     return model
+
 
 def trainLinkModels(linkDirs, test=False):
     """
@@ -125,6 +133,7 @@ def trainLinkModels(linkDirs, test=False):
 
     return model
 
+
 def trainMusicModels(musicDirs):
     """
     Requires: musicDirs is a list of directories in data/midi/
@@ -144,6 +153,7 @@ def trainMusicModels(musicDirs):
 
     return model
 
+
 def runLyricsGenerator(models):
     """
     Requires: models is a list of a trained nGramModel child class objects
@@ -161,10 +171,6 @@ def runLyricsGenerator(models):
         chorus.append(generateTokenSentence(models, 9))
 
     printSongLyrics(verseOne, verseTwo, chorus)
-
-
-
-
 
 
 def runMusicGenerator(models, songName):
@@ -193,6 +199,7 @@ def runMusicGenerator(models, songName):
 
     pysynth.make_wav(song, fn=songName)
 
+
 ###############################################################################
 # Begin Core >> FOR CORE IMPLEMENTION, DO NOT EDIT OUTSIDE OF THIS SECTION <<
 ###############################################################################
@@ -211,7 +218,7 @@ def generateTokenSentence(model, desiredLength):
     sentence = ["^::^", "^:::^"]
     x = model.getNextToken(sentence)
 
-    while sentenceTooLong(desiredLength,len(sentence) - 2) == False and x != "$:::$":
+    while sentenceTooLong(desiredLength, len(sentence) - 2) == False and x != "$:::$":
         sentence.append(x)
         sentence = grammarRules(sentence)
         x = model.getNextToken(sentence)
@@ -237,6 +244,7 @@ def generateTokenSentence(model, desiredLength):
     '''print(sentence[2:])'''
     return sentence[2:]
 
+
 '''
 def sentenceLength(model, x, tweet):
     nlp = spacy.load("en_core_web_sm")
@@ -244,19 +252,19 @@ def sentenceLength(model, x, tweet):
     for i in tweet[2:]:
         tweetString += i
         tweetString += ' '
-
     doc = nlp(tweetString)
-    
+
     if len(tweet) - 2 == 1:
         if doc[-1].pos_ != 'VERB':
             tweet.remove(tweet[-1])      
-    
+
     if len(tweet) - 2 == 2:
         if doc[-2].pos_ != 'NOUN':
             tweet.remove(tweet[-2])
         if doc[-1].pos_ != 'VERB':
             tweet.remove(tweet[-1])
 '''
+
 
 def endSentence(tweet):
     nlp = spacy.load("en_core_web_sm")
@@ -266,8 +274,10 @@ def endSentence(tweet):
         tweetString += ' '
 
     doc = nlp(tweetString)
-    if doc[-1].pos_ == 'AUX' or doc[-1].pos_ == 'SCONJ' or doc[-1].pos_ == 'ADP' or doc[-1].pos_ == 'DET' or doc[-1].pos_ == 'PRON' or doc[-1].pos_ == 'CCONJ':
+    if doc[-1].pos_ == 'AUX' or doc[-1].pos_ == 'SCONJ' or doc[-1].pos_ == 'ADP' or doc[-1].pos_ == 'DET' or doc[
+        -1].pos_ == 'PRON' or doc[-1].pos_ == 'CCONJ':
         tweet.remove(tweet[-1])
+
 
 def grammarRules(tweet):
     """ this capitalizes the first word in a tweet """
@@ -278,8 +288,8 @@ def grammarRules(tweet):
         tweetString += ' '
 
     doc = nlp(tweetString)
-    for token in doc:
-        print(token.text, ' : ', token.pos_, ':', token.tag_, ':', token.dep_)
+   # for token in doc:
+        #print(token.text, ' : ', token.pos_, ':', token.tag_, ':', token.dep_)
 
     '''
     if len(tweet) - 2 > 1:
@@ -341,6 +351,7 @@ PROMPT2 = [
     'End the program'
 ]
 
+
 def main():
     """
     Requires: Nothing
@@ -383,58 +394,57 @@ def main():
 
 
 def getTweet():
-   consumer_key = "jwRrpCUD5nicMU8bkd31Eh9yV"
-   consumer_secret = "ojFtjsecfskKeXso2IM8Jbekj5bZZCPECubfgmaOOaI9mWnNVg"
-   access_token = "1203360136691011585-oEHF6waSe3DHWyKuWb4zbdLR2x0K5I"
-   access_token_secret = "ShTIm1K0p9aEQKFaa711l97hoymIFUkwtthyV9zsouMVb"
-   auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-   auth.set_access_token(access_token, access_token_secret)
+    consumer_key = "jwRrpCUD5nicMU8bkd31Eh9yV"
+    consumer_secret = "ojFtjsecfskKeXso2IM8Jbekj5bZZCPECubfgmaOOaI9mWnNVg"
+    access_token = "1203360136691011585-oEHF6waSe3DHWyKuWb4zbdLR2x0K5I"
+    access_token_secret = "ShTIm1K0p9aEQKFaa711l97hoymIFUkwtthyV9zsouMVb"
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
 
-   api = tweepy.API(auth)
+    api = tweepy.API(auth)
 
-   print('Welcome to the Elon Musk tweet generator! Now loading... Please be patient :]'.format(TEAM))
-   print('Check out our twitter account @ElonMuskAiBot'.format(TEAM))
+    print('Welcome to the Elon Musk tweet generator! Now loading... Please be patient :]'.format(TEAM))
+    print('Check out our twitter account @ElonMuskAiBot'.format(TEAM))
 
+    # copy path to your text file
+    f = open('data/elonMusk/elon/elonTweets.txt', 'w')
+    l = open('data/elonMusk/elon2/elonLinks.txt', 'w')
 
-   #copy path to your text file
-   f = open('data/elonMusk/elon/elonTweets.txt', 'w')
-   l = open('data/elonMusk/elon2/elonLinks.txt', 'w')
+    for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items(100):
+        if item.full_text[0:2] != "RT":
+            for x in item.full_text.split():
+                if x.startswith('https') and x[len(x) - 1] != "." and x[len(x) - 1] != "!":
+                    l.write(x)
+                    l.write('\n')
+            editedString = item.full_text.split()
+            for index in range(len(editedString)):
+                if editedString[index] == '&amp;':
+                    editedString[index] = "and"
+            editedString = ' '.join(x for x in editedString if not (x.startswith('@') or x.startswith('https')))
+            f.write(editedString)
+            f.write('\n')
 
-   for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items():
-       if item.full_text[0:2] != "RT":
-           for x in item.full_text.split():
-               if x.startswith('https') and x[len(x)-1] != "." and x[len(x)-1] != "!":
-                   l.write(x)
-                   l.write('\n')
-           editedString = item.full_text.split()
-           for index in range(len(editedString)):
-               if editedString[index] == '&amp;':
-                   editedString[index] = "and"
-           editedString = ' '.join(x for x in editedString if not (x.startswith('@') or not x.startswith('https')))
-           f.write(editedString)
-           f.write('\n')
+    f.close()
+    l.close()
 
-   f.close()
-   l.close()
+    mainMenu = Menu(PROMPT2)
 
-   mainMenu = Menu(PROMPT2)
+    tweetsTrained = False
 
-   tweetsTrained = False
+    while True:
+        userInput = mainMenu.getChoice()
 
-   while True:
-       userInput = mainMenu.getChoice()
+        if userInput == 1:
+            if not tweetsTrained:
+                print('Starting tweet generator...')
+                tweetModel = trainTweetModels(TWEETSDIRS)
+                linkModel = trainLinkModels(LINKDIRS)
+                tweetsTrained = True
 
-       if userInput == 1:
-           if not tweetsTrained:
-               print('Starting tweet generator...')
-               tweetModel = trainTweetModels(TWEETSDIRS)
-               linkModel = trainLinkModels(LINKDIRS)
-               tweetsTrained = True
-
-           runTweetGenerator(tweetModel)
-       elif userInput == 2:
-           print('Thank you for using the {} tweet generator!'.format(TEAM))
-           sys.exit()
+            runTweetGenerator(tweetModel)
+        elif userInput == 2:
+            print('Thank you for using the {} tweet generator!'.format(TEAM))
+            sys.exit()
 
 
 def runTweetGenerator(models):
@@ -463,12 +473,11 @@ def runTweetGenerator(models):
             tweetPost += ' '
     l = open('data/elonMusk/elon2/elonLinks.txt')
     links = l.readlines()
-    x = random.randint(1,len(links)-1)
+    x = random.randint(1, len(links) - 1)
     tweetPost = tweetPost + " " + links[x]
     l.close()
 
-
-    #Future sentiment and subjectvity analysis
+    # Future sentiment and subjectvity analysis
     '''
     store = sentiment(tweetPost)
     sentiment = 'postive or negative'
@@ -501,15 +510,16 @@ def runTweetGenerator(models):
 
     api.update_status(tweetPost)
 
+
 # This is how python tells if the file is being run as main
 if __name__ == '__main__':
-    #main()
+    # main()
     getTweet()
 
     # note that if you want to individually test functions from this file,
     # you can comment out main() and call those functions here. Just make
     # sure to call main() in your final submission of the project!
-    #first set of tests
+    # first set of tests
     # text = [["^::^", "^:::^", 'the', 'quick', 'brown', 'fox', "$:::$"], ["^::^", "^:::^", 'the', 'lazy', 'quick', 'dog', 'jumped', 'over', "$:::$"], ["^::^", "^:::^", 'the', 'quick', 'brown', 'dog', 'barked', "$:::$"],
     #           ["^::^", "^:::^", 'dog', 'jumped', 'over', 'the', 'fox', "$:::$"], ["^::^", "^:::^", 'brown', 'cat', "$:::$"], ["^::^", "^:::^",'the','quick','brown','fox','jumped','over','the','lazy','dog', "$:::$"], ["^::^", "^:::^",'the','brown','dog','fox','quick','brown','the','dog','jumped','the','jumped',"$:::$"]]
     '''
