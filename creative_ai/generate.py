@@ -317,8 +317,8 @@ def getTweet():
    print('Welcome to the Elon Musk tweet generator! Now loading... Please be patient :]'.format(TEAM))
 
    #copy path to your text file
-   f = open('creative_ai/data/elonMusk/elon/elonTweets.txt', 'w')
-   l = open('creative_ai/data/elonMusk/elon2/elonLinks.txt', 'w')
+   f = open('data/elonMusk/elon/elonTweets.txt', 'w')
+   l = open('data/elonMusk/elon2/elonLinks.txt', 'w')
 
    for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items(100):
        if item.full_text[0:2] != "RT":
