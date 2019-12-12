@@ -24,7 +24,7 @@ Good luck on the project!
 
 - Turing Machine
 -  Nikhil Kanamarla; nkanama
-- group member 2; uniqname 2
+-  Aidan Riedman; uniqname 2
 - group member 3; uniqname 3
 - group member 4; uniqname 4
 
