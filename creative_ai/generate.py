@@ -274,8 +274,7 @@ def endSentence(tweet):
         tweetString += ' '
 
     doc = nlp(tweetString)
-    if doc[-1].pos_ == 'AUX' or doc[-1].pos_ == 'SCONJ' or doc[-1].pos_ == 'ADP' or doc[-1].pos_ == 'DET' or doc[
-        -1].pos_ == 'PRON' or doc[-1].pos_ == 'CCONJ':
+    if doc[-1].pos_ == 'AUX' or doc[-1].pos_ == 'SCONJ' or doc[-1].pos_ == 'ADP' or doc[-1].pos_ == 'DET' or doc[-1].pos_ == 'PRON' or doc[-1].pos_ == 'CCONJ':
         tweet.remove(tweet[-1])
 
 
@@ -288,7 +287,7 @@ def grammarRules(tweet):
         tweetString += ' '
 
     doc = nlp(tweetString)
-   # for token in doc:
+    #for token in doc:
         #print(token.text, ' : ', token.pos_, ':', token.tag_, ':', token.dep_)
 
     '''
