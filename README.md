@@ -24,18 +24,20 @@ Good luck on the project!
 
 - Turing Machine
 -  Nikhil Kanamarla; nkanama
--  Aidan Riedman; uniqname 2
-- group member 3; uniqname 3
-- group member 4; uniqname 4
+-  Aidan Riedman; ariedman
+- Omar Khan 3; omarkhan
+- Joe Richards 4; joericha 
 
 All Downloaded Python Libraries used:
 * Spacy
 * Tweepy
 ...
 
-[Our application is a twitter based and we plan to get data in the form tweets and generate tweets]
-[Replace with Description of the Heuristics used (1-2 sentences)]
-[Our Showmanship component is a twitter bot based on Elon Musk Tweets]
+Our project is a twitter bot that generates Elon Musk-based tweets. 
 
+For general heuristics, we added various grammar rules, ike capitialization and punctuaion.
+We also used Spacy to filter which parts of speech can occur at the start and end of each setence. 
+
+[Our Showmanship component is a twitter bot based on Elon Musk Tweets]
 [Please don't forget to run python -m spacy download en_core_web_sm ]
 
