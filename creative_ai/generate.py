@@ -387,7 +387,7 @@ def getTweet():
            if item.full_text[len(item.full_text)-1] != '.' and item.full_text[len(item.full_text)-1] != '?' and item.full_text[len(item.full_text)-1] != '!':
                f.write('.')
            f.write('\n')
-    '''
+
    f.close()
    l.close()
 
