@@ -320,13 +320,13 @@ def getTweet():
    f = open('elonTweets.txt', 'w')
    l = open('elonLinks.txt', 'w')
 
-   for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items():
+   for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items(100):
        if item.full_text[0:2] != "RT":
            for x in item.full_text.split():
                if x.startswith('https') and x[len(x)-1] != "." and x[len(x)-1] != "!":
                    l.write(x)
                    l.write('\n')
-           editedString = ' '.join(x for x in item.full_text.split() if not x.startswith('@') and not x.startswith('https'))
+           editedString = ' '.join(x for x in item.full_text.split() if not (x.startswith('@') or x.startswith('https')))
            editedString.replace('&amp;','&')
            if (editedString == '&amp;'):
                editedString = '&'
