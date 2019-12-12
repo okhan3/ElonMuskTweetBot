@@ -410,7 +410,7 @@ def getTweet():
     f = open('data/elonMusk/elon/elonTweets.txt', 'w')
     l = open('data/elonMusk/elon2/elonLinks.txt', 'w')
 
-    for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items(100):
+    for item in tweepy.Cursor(api.user_timeline, id="elonmusk", tweet_mode='extended').items():
         if item.full_text[0:2] != "RT":
             for x in item.full_text.split():
                 if x.startswith('https') and x[len(x) - 1] != "." and x[len(x) - 1] != "!":
