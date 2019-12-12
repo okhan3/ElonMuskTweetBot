@@ -284,9 +284,9 @@ def grammarRules(tweet):
         tweet[2] = firstWord
 
     """ this removes amp and replaces it with & """
-    for i in range(len(tweet)):
-        if tweet[i] is '&amp;' or tweet[i] is 'amp' or tweet[i] is '&amp' or tweet[i] is 'amp;':
-            tweet[i] = '&'
+    # for i in range(len(tweet)):
+    #     if tweet[i] is '&amp;' or tweet[i] is 'amp' or tweet[i] is '&amp' or tweet[i] is 'amp;':
+    #         tweet[i] = '&'
 
 
 
@@ -377,14 +377,13 @@ def getTweet():
                if x.startswith('https') and x[len(x)-1] != "." and x[len(x)-1] != "!":
                    l.write(x)
                    l.write('\n')
-           editedString = ' '.join(x for x in item.full_text.split() if not (x.startswith('@') or x.startswith('https')))
-           editedString.replace('&amp;','&')
-           if (editedString == '&amp;'):
-               editedString = '&'
-           editedString.translate({ord(i): None for i in '&amp;'})
-           #print(editedString)
+           editedString = item.full_text.split()
+           for index in range(len(editedString)):
+               if editedString[index] == '&amp;':
+                   editedString[index] = "and"
+           editedString = ' '.join(x for x in editedString if not (x.startswith('@') or x.startswith('https')))
            f.write(editedString)
-           if item.full_text[len(item.full_text)-1] != '.' and item.full_text[len(item.full_text)-1] != '?' and item.full_text[len(item.full_text)-1] != '!':
+           if editedString[len(editedString)-1] != '.' and editedString[len(editedString)-1] != '?' and editedString[len(editedString)-1] != '!':
                f.write('.')
            f.write('\n')
 
@@ -429,20 +428,18 @@ def runTweetGenerator(models):
     for _ in range(2):
         Tweet.append(generateTokenSentence(models, 10))
 
-    tweetPost = " "
+    tweetPost = ""
     for index in range(len(Tweet)):
         for index2 in range(len(Tweet[index])):
             store = str(Tweet[index][index2])
-            if (store == 'amp' or store == '&amp;' or store == 'amp;'):
-                store = '&'
             tweetPost += store
             tweetPost += ' '
-            
-    l = open('elonLinks.txt')
+
+    l = open('data/elonMusk/elon2/elonLinks.txt')
     links = l.readlines()
     chance = random.randint(0,4)
     if chance == 1:
-        x = random.randint(0,len(links)-1)
+        x = random.randint(1,len(links)-1)
         tweetPost = tweetPost + " " + links[x]
     l.close()
 
@@ -478,7 +475,7 @@ def runTweetGenerator(models):
 
     print(tweetPost)
 
-    api.update_status(tweetPost)
+    #api.update_status(tweetPost)
 
 # This is how python tells if the file is being run as main
 if __name__ == '__main__':
