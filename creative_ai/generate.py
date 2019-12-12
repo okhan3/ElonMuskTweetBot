@@ -215,8 +215,10 @@ def generateTokenSentence(model, desiredLength):
         sentence.append(x)
         sentence = grammarRules(sentence)
         x = model.getNextToken(sentence)
+
         if x == "$:::$" or desiredLength == len(sentence) - 2:
             endSentence(sentence)
+            # x = sentenceLength(x, sentence)
 
     """ this adds a ./.../!/? to the end of a the sentence """
     i = random.randint(0, 7)
@@ -231,6 +233,26 @@ def generateTokenSentence(model, desiredLength):
 
     print(sentence[2:])
     return sentence[2:]
+'''
+def sentenceLength(model, x, tweet):
+    nlp = spacy.load("en_core_web_sm")
+    tweetString = ''
+    for i in tweet[2:]:
+        tweetString += i
+        tweetString += ' '
+
+    doc = nlp(tweetString)
+    
+    if len(tweet) - 2 == 1:
+        if doc[-1].pos_ != 'VERB':
+            tweet.remove(tweet[-1])      
+    
+    if len(tweet) - 2 == 2:
+        if doc[-2].pos_ != 'NOUN':
+            tweet.remove(tweet[-2])
+        if doc[-1].pos_ != 'VERB':
+            tweet.remove(tweet[-1])
+'''
 
 def endSentence(tweet):
     nlp = spacy.load("en_core_web_sm")
@@ -240,7 +262,7 @@ def endSentence(tweet):
         tweetString += ' '
 
     doc = nlp(tweetString)
-    if doc[-1].pos_ == 'AUX' or doc[-1].pos_ == 'SCONJ' or doc[-1].pos_ == 'ADP' or doc[-1].pos_ == 'DET':
+    if doc[-1].pos_ == 'AUX' or doc[-1].pos_ == 'SCONJ' or doc[-1].pos_ == 'ADP' or doc[-1].pos_ == 'DET' or doc[-1].pos_ == 'PRON' or doc[-1].pos_ == 'CCONJ':
         tweet.remove(tweet[-1])
 
 def grammarRules(tweet):
@@ -252,8 +274,8 @@ def grammarRules(tweet):
         tweetString += ' '
 
     doc = nlp(tweetString)
-    # for token in doc:
-        # print(token.text, ' : ', token.pos_, ':', token.tag_, ':', token.dep_)
+    for token in doc:
+        print(token.text, ' : ', token.pos_, ':', token.tag_, ':', token.dep_)
 
     '''
     if len(tweet) - 2 > 1:
@@ -261,23 +283,28 @@ def grammarRules(tweet):
             if doc[i].pos_ == 'ADJ':
                 if doc[i - 1].pos_ == 'NOUN' or doc[i - 1].pos_ == 'PROPN':
                     tweet.remove(tweet[i + 2])
+                    doc.remove(doc[i])
             if doc[i].pos_ == 'AUX':
                 if doc[i - 1].pos_ != 'NOUN' or doc[i - 1].pos_ != 'PROPN' or doc[i - 1].pos_ != 'VERB':
                     tweet.remove(tweet[i + 2])
+                    doc.remove(doc[i])
             if doc[i].pos_ == 'VERB':
                 if doc[i - 1].pos_ != 'NOUN' or doc[i - 1].pos_ != 'PROPN':
                     tweet.remove(tweet[i + 2])
-            if doc[i].pos_ == 'NOUN':
-                if doc[i - 1].pos_ == 'NOUN':
-                    tweet.remove(tweet[i + 2])
+                    doc.remove(doc[i])
             if doc[i].pos_ == 'ADP':
                 if doc[i - 1].pos_ == 'PRON':
                     tweet.remove(tweet[i + 2])
+                    doc.remove(doc[i])
             if doc[i].pos_ == 'INTJ':
                 tweet[i + 2] += ','
     '''
     if len(tweet) is 3:
-        if doc[0].pos_ == 'INTJ':
+        if doc[0].pos_ == 'ADP':
+            tweet.remove(tweet[2])
+
+    if len(tweet) is 3:
+        if doc[0].pos_ == 'INTJ' or doc[0].pos_ == 'ADJ':
             tweet[2] += ','
         firstWord = tweet[2]
         firstWord = firstWord.capitalize()
@@ -427,9 +454,9 @@ def runTweetGenerator(models):
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
     for _ in range(2):
-        Tweet.append(generateTokenSentence(models, 10))
+        Tweet.append(generateTokenSentence(models, 7))
 
-    tweetPost = " "
+    tweetPost = ""
     for index in range(len(Tweet)):
         for index2 in range(len(Tweet[index])):
             store = str(Tweet[index][index2])
@@ -438,7 +465,7 @@ def runTweetGenerator(models):
             tweetPost += store
             tweetPost += ' '
             
-    l = open('elonLinks.txt')
+    l = open('data/elonMusk/elon2/elonLinks.txt')
     links = l.readlines()
     chance = random.randint(0,4)
     if chance == 1:
