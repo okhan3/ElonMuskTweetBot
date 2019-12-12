@@ -435,7 +435,7 @@ def runTweetGenerator(models):
 
     l = open('data/elonMusk/elon2/elonLinks.txt')
     links = l.readlines()
-    chance = random.randint(0,2)
+    chance = random.randint(0,2) 
     if chance == 1:
         x = random.randint(1,len(links)-1)
         tweetPost = tweetPost + " " + links[x]
