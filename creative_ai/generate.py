@@ -385,7 +385,7 @@ def runTweetGenerator(models):
                 store = '&'
             tweetPost += store
             tweetPost += ' '
-
+            
     l = open('elonLinks.txt')
     links = l.readlines()
     chance = random.randint(0,4)
